@@ -9,7 +9,10 @@ namespace motorsports_backend.Controllers
     public class DriverController : ControllerBase
     {
         private readonly IDriverService _driverService;
-        public DriverController(IDriverService driverService) { _driverService = driverService; }
+        public DriverController(IDriverService driverService) 
+        { 
+            _driverService = driverService;
+        }
         [HttpGet]
         public async Task<IActionResult> GetAllDrivers()
         {
@@ -21,5 +24,6 @@ namespace motorsports_backend.Controllers
         {
             return Ok(await _driverService.CreateDriver(driver));
         }
+        
     }
 }
