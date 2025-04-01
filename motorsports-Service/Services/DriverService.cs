@@ -1,11 +1,8 @@
 ﻿using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
+using motorsports_Domain.enums;
 using motorsports_Service.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using motorsports_Service.DTOs;
 
 namespace motorsports_Service.Services
 {
@@ -13,9 +10,12 @@ namespace motorsports_Service.Services
     {
         private readonly IDriverRepository _driverRepository;
         private readonly ICacheService _cacheService;
-        private readonly TimeSpan _cacheDuration = TimeSpan.FromMinutes(10);
         const string cacheKey = "drivers_list";
-        public DriverService(IDriverRepository driverRepository, ICacheService cacheService) { _driverRepository = driverRepository; _cacheService = cacheService; }
+
+        public DriverService(IDriverRepository driverRepository, ICacheService cacheService) { 
+            _driverRepository = driverRepository; 
+            _cacheService = cacheService;
+        }
         public Task<Driver> CreateDriver(Driver driver)
         {
             throw new NotImplementedException();
@@ -26,10 +26,10 @@ namespace motorsports_Service.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Driver>> GetAllDrivers()
+        public async Task<IEnumerable<DriverDTO>> GetAllDrivers()
         {
             
-            var cachedDrivers = await _cacheService.GetAsync<IEnumerable<Driver>>(cacheKey);
+            var cachedDrivers = await _cacheService.GetAsync<IEnumerable<DriverDTO>>(cacheKey);
             if (cachedDrivers != null)
             {
                 Console.WriteLine("from Cache");
@@ -37,8 +37,16 @@ namespace motorsports_Service.Services
             }
             Console.WriteLine("in service");
             var drivers = await _driverRepository.GetAllDrivers();
-            await _cacheService.SetAsync(cacheKey, drivers, _cacheDuration);
-            return drivers;
+            var A = drivers.Select(D => new DriverDTO
+            {
+                FirstName = D.FirstName,
+                LastName = D.LastName,
+                BirthDate = D.BirthDate,
+                Nationality = ((NationalityEnums)D.Nationality).ToString().Replace("_", " "),
+                Gender = ((GenderEnums)D.Gender).ToString().Replace("_", " ")
+            });
+            await _cacheService.SetAsync(cacheKey, A);
+            return A;
         }
 
         public Task<Driver> GetDriverById(int id)

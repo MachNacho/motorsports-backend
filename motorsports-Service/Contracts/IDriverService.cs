@@ -1,10 +1,11 @@
 ﻿using motorsports_Domain.Entities;
+using motorsports_Service.DTOs;
 
 namespace motorsports_Service.Contracts
 {
     public interface IDriverService
     {
-        Task<IEnumerable<Driver>> GetAllDrivers();
+        Task<IEnumerable<DriverDTO>> GetAllDrivers();
         Task<Driver> GetDriverById(int id);
         Task<Driver> CreateDriver(Driver driver);
         Task<Driver> UpdateDriver(Driver driver);

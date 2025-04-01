@@ -27,11 +27,11 @@ namespace motorsports_Infrastructure.Repositories
             return Task.CompletedTask;
         }
 
-        public Task SetAsync<T>(string key, T value, TimeSpan expiration)
+        public Task SetAsync<T>(string key, T value)
         {
             var cacheEntryOptions = new MemoryCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = expiration
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
             };
             _cache.Set(key, value, cacheEntryOptions);
             return Task.CompletedTask;
