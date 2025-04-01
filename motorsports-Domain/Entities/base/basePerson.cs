@@ -1,19 +1,13 @@
-﻿using motorsports_Domain.Entities.@base;
-using motorsports_Domain.enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using motorsports_Domain.enums;
 
 namespace motorsports_Domain.Entities.@base
 {
-    public class basePerson : baseEntity
+    public class BasePerson : BaseEntity
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public DateOnly birthDate { get; set; }
-        public nationalityEnums nationality { get; set; }
-        public genderEnums gender { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateOnly BirthDate { get; set; }
+        public NationalityEnums Nationality { get; set; }
+        public GenderEnums Gender { get; set; }
     }
 }

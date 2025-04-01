@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "motorsports-API", "motorspo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "motorsports-Domain", "motorsports-Domain\motorsports-Domain.csproj", "{95346D18-22E9-4CF9-B817-D00B0CF9CDD7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "motorsports-Infrastructure", "motorsports-Infrastructure\motorsports-Infrastructure.csproj", "{BBCE1CDA-30CC-4A13-8A96-9934FD8351A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{95346D18-22E9-4CF9-B817-D00B0CF9CDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95346D18-22E9-4CF9-B817-D00B0CF9CDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95346D18-22E9-4CF9-B817-D00B0CF9CDD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCE1CDA-30CC-4A13-8A96-9934FD8351A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCE1CDA-30CC-4A13-8A96-9934FD8351A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCE1CDA-30CC-4A13-8A96-9934FD8351A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCE1CDA-30CC-4A13-8A96-9934FD8351A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
