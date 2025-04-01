@@ -1,19 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using motorsports_Domain.Contracts;
+﻿using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
-using motorsports_Infrastructure.Data;
+using motorsports_Service.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace motorsports_Infrastructure.Repositories
+namespace motorsports_Service.Services
 {
-    public class DriverRepositories : IDriverRepository
+    public class DriverService : IDriverService
     {
-        //Get DB context
-        private readonly ApplicationDBContext _context;
-        //Constructor using dependency injection
-        public DriverRepositories(ApplicationDBContext context)
-        {
-            _context = context;
-        }
+        private readonly IDriverRepository _driverRepository;
+        public DriverService(IDriverRepository driverRepository) { _driverRepository = driverRepository; }
         public Task<Driver> CreateDriver(Driver driver)
         {
             throw new NotImplementedException();
@@ -26,7 +25,7 @@ namespace motorsports_Infrastructure.Repositories
 
         public async Task<IEnumerable<Driver>> GetAllDrivers()
         {
-            return await _context.Driver.AsNoTracking().ToListAsync();
+            return await _driverRepository.GetAllDrivers();
         }
 
         public Task<Driver> GetDriverById(int id)
