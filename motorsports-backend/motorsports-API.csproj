@@ -13,14 +13,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\motorsports-Infrastructure\motorsports-Infrastructure.csproj" />
+    <ProjectReference Include="..\motorsports-Service\motorsports-Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,5 @@
+﻿@motorsports-API_HostAddress = https://localhost:7016
+
+GET {{motorsports-API_HostAddress}}/api/driver
+
+###

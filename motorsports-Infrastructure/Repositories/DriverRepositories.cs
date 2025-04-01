@@ -26,6 +26,7 @@ namespace motorsports_Infrastructure.Repositories
 
         public async Task<IEnumerable<Driver>> GetAllDrivers()
         {
+            Console.WriteLine("In repo");
             return await _context.Driver.AsNoTracking().ToListAsync();
         }
 
