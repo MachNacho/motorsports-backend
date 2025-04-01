@@ -14,9 +14,11 @@ namespace motorsports_Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task<Driver> CreateDriver(Driver driver)
+        public async Task<string> CreateDriver(Driver driver)
         {
-            throw new NotImplementedException();
+            await _context.Driver.AddAsync(driver);
+            await _context.SaveChangesAsync();
+            return "Driver created successfully";
         }
 
         public Task<Driver> DeleteDriver(int id)

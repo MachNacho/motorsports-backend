@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Service.Contracts;
+using motorsports_Service.DTOs;
 
 namespace motorsports_backend.Controllers
 {
@@ -15,6 +15,11 @@ namespace motorsports_backend.Controllers
         {
             Console.WriteLine("In controller");
             return Ok(await _driverService.GetAllDrivers());
+        }
+        [HttpPut]
+        public async Task<IActionResult> CreateDriver(DriverDTO driver)
+        {
+            return Ok(await _driverService.CreateDriver(driver));
         }
     }
 }

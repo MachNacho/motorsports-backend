@@ -1,4 +1,5 @@
-﻿using motorsports_Domain.Contracts;
+﻿using AutoMapper;
+using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
 using motorsports_Domain.enums;
 using motorsports_Service.Contracts;
@@ -9,16 +10,21 @@ namespace motorsports_Service.Services
     public class DriverService : IDriverService
     {
         private readonly IDriverRepository _driverRepository;
-        private readonly ICacheService _cacheService;
+        private readonly ICacheRepository _cacheService;
+        private readonly IMapper _mapper;
         const string cacheKey = "drivers_list";
 
-        public DriverService(IDriverRepository driverRepository, ICacheService cacheService) { 
-            _driverRepository = driverRepository; 
-            _cacheService = cacheService;
-        }
-        public Task<Driver> CreateDriver(Driver driver)
+        public DriverService(IDriverRepository driverRepository, ICacheRepository cacheService, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _driverRepository = driverRepository;
+            _cacheService = cacheService;
+            _mapper = mapper;
+        }
+        public async Task<string> CreateDriver(DriverDTO driverDTO)
+        {
+            var driver = _mapper.Map<Driver>(driverDTO);
+            await _cacheService.RemoveAsync(cacheKey);
+            return await _driverRepository.CreateDriver(driver);
         }
 
         public Task<Driver> DeleteDriver(int id)
@@ -28,7 +34,7 @@ namespace motorsports_Service.Services
 
         public async Task<IEnumerable<DriverDTO>> GetAllDrivers()
         {
-            
+
             var cachedDrivers = await _cacheService.GetAsync<IEnumerable<DriverDTO>>(cacheKey);
             if (cachedDrivers != null)
             {
@@ -45,7 +51,9 @@ namespace motorsports_Service.Services
                 Nationality = ((NationalityEnums)D.Nationality).ToString().Replace("_", " "),
                 Gender = ((GenderEnums)D.Gender).ToString().Replace("_", " ")
             });
+            Console.WriteLine("Cached");
             await _cacheService.SetAsync(cacheKey, A);
+
             return A;
         }
 
