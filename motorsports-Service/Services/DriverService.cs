@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
 using motorsports_Domain.enums;
+using motorsports_Domain.Exceptions;
 using motorsports_Service.Contracts;
 using motorsports_Service.DTOs;
 
@@ -21,14 +22,21 @@ namespace motorsports_Service.Services
             _cacheService = cacheService;
             _mapper = mapper;
         }
-        public async Task<string> CreateDriver(DriverDTO driverDTO)
+        public async Task<bool> CreateDriver(DriverDTO driverDTO)
         {
-            var driver = _mapper.Map<DriverEntity>(driverDTO);
-            await _cacheService.RemoveAsync(cacheKey);
-            return await _driverRepository.CreateDriver(driver);
+            try {
+                var driver = _mapper.Map<DriverEntity>(driverDTO);
+                await _cacheService.RemoveAsync(cacheKey);
+                return await _driverRepository.CreateDriver(driver);
+            }
+            catch (Exception EX)
+            {
+                throw new BusinessRuleViolationException($"Error creating driver");
+            }
+
         }
 
-        public async Task<string> DeleteDriver(int id)
+        public async Task<bool> DeleteDriver(int id)
         {
             return await _driverRepository.DeleteDriver(id);
         }

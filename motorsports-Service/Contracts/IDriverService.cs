@@ -8,8 +8,8 @@ namespace motorsports_Service.Contracts
     {
         Task<IEnumerable<DriverDTO>> GetAllDrivers();
         Task<DriverEntity> GetDriverById(int id);
-        Task<string> CreateDriver(DriverDTO driver);
+        Task<bool> CreateDriver(DriverDTO driver);
         Task<DriverEntity> UpdateDriver(int id, JsonPatchDocument<DriverEntity> driver);
-        Task<string> DeleteDriver(int id);
+        Task<bool> DeleteDriver(int id);
     }
 }

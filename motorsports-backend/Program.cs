@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using motorsports_backend.Middleware;
 using motorsports_Domain.Contracts;
 using motorsports_Infrastructure.Data;
 using motorsports_Infrastructure.Mapping;
@@ -31,9 +32,15 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+//app.UseHttpsRedirection();
+app.UseCors(x => x
+     .AllowAnyMethod()
+     .AllowAnyHeader()
+     .AllowCredentials()
+      .SetIsOriginAllowed(origin => true));
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

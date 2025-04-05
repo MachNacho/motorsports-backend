@@ -9,5 +9,6 @@ namespace motorsports_Infrastructure.Data
         {
         }
         public DbSet<DriverEntity> Driver { get; set; }
+        public DbSet<TeamEntity> Team { get; set; }
     }
 }
