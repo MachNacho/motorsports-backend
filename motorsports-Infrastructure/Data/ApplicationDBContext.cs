@@ -8,6 +8,6 @@ namespace motorsports_Infrastructure.Data
         public ApplicationDBContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<Driver> Driver { get; set; }
+        public DbSet<DriverEntity> Driver { get; set; }
     }
 }

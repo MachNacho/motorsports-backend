@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Domain.enums;
 
 namespace motorsports_backend.Controllers
@@ -22,7 +21,7 @@ namespace motorsports_backend.Controllers
         [HttpGet("genders")]
         public IActionResult GetGender()
         {
-            var gender = Enum.GetValues(typeof(GenderEnums)).Cast<GenderEnums>().Select(g => new {Name = g.ToString() }).ToList();
+            var gender = Enum.GetValues(typeof(GenderEnums)).Cast<GenderEnums>().Select(g => new { Name = g.ToString() }).ToList();
             return Ok(gender);
         }
         [HttpGet("StaffRoles")]

@@ -2,7 +2,7 @@
 
 namespace motorsports_Domain.Entities
 {
-    public class Driver : BasePerson
+    public class DriverEntity : BasePersonEntity
     {
     }
 }

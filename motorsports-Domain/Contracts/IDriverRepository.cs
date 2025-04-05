@@ -1,13 +1,14 @@
-﻿using motorsports_Domain.Entities;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using motorsports_Domain.Entities;
 
 namespace motorsports_Domain.Contracts
 {
     public interface IDriverRepository
     {
-        Task<IEnumerable<Driver>> GetAllDrivers();
-        Task<Driver> GetDriverById(int id);
-        Task<string> CreateDriver(Driver driver);
-        Task<Driver> UpdateDriver(Driver driver);
-        Task<Driver> DeleteDriver(int id);
+        Task<IEnumerable<DriverEntity>> GetAllDrivers();
+        Task<DriverEntity> GetDriverById(int id);
+        Task<string> CreateDriver(DriverEntity driver);
+        Task<DriverEntity> UpdateDriver(int id, JsonPatchDocument<DriverEntity> driver);
+        Task<string> DeleteDriver(int id);
     }
 }

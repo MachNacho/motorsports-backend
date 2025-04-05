@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
 using motorsports_Infrastructure.Data;
@@ -14,32 +15,43 @@ namespace motorsports_Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<string> CreateDriver(Driver driver)
+        public async Task<string> CreateDriver(DriverEntity driver)
         {
             await _context.Driver.AddAsync(driver);
             await _context.SaveChangesAsync();
             return "Driver created successfully";
         }
 
-        public Task<Driver> DeleteDriver(int id)
+        public async Task<string> DeleteDriver(int id)
         {
-            throw new NotImplementedException();
+            var drivertodelete = await _context.Driver.FirstOrDefaultAsync(d => d.ID == id);
+            if (drivertodelete != null)
+            {
+                _context.Remove(drivertodelete);
+                await _context.SaveChangesAsync();
+                return "Driver is deleted";
+            }
+            return "Driver not found";
         }
 
-        public async Task<IEnumerable<Driver>> GetAllDrivers()
+        public async Task<IEnumerable<DriverEntity>> GetAllDrivers()
         {
             Console.WriteLine("In repo");
-            return await _context.Driver.AsNoTracking().ToListAsync();
+            return await _context.Driver.AsNoTracking().Where(d => d.IsActive).ToListAsync();
         }
 
-        public Task<Driver> GetDriverById(int id)
+        public async Task<DriverEntity> GetDriverById(int id)
         {
-            throw new NotImplementedException();
+            var driver = await _context.Driver.FindAsync(id);
+            return driver;
         }
 
-        public Task<Driver> UpdateDriver(Driver driver)
+        public async Task<DriverEntity> UpdateDriver(int id, JsonPatchDocument<DriverEntity> driver)
         {
-            throw new NotImplementedException();
+            var OGmodel = await GetDriverById(id);
+            driver.ApplyTo(OGmodel);
+            await _context.SaveChangesAsync();
+            return OGmodel;
         }
     }
 }

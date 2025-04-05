@@ -2,7 +2,7 @@
 
 namespace motorsports_Domain.Entities.@base
 {
-    public class BasePerson : BaseEntity
+    public class BasePersonEntity : BaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

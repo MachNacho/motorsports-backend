@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
 using motorsports_Domain.enums;
@@ -22,14 +23,14 @@ namespace motorsports_Service.Services
         }
         public async Task<string> CreateDriver(DriverDTO driverDTO)
         {
-            var driver = _mapper.Map<Driver>(driverDTO);
+            var driver = _mapper.Map<DriverEntity>(driverDTO);
             await _cacheService.RemoveAsync(cacheKey);
             return await _driverRepository.CreateDriver(driver);
         }
 
-        public Task<Driver> DeleteDriver(int id)
+        public async Task<string> DeleteDriver(int id)
         {
-            throw new NotImplementedException();
+            return await _driverRepository.DeleteDriver(id);
         }
 
         public async Task<IEnumerable<DriverDTO>> GetAllDrivers()
@@ -57,14 +58,15 @@ namespace motorsports_Service.Services
             return A;
         }
 
-        public Task<Driver> GetDriverById(int id)
+        public async Task<DriverEntity> GetDriverById(int id)
         {
-            throw new NotImplementedException();
+            return await _driverRepository.GetDriverById(id);
         }
 
-        public Task<Driver> UpdateDriver(Driver driver)
+        public async Task<DriverEntity> UpdateDriver(int id, JsonPatchDocument<DriverEntity> driver)
         {
-            throw new NotImplementedException();
+            await _cacheService.RemoveAsync(cacheKey);
+            return await _driverRepository.UpdateDriver(id, driver);
         }
     }
 }
