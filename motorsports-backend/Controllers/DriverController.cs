@@ -18,11 +18,10 @@ namespace motorsports_backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllDrivers()
         {
-            Console.WriteLine("In controller");
             return Ok(await _driverService.GetAllDrivers());
         }
         [HttpPost]
-        public async Task<IActionResult> CreateDriver(DriverDTO driver)
+        public async Task<IActionResult> CreateDriver(CreateDriverDTO driver)
         {
             return Ok(await _driverService.CreateDriver(driver));
         }

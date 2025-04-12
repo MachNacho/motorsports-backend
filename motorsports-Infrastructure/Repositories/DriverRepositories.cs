@@ -5,11 +5,9 @@ using motorsports_Domain.Entities;
 using motorsports_Domain.Exceptions;
 using motorsports_Infrastructure.Data;
 using motorsports_Infrastructure.Exceptions;
-using System;
 
 namespace motorsports_Infrastructure.Repositories
 {
-    //TODO Add custom exception 
     public class DriverRepositories : IDriverRepository
     {
         private readonly ApplicationDBContext _context;
@@ -19,12 +17,16 @@ namespace motorsports_Infrastructure.Repositories
         }
         public async Task<bool> CreateDriver(DriverEntity driver)
         {
-            try 
+            try
             {
+                driver.IsActive = true;
+                driver.CreatedAt = DateTime.UtcNow;
+                driver.UpdatedAt = DateTime.UtcNow;
                 await _context.Driver.AddAsync(driver);
                 await _context.SaveChangesAsync();
                 return true;
-            } catch (Exception) 
+            }
+            catch (Exception)
             {
                 throw new BusinessRuleViolationException("Error creating driver");
             }
@@ -33,7 +35,7 @@ namespace motorsports_Infrastructure.Repositories
 
         public async Task<bool> DeleteDriver(int id)
         {
-            
+
             try
             {
                 var drivertodelete = await GetDriverById(id);
@@ -53,17 +55,15 @@ namespace motorsports_Infrastructure.Repositories
             {
                 throw new DatabaseException($"Error deleting driver: {ex}");
             }
-           
+
 
         }
-
-        //TODO - Add pagination to the GetAllDrivers method
         public async Task<IEnumerable<DriverEntity>> GetAllDrivers()
         {
             try
             {
                 var drivers = await _context.Driver.AsNoTracking().Where(d => d.IsActive).ToListAsync();
-                return drivers.Count == 0?throw new EmptyOrNoRecordsException("No drivers found"):drivers;
+                return drivers.Count == 0 ? throw new EmptyOrNoRecordsException("No drivers found") : drivers;
             }
             catch (Exception)
             {
@@ -80,7 +80,7 @@ namespace motorsports_Infrastructure.Repositories
             }
             catch (Exception)
             {
-                throw new NotFoundException("Driver not found");
+                throw new NotFoundException($"Driver with ID {id} not found");
             }
 
         }
@@ -90,6 +90,7 @@ namespace motorsports_Infrastructure.Repositories
             try
             {
                 var OGmodel = await GetDriverById(id);
+                OGmodel.UpdatedAt = DateTime.UtcNow;
                 driver.ApplyTo(OGmodel);
                 await _context.SaveChangesAsync();
                 return OGmodel;

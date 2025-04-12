@@ -22,14 +22,15 @@ namespace motorsports_Service.Services
             _cacheService = cacheService;
             _mapper = mapper;
         }
-        public async Task<bool> CreateDriver(DriverDTO driverDTO)
+        public async Task<bool> CreateDriver(CreateDriverDTO driverDTO)
         {
-            try {
+            try
+            {
                 var driver = _mapper.Map<DriverEntity>(driverDTO);
                 await _cacheService.RemoveAsync(cacheKey);
                 return await _driverRepository.CreateDriver(driver);
             }
-            catch (Exception EX)
+            catch (Exception)
             {
                 throw new BusinessRuleViolationException($"Error creating driver");
             }
@@ -52,14 +53,7 @@ namespace motorsports_Service.Services
             }
             Console.WriteLine("in service");
             var drivers = await _driverRepository.GetAllDrivers();
-            var A = drivers.Select(D => new DriverDTO
-            {
-                FirstName = D.FirstName,
-                LastName = D.LastName,
-                BirthDate = D.BirthDate,
-                Nationality = ((NationalityEnums)D.Nationality).ToString().Replace("_", " "),
-                Gender = ((GenderEnums)D.Gender).ToString().Replace("_", " ")
-            });
+            var A = drivers.Select(d => _mapper.Map<DriverDTO>(d));
             Console.WriteLine("Cached");
             await _cacheService.SetAsync(cacheKey, A);
 
