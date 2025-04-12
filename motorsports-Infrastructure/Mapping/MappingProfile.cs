@@ -14,9 +14,13 @@ namespace motorsports_Infrastructure.Mapping
                 .ForMember(dest => dest.Nationality,
                            opt => opt.MapFrom(src => ((NationalityEnums)src.Nationality).ToString().Replace("_", " ")));
             // Map DriverDto → Driver
-            CreateMap<DriverDTO, DriverEntity>()
+            CreateMap<CreateDriverDTO, DriverEntity>()
                 .ForMember(dest => dest.Nationality,
                            opt => opt.MapFrom(src => (int)Enum.Parse<NationalityEnums>(src.Nationality.Replace(" ", "_"))));
+
+            // Map Team → TeamDto
+            CreateMap<TeamEntity,TeamDTO>().ForMember(dest => dest.Country,
+                           opt => opt.MapFrom(src => ((NationalityEnums)src.Country).ToString().Replace("_", " ")));
         }
     }
 }
