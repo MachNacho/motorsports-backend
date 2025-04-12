@@ -56,10 +56,15 @@ namespace motorsports_Infrastructure.Migrations
                     b.Property<int>("RaceNumber")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeamID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("TeamID");
 
                     b.ToTable("Driver");
                 });
@@ -72,9 +77,8 @@ namespace motorsports_Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Country")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -99,6 +103,22 @@ namespace motorsports_Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Team");
+                });
+
+            modelBuilder.Entity("motorsports_Domain.Entities.DriverEntity", b =>
+                {
+                    b.HasOne("motorsports_Domain.Entities.TeamEntity", "Team")
+                        .WithMany("Drivers")
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("motorsports_Domain.Entities.TeamEntity", b =>
+                {
+                    b.Navigation("Drivers");
                 });
 #pragma warning restore 612, 618
         }
