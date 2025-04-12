@@ -10,19 +10,31 @@ using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-//Add AutoMapper
+//Entities repositorys & Services
+//DI - Drivers
+builder.Services.AddScoped<IDriverRepository, DriverRepositories>();
+builder.Services.AddScoped<IDriverService, DriverService>();
+//DI - Teams
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<ITeamService, TeamService>();
+
+//Services/Tool
+//DI - BLOB
+builder.Services.AddScoped<IBlobService, BlobService>();//Add AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 //Add in-memory cache
 builder.Services.AddMemoryCache();
 //DI - Cache
 builder.Services.AddScoped<ICacheRepository, MemoryCacheRepository>();
-//DI - Drivers
-builder.Services.AddScoped<IDriverRepository, DriverRepositories>();
-builder.Services.AddScoped<IDriverService, DriverService>();
+//Prevent circular references
+builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
+
+
+
 // Add database connection
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("HomeConnection")));
 var app = builder.Build();
@@ -40,7 +52,7 @@ app.UseCors(x => x
       .SetIsOriginAllowed(origin => true));
 
 app.UseHttpsRedirection();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();//custom exceptions
 app.UseAuthorization();
 
 app.MapControllers();
