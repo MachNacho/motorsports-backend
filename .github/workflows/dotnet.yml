@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: .NET CI
 
 on:
   push:
@@ -10,20 +10,39 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
+    - name: 🧾 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🛠️ Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
         include-prerelease: true
-    - name: Restore dependencies
+
+    - name: 💾 Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          nuget-${{ runner.os }}-
+
+    - name: 🔄 Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+
+    - name: 🏗️ Build solution
+      run: dotnet build --no-restore --configuration Release
+
+    - name: 🧪 Run tests
+      run: dotnet test --no-build --verbosity normal --logger "trx"
+
+    - name: 📤 Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: '**/TestResults/*.trx'
