@@ -5,8 +5,7 @@ namespace motorsports_Domain.Entities
 {
     public class CircutEntity : BaseEntity
     {
-        public string Name { get; set; }
-        public int LengthOfficalLayout { get; set; } // in meters
+        public required string Name { get; set; }
         public int Capacity { get; set; } // number of spectators
         public NationalityEnums Country { get; set; }
         public DateOnly EstablishedDate { get; set; }
