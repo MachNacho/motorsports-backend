@@ -1,14 +1,24 @@
 ﻿using motorsports_Domain.Entities.@base;
 using motorsports_Domain.enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace motorsports_Domain.Entities
 {
     public class TeamEntity : BaseEntity
     {
-        public string Name { get; set; }
-        public NationalityEnums Country { get; set; }
-        public int YearFounded { get; set; }
-        public string Headquarters { get; set; }
-        public  List<DriverEntity> Drivers { get; set; } = new List<DriverEntity>();//List of drivers signed by team
+        //Team info
+        [Required]
+        public required string TeamName { get; set; }
+        public DateOnly? YearFounded { get; set; }
+
+
+        //Aditional info
+        //Nation
+        [Required]
+        public required Guid NationalityID { get; set; }
+        public required NationalityEntity Nationality { get; set; }
+
+        //List of drivers signed by team
+        public ICollection<DriverEntity> Employees { get; set; } = new List<DriverEntity>();
     }
 }

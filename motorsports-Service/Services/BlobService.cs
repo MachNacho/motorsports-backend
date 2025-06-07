@@ -3,6 +3,8 @@ using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using motorsports_Service.Contracts;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 
 namespace motorsports_Service.Services
 {
@@ -11,10 +13,14 @@ namespace motorsports_Service.Services
         private readonly BlobContainerClient _containerClient;
         public BlobService(IConfiguration config)
         {
-            var connectionString = config["AzureBlobStorage:ConnectionString"];
-            var containerName = config["AzureBlobStorage:ContainerName"];
-            _containerClient = new BlobContainerClient(connectionString, containerName);
+            var keyVaultUrl = config["KeyVault:Url"];
+            var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+
+            var connectionString = secretClient.GetSecret("BlobStorageConnectionString");
+            var containerName = secretClient.GetSecret("BlobContainerName");
+            _containerClient = new BlobContainerClient(connectionString.Value.Value, containerName.Value.Value);
             _containerClient.CreateIfNotExists(PublicAccessType.Blob);
+
         }
         public Task<bool> DeleteAsync(string fileName)
         {

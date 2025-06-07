@@ -3,3 +3,11 @@
 GET {{motorsports-API_HostAddress}}/api/driver
 
 ###
+
+GET {{motorsports-API_HostAddress}}/api/person/drivers
+
+###
+
+GET {{motorsports-API_HostAddress}}/api/person/drivers
+
+###

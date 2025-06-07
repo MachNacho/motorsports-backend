@@ -7,9 +7,9 @@ namespace motorsports_Domain.Entities.@base
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public required Guid ID { get; set; }
-        public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public required DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public Guid ID { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; } = true;
     }
 }

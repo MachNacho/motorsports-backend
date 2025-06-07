@@ -2,10 +2,10 @@
 using motorsports_Domain.Contracts;
 namespace motorsports_Infrastructure.Repositories
 {
-    public class MemoryCacheRepository : ICacheRepository
+    public class MemoryCacheService : ICacheService
     {
         private readonly IMemoryCache _cache;
-        public MemoryCacheRepository(IMemoryCache cache)
+        public MemoryCacheService(IMemoryCache cache)
         {
             _cache = cache;
         }

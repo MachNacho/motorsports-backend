@@ -1,6 +1,6 @@
 ﻿namespace motorsports_Domain.enums
 {
-    public enum GenderEnums
+    public enum GenderEnum
     {
         Male = 1,
         Female = 2,

@@ -25,7 +25,7 @@ namespace motorsports_Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new BusinessRuleViolationException($"Error creating team. {ex}");
+                throw new NotImplementedException();
             }
         }
 
@@ -49,7 +49,7 @@ namespace motorsports_Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new DatabaseException($"Error deleting driver: {ex}");
+                throw new NotImplementedException();
             }
         }
 
@@ -62,7 +62,7 @@ namespace motorsports_Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new DatabaseException($"Error getting all teams: {ex}");
+                throw new NotImplementedException();
             }
         }
 
@@ -90,7 +90,7 @@ namespace motorsports_Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new BusinessRuleViolationException($"Error updating team. {ex}");
+                throw new NotImplementedException();
             }
         }
     }

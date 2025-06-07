@@ -10,37 +10,44 @@ namespace motorsports_backend.Controllers
     [ApiController]
     public class DriverController : ControllerBase
     {
-        private readonly IDriverService _driverService;
-        public DriverController(IDriverService driverService)
+        private readonly IPersonService _personService;
+        public DriverController(IPersonService personService)
         {
-            _driverService = driverService;
+            _personService = personService;
         }
-        [HttpGet]
+
+        [HttpGet("list/drivers")]
         public async Task<IActionResult> GetAllDrivers()
         {
-            return Ok(await _driverService.GetAllDrivers());
+            var drivers = await _personService.GetAllDrivers();
+            return Ok(drivers);
         }
-        [HttpPost]
-        public async Task<IActionResult> CreateDriver(CreateDriverDTO driver)
+
+        [HttpPost("add")]
+        public async Task<IActionResult> AddPerson(UploadPersonDTO uploadPersonDTO)
         {
-            return Ok(await _driverService.CreateDriver(driver));
+            return Ok(await _personService.CreateDriver(uploadPersonDTO));
         }
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> HideDriver(int id, [FromBody] JsonPatchDocument<DriverEntity> driverDoc)
+
+        [HttpPatch("update/{personid}")]
+        public async Task<IActionResult> UpdateDriver(Guid personid, [FromBody] JsonPatchDocument<DriverEntity> driver)
         {
-            if (driverDoc == null) { return BadRequest("Invalid patch document"); }
-            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(driverDoc));
-            return Ok(await _driverService.UpdateDriver(id, driverDoc));
+            if (driver == null)
+            {
+                return BadRequest("Driver data is null");
+            }
+            var updatedDriver = await _personService.UpdateDriver(personid, driver);
+            return Ok(updatedDriver);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetDriverById(int id)
+        [HttpDelete("delete/{personid}")]
+        public async Task<IActionResult> DeleteDriver(Guid personid)
         {
-            return Ok(await _driverService.GetDriverById(id));
-        }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDriverfromDB(int id)
-        {
-            return Ok(_driverService.DeleteDriver(id));
+            var result = await _personService.DeleteDriver(personid);
+            if (result)
+            {
+                return Ok("Driver deleted successfully");
+            }
+            return NotFound("Driver not found");
         }
     }
 }
