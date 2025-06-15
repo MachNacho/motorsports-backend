@@ -3,12 +3,12 @@ using motorsports_Domain.Entities;
 
 namespace motorsports_Domain.Contracts
 {
-    public interface IPersonRepository
+    public interface IDriverRepository
     {
         Task<IEnumerable<DriverEntity>> GetAllDrivers();
-        Task<DriverEntity?> GetDriverById(Guid id);
+        Task<DriverEntity> GetDriverById(Guid id);
         Task<DriverEntity> CreateDriver(DriverEntity driver);
-        Task<DriverEntity?> UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver);
-        Task<bool> DeleteDriver(Guid id);
+        Task<DriverEntity> UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver);
+        Task DeleteDriver(Guid id);
     }
 }

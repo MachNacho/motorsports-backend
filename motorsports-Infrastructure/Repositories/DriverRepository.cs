@@ -9,12 +9,12 @@ using motorsports_Infrastructure.Exceptions;
 
 namespace motorsports_Infrastructure.Repositories
 {
-    public class PersonRepository : IPersonRepository
+    public class DriverRepository : IDriverRepository
     {
         private readonly ApplicationDBContext _context;
-        private readonly ILogger<PersonRepository> _logger;
+        private readonly ILogger<DriverRepository> _logger;
 
-        public PersonRepository(ApplicationDBContext context, ILogger<PersonRepository> logger)
+        public DriverRepository(ApplicationDBContext context, ILogger<DriverRepository> logger)
         {
             _context = context;
             _logger = logger;
@@ -25,7 +25,7 @@ namespace motorsports_Infrastructure.Repositories
             {
                 driver.CreatedAt = DateTime.UtcNow;
 
-                await _context.Person.AddAsync(driver);
+                await _context.Driver.AddAsync(driver);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Driver created: {@Driver}", driver);
@@ -38,7 +38,7 @@ namespace motorsports_Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> DeleteDriver(Guid id)
+        public async Task DeleteDriver(Guid id)
         {
             try
             {
@@ -47,12 +47,6 @@ namespace motorsports_Infrastructure.Repositories
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Deleted driver ID: {Id}", id);
-                return true;
-            }
-            catch (NotFoundException ex)
-            {
-                _logger.LogWarning(ex, "Driver not found: {Id}", id);
-                throw;
             }
             catch (Exception ex)
             {
@@ -66,7 +60,7 @@ namespace motorsports_Infrastructure.Repositories
         {
             try
             {
-                var activePersons = await _context.Person.AsNoTracking().Where(d => d.IsActive).ToListAsync();
+                var activePersons = await _context.Driver.AsNoTracking().Where(d => d.IsActive).Include(x=>x.Nationality).ToListAsync();
 
                 if (activePersons == null || activePersons.Count == 0)
                 {
@@ -88,7 +82,7 @@ namespace motorsports_Infrastructure.Repositories
         {
             try
             {
-                var driver = await _context.Person.FindAsync(id);
+                var driver = await _context.Driver.FindAsync(id);
                 if (driver == null || !driver.IsActive)
                 {
                     _logger.LogWarning("Driver with ID {Id} not found or inactive", id);

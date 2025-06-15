@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using motorsports_Domain.Contracts;
+using motorsports_Domain.Contracts.Service;
 namespace motorsports_Infrastructure.Repositories
 {
     public class MemoryCacheService : ICacheService

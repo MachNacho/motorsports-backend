@@ -6,8 +6,8 @@
         Antarctica,
         Asia,
         Europe,
-        North_America,
+        NorthAmerica,
         Oceania,
-        South_America
+        SouthAmerica
     }
 }

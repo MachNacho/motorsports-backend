@@ -1,4 +1,4 @@
-﻿namespace motorsports_Domain.Contracts
+﻿namespace motorsports_Domain.Contracts.Service
 {
     public interface ICacheService
     {

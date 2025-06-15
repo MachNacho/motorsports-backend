@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Logging;
 using motorsports_Domain.Contracts;
+using motorsports_Domain.Contracts.Service;
 using motorsports_Domain.Entities;
-using motorsports_Domain.enums;
 using motorsports_Service.Contracts;
 using motorsports_Service.DTOs;
 
 namespace motorsports_Service.Services
 {
-    public class PersonService : IPersonService
+    public class DriverService : IDriverService
     {
-        private readonly IPersonRepository _personRepo;
+        private readonly IDriverRepository _personRepo;
         private readonly ICacheService _cacheService;
-        private readonly ILogger<PersonService> _logger;
+        private readonly ILogger<DriverService> _logger;
 
-        public PersonService(IPersonRepository personRepo, ICacheService cacheService, ILogger<PersonService> logger)
+        public DriverService(IDriverRepository personRepo, ICacheService cacheService, ILogger<DriverService> logger)
         {
             _personRepo = personRepo;
             _cacheService = cacheService;
@@ -39,7 +39,7 @@ namespace motorsports_Service.Services
             return true;
         }
 
-        public Task<bool> DeleteDriver(Guid id)
+        public Task DeleteDriver(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -52,13 +52,24 @@ namespace motorsports_Service.Services
                 ID = x.ID,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                BirthDate = x.BirthDate
+                BirthDate = x.BirthDate,
+                Gender =  x.Gender.ToString(),
+                Nationality = x.Nationality.Name,
+                RaceNumber = x.RaceNumber ?? 0,
             });
         }
 
-        public Task<PersonDTO> GetDriverById(Guid id)
+        public async Task<PersonDTO> GetDriverById(Guid id)
         {
-            throw new NotImplementedException();
+            var driver = await _personRepo.GetDriverById(id);
+            var DTO = new PersonDTO
+            {
+                ID = driver.ID,
+                FirstName = driver.FirstName,
+                LastName = driver.LastName,
+                BirthDate = driver.BirthDate,
+            };
+            return DTO;
         }
 
         public Task<PersonDTO> UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver)

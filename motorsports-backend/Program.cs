@@ -1,8 +1,11 @@
+using Bogus;
 using Microsoft.EntityFrameworkCore;
 using motorsports_backend.Middleware;
 using motorsports_Domain.Contracts;
+using motorsports_Domain.Contracts.Service;
 using motorsports_Infrastructure.Data;
 using motorsports_Infrastructure.Repositories;
+using motorsports_Infrastructure.Seeding;
 using motorsports_Service.Contracts;
 using motorsports_Service.Services;
 using Newtonsoft.Json;
@@ -16,8 +19,8 @@ builder.Services.AddOpenApi();
 
 //Entities repositorys & Services
 //DI - Drivers
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IDriverRepository, DriverRepository>();
+builder.Services.AddScoped<IDriverService, DriverService>();
 //DI - Teams
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 
@@ -33,6 +36,7 @@ builder.Services.AddScoped<ICacheService, MemoryCacheService>();
 //Prevent circular references
 builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
+builder.Services.AddTransient<Fakers>();
 //Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // or AddDebug(), AddFile(), etc.
@@ -46,12 +50,20 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.EnableSensitiveDataLogging(); // show parameters
     options.LogTo(Console.WriteLine, LogLevel.Information); // log SQL to console
 });
+
 var app = builder.Build();
-if (args.Length == 1 && args[0].ToLower() == "seeddata") // allows for test data to be loaded with command  
+
+if (args.Length == 1 && args[0].ToLower() == "seeddata")
 {
-    Console.WriteLine("Seeding data...");
-    // Add a simple test message to confirm execution  
-    Console.WriteLine("Test: Seed data logic executed successfully.");
+
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+    var fakers = scope.ServiceProvider.GetRequiredService<Fakers>();
+    //Seed the database with initial data
+    motorsports_Infrastructure.Seeding.DbSeeder.SeedBDData(dbContext, fakers, 50, 50);
 }
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -59,7 +71,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseCors(x => x
      .AllowAnyMethod()
      .AllowAnyHeader()

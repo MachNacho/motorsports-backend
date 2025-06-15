@@ -10,8 +10,8 @@ namespace motorsports_backend.Controllers
     [ApiController]
     public class DriverController : ControllerBase
     {
-        private readonly IPersonService _personService;
-        public DriverController(IPersonService personService)
+        private readonly IDriverService _personService;
+        public DriverController(IDriverService personService)
         {
             _personService = personService;
         }
@@ -42,12 +42,8 @@ namespace motorsports_backend.Controllers
         [HttpDelete("delete/{personid}")]
         public async Task<IActionResult> DeleteDriver(Guid personid)
         {
-            var result = await _personService.DeleteDriver(personid);
-            if (result)
-            {
-                return Ok("Driver deleted successfully");
-            }
-            return NotFound("Driver not found");
+            await _personService.DeleteDriver(personid);          
+            return Ok("Driver deleted successfully");         
         }
     }
 }

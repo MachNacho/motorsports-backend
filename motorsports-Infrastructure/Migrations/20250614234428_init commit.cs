@@ -53,7 +53,7 @@ namespace motorsports_Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Person",
+                name: "Driver",
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -73,15 +73,15 @@ namespace motorsports_Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Person", x => x.ID);
+                    table.PrimaryKey("PK_Driver", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Person_Nationailty_NationalityID",
+                        name: "FK_Driver_Nationailty_NationalityID",
                         column: x => x.NationalityID,
                         principalTable: "Nationailty",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Person_Team_TeamID",
+                        name: "FK_Driver_Team_TeamID",
                         column: x => x.TeamID,
                         principalTable: "Team",
                         principalColumn: "ID",
@@ -89,13 +89,13 @@ namespace motorsports_Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Person_NationalityID",
-                table: "Person",
+                name: "IX_Driver_NationalityID",
+                table: "Driver",
                 column: "NationalityID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Person_TeamID",
-                table: "Person",
+                name: "IX_Driver_TeamID",
+                table: "Driver",
                 column: "TeamID");
 
             migrationBuilder.CreateIndex(
@@ -108,7 +108,7 @@ namespace motorsports_Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Person");
+                name: "Driver");
 
             migrationBuilder.DropTable(
                 name: "Team");

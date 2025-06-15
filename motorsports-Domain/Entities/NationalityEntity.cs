@@ -17,7 +17,7 @@ namespace motorsports_Domain.Entities
         public string? FlagUrl { get; set; }
 
         //Navigation property
-        public ICollection<DriverEntity> persons { get; set; } = new List<DriverEntity>();
-        public ICollection<TeamEntity> teams { get; set; } = new List<TeamEntity>();
+        public ICollection<DriverEntity> Driver { get; set; } = new List<DriverEntity>();
+        public ICollection<TeamEntity> Teams { get; set; } = new List<TeamEntity>();
     }
 }

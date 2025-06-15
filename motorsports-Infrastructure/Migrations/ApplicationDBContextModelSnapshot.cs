@@ -75,7 +75,7 @@ namespace motorsports_Infrastructure.Migrations
 
                     b.HasIndex("TeamID");
 
-                    b.ToTable("Person");
+                    b.ToTable("Driver");
                 });
 
             modelBuilder.Entity("motorsports_Domain.Entities.NationalityEntity", b =>
@@ -147,13 +147,13 @@ namespace motorsports_Infrastructure.Migrations
             modelBuilder.Entity("motorsports_Domain.Entities.DriverEntity", b =>
                 {
                     b.HasOne("motorsports_Domain.Entities.NationalityEntity", "Nationality")
-                        .WithMany("persons")
+                        .WithMany("Driver")
                         .HasForeignKey("NationalityID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("motorsports_Domain.Entities.TeamEntity", "Team")
-                        .WithMany("Employees")
+                        .WithMany("Drivers")
                         .HasForeignKey("TeamID")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -165,7 +165,7 @@ namespace motorsports_Infrastructure.Migrations
             modelBuilder.Entity("motorsports_Domain.Entities.TeamEntity", b =>
                 {
                     b.HasOne("motorsports_Domain.Entities.NationalityEntity", "Nationality")
-                        .WithMany("teams")
+                        .WithMany("Teams")
                         .HasForeignKey("NationalityID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -175,14 +175,14 @@ namespace motorsports_Infrastructure.Migrations
 
             modelBuilder.Entity("motorsports_Domain.Entities.NationalityEntity", b =>
                 {
-                    b.Navigation("persons");
+                    b.Navigation("Driver");
 
-                    b.Navigation("teams");
+                    b.Navigation("Teams");
                 });
 
             modelBuilder.Entity("motorsports_Domain.Entities.TeamEntity", b =>
                 {
-                    b.Navigation("Employees");
+                    b.Navigation("Drivers");
                 });
 #pragma warning restore 612, 618
         }
