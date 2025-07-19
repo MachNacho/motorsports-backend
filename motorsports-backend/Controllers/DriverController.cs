@@ -29,14 +29,10 @@ namespace motorsports_backend.Controllers
             return Ok(await _personService.CreateDriver(uploadPersonDTO));
         }
 
-        [HttpPatch("update/{personid}")]
-        public async Task<IActionResult> UpdateDriver(Guid personid, [FromBody] JsonPatchDocument<DriverEntity> driver)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetDriverProfile(Guid id)
         {
-            if (driver == null)
-            {
-                return BadRequest("Driver data is null");
-            }
-            var updatedDriver = await _personService.UpdateDriver(personid, driver);
+            var updatedDriver = await _personService.GetDriverById(id);
             return Ok(updatedDriver);
         }
         [HttpDelete("delete/{personid}")]
