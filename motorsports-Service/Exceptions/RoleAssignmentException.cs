@@ -1,7 +1,7 @@
 ﻿namespace motorsports_Service.Exceptions
 {
-    public class RoleAssignmentException:Exception
+    public class RoleAssignmentException : Exception
     {
-        public RoleAssignmentException(string message):base(message) { }
+        public RoleAssignmentException(string message) : base(message) { }
     }
 }

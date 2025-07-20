@@ -43,6 +43,7 @@ namespace motorsports_Infrastructure.Repositories
             try
             {
                 var drivertodelete = await GetDriverById(id);
+                if (drivertodelete == null) { throw new NotFoundException($"Driver with ID '{id}' not found"); }
                 drivertodelete.IsActive = false; // Soft delete
                 await _context.SaveChangesAsync();
 

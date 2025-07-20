@@ -5,48 +5,49 @@ using motorsports_Domain.Contracts.Service;
 using motorsports_Domain.Entities;
 using motorsports_Service.Contracts;
 using motorsports_Service.DTOs;
+using motorsports_Service.DTOs.Driver;
 
 namespace motorsports_Service.Services
 {
     public class DriverService : IDriverService
     {
-        private readonly IDriverRepository _personRepo;
+        private readonly IDriverRepository _driverRepo;
         private readonly ICacheService _cacheService;
         private readonly ILogger<DriverService> _logger;
 
-        public DriverService(IDriverRepository personRepo, ICacheService cacheService, ILogger<DriverService> logger)
+        public DriverService(IDriverRepository driverRepo, ICacheService cacheService, ILogger<DriverService> logger)
         {
-            _personRepo = personRepo;
+            _driverRepo = driverRepo;
             _cacheService = cacheService;
             _logger = logger;
         }
 
-        public async Task<bool> CreateDriver(UploadPersonDTO uploadPersonDto)
+        public async Task<bool> CreateDriver(UploadDriverDTO uploadDriverDTO)
         {
             var newPersonEntity = new DriverEntity
             {
-                FirstName = uploadPersonDto.FirstName,
-                LastName = uploadPersonDto.LastName,
-                MiddleName = uploadPersonDto.MiddleName,
-                BirthDate = uploadPersonDto.BirthDate,
-                Gender = uploadPersonDto.Gender,
-                NationalityID = uploadPersonDto.NationalityID,
-                TeamID = uploadPersonDto.TeamID,
-                ImageUrl = uploadPersonDto.ImageUrl,
-                Description = uploadPersonDto.Description
+                FirstName = uploadDriverDTO.FirstName,
+                LastName = uploadDriverDTO.LastName,
+                MiddleName = uploadDriverDTO.MiddleName,
+                BirthDate = uploadDriverDTO.BirthDate,
+                Gender = uploadDriverDTO.Gender,
+                NationalityID = uploadDriverDTO.NationalityID,
+                TeamID = uploadDriverDTO.TeamID,
+                ImageUrl = uploadDriverDTO.ImageUrl,
+                Description = uploadDriverDTO.Description
             };
-            await _personRepo.CreateDriver(newPersonEntity);
+            await _driverRepo.CreateDriver(newPersonEntity);
             return true;
         }
 
-        public Task DeleteDriver(Guid id)
+        public async Task DeleteDriver(Guid id)
         {
-            throw new NotImplementedException();
+            await _driverRepo.DeleteDriver(id);
         }
 
         public async Task<IEnumerable<PersonDTO>> GetAllDrivers()
         {
-            var persons = await _personRepo.GetAllDrivers();
+            var persons = await _driverRepo.GetAllDrivers();
             return persons.Select(x => new PersonDTO
             {
                 ID = x.ID,
@@ -61,7 +62,7 @@ namespace motorsports_Service.Services
 
         public async Task<DriverEntity> GetDriverById(Guid id)
         {
-            var driver = await _personRepo.GetDriverById(id);
+            var driver = await _driverRepo.GetDriverById(id);
             return driver;
         }
 

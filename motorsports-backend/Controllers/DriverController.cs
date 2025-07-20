@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Service.Contracts;
-using motorsports_Service.DTOs;
+using motorsports_Service.DTOs.Driver;
 
 namespace motorsports_backend.Controllers
 {
@@ -22,22 +22,23 @@ namespace motorsports_backend.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddPerson(UploadPersonDTO uploadPersonDTO)
+        public async Task<IActionResult> AddPerson(UploadDriverDTO uploadPersonDTO)
         {
             return Ok(await _personService.CreateDriver(uploadPersonDTO));
         }
-
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDriverProfile(Guid id)
         {
             var updatedDriver = await _personService.GetDriverById(id);
             return Ok(updatedDriver);
         }
-        [HttpDelete("delete/{personid}")]
-        public async Task<IActionResult> DeleteDriver(Guid personid)
+        
+        [HttpPatch("delete/{personid}")]
+        public async Task<IActionResult> DeleteDriver([FromRoute] Guid personid)
         {
             await _personService.DeleteDriver(personid);
-            return Ok("Driver deleted successfully");
+            return NoContent();
         }
     }
 }

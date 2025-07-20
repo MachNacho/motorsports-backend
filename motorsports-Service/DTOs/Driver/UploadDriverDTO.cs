@@ -1,8 +1,8 @@
 ﻿using motorsports_Domain.enums;
 
-namespace motorsports_Service.DTOs
+namespace motorsports_Service.DTOs.Driver
 {
-    public class UploadPersonDTO
+    public class UploadDriverDTO
     {
         public required string FirstName { get; set; }
         public string? MiddleName { get; set; }

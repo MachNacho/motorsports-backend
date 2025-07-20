@@ -7,7 +7,7 @@ using motorsports_Service.Exceptions;
 
 namespace motorsports_Service.Services
 {
-    public class AccountService:IAccountService
+    public class AccountService : IAccountService
     {
         //User identity manager
         private readonly UserManager<UserEntity> _userManager;
@@ -16,7 +16,8 @@ namespace motorsports_Service.Services
         //Token service
         private readonly ITokenService _tokenService;
 
-        public AccountService(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, RoleManager<IdentityRole> roleManager,ITokenService tokenService) {
+        public AccountService(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, RoleManager<IdentityRole> roleManager, ITokenService tokenService)
+        {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -25,9 +26,9 @@ namespace motorsports_Service.Services
 
         public async Task<NewUserDTO> Login(LoginDTO login)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.NormalizedUserName== login.Username.ToUpper());
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.NormalizedUserName == login.Username.ToUpper());
             if (user == null) { throw new AuthenticationFailedException(); }
-            var result = await _signInManager.CheckPasswordSignInAsync(user,login.Password,false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
 
             if (!result.Succeeded) { throw new AuthenticationFailedException(); }
 
@@ -44,12 +45,12 @@ namespace motorsports_Service.Services
             var createUser = new UserEntity
             {
                 FirstName = register.UserFirstName,
-                LastName = register.UserLastName, 
+                LastName = register.UserLastName,
                 Email = register.Email,
                 UserName = register.Username,
             };
 
-            var userEmail = await _userManager.Users.FirstOrDefaultAsync(x=>x.Email == register.Email);
+            var userEmail = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == register.Email);
 
             if (userEmail != null) { throw new EmailAlreadyExistsException(); }
 
@@ -57,8 +58,8 @@ namespace motorsports_Service.Services
 
             if (createdUser.Succeeded)
             {
-                var roleResult = await _userManager.AddToRoleAsync(createUser,"User");
-                if (roleResult.Succeeded) 
+                var roleResult = await _userManager.AddToRoleAsync(createUser, "User");
+                if (roleResult.Succeeded)
                 {
                     return new NewUserDTO
                     {
@@ -83,18 +84,19 @@ namespace motorsports_Service.Services
         {
             //Find the user
             var user = await _userManager.FindByIdAsync(userRoleUpdate.UserId);
-            if (user == null) throw new UserNotFoundException(userRoleUpdate.UserId) ;
+            if (user == null) throw new UserNotFoundException(userRoleUpdate.UserId);
 
             if (!await _roleManager.RoleExistsAsync(userRoleUpdate.NewRole)) throw new RoleNotFoundException(userRoleUpdate.NewRole);
 
             var currentRole = await _userManager.GetRolesAsync(user);
 
-            var removeResult = await _userManager.RemoveFromRolesAsync(user,currentRole);
-            if (!removeResult.Succeeded) 
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRole);
+            if (!removeResult.Succeeded)
             {
                 var errors = string.Join(", ", removeResult.Errors.Select(e => e.Description));
                 throw new RoleUpdateException(errors);
-            };
+            }
+            ;
 
             var addResult = await _userManager.AddToRoleAsync(user, userRoleUpdate.NewRole);
 
@@ -102,7 +104,8 @@ namespace motorsports_Service.Services
             {
                 var errors = string.Join(", ", addResult.Errors.Select(e => e.Description));
                 throw new RoleUpdateException(errors);
-            };
+            }
+            ;
         }
     }
 }

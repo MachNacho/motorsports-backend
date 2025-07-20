@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using motorsports_Domain.Entities;
 using motorsports_Service.DTOs;
+using motorsports_Service.DTOs.Driver;
 
 namespace motorsports_Service.Contracts
 {
@@ -8,7 +9,7 @@ namespace motorsports_Service.Contracts
     {
         Task<IEnumerable<PersonDTO>> GetAllDrivers();
         Task<DriverEntity> GetDriverById(Guid id);
-        Task<bool> CreateDriver(UploadPersonDTO uploadPersonDto);
+        Task<bool> CreateDriver(UploadDriverDTO uploadDriverDTO);
         Task<PersonDTO> UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver);
         Task DeleteDriver(Guid id);
     }
