@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using motorsports_Domain.DTO.Account;
 using motorsports_Domain.Entities;
 using motorsports_Service.Contracts;
+using motorsports_Service.Exceptions;
 
 namespace motorsports_Service.Services
 {
@@ -11,22 +12,24 @@ namespace motorsports_Service.Services
         //User identity manager
         private readonly UserManager<UserEntity> _userManager;
         private readonly SignInManager<UserEntity> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         //Token service
         private readonly ITokenService _tokenService;
 
-        public AccountService(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, ITokenService tokenService) {
+        public AccountService(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, RoleManager<IdentityRole> roleManager,ITokenService tokenService) {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _tokenService = tokenService;
         }
 
         public async Task<NewUserDTO> Login(LoginDTO login)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.NormalizedUserName== login.Username.ToUpper());
-            if (user == null) { /*tHROW SOMETHING FOR USERNAME INVALID*/}
+            if (user == null) { throw new AuthenticationFailedException(); }
             var result = await _signInManager.CheckPasswordSignInAsync(user,login.Password,false);
 
-            if (!result.Succeeded) { /*throw something for incorrrect password*/}
+            if (!result.Succeeded) { throw new AuthenticationFailedException(); }
 
             return new NewUserDTO
             {
@@ -48,7 +51,7 @@ namespace motorsports_Service.Services
 
             var userEmail = await _userManager.Users.FirstOrDefaultAsync(x=>x.Email == register.Email);
 
-            if (userEmail != null) {/*Throw something for identical email*/ }
+            if (userEmail != null) { throw new EmailAlreadyExistsException(); }
 
             var createdUser = await _userManager.CreateAsync(createUser, register.Password);
 
@@ -67,14 +70,39 @@ namespace motorsports_Service.Services
                 }
                 else
                 {
-                    /*Throw something for role error*/
+                    throw new UserCreationFailedException("Failed to create user.");
                 }
             }
             else
             {
-                //Throw error for unsccessful account creation
+                throw new UserCreationFailedException("Failed to create user.");
             }
-                throw new NotImplementedException();
+        }
+
+        public async Task RoleChange(UpdateUserRoleDTO userRoleUpdate)
+        {
+            //Find the user
+            var user = await _userManager.FindByIdAsync(userRoleUpdate.UserId);
+            if (user == null) throw new UserNotFoundException(userRoleUpdate.UserId) ;
+
+            if (!await _roleManager.RoleExistsAsync(userRoleUpdate.NewRole)) throw new RoleNotFoundException(userRoleUpdate.NewRole);
+
+            var currentRole = await _userManager.GetRolesAsync(user);
+
+            var removeResult = await _userManager.RemoveFromRolesAsync(user,currentRole);
+            if (!removeResult.Succeeded) 
+            {
+                var errors = string.Join(", ", removeResult.Errors.Select(e => e.Description));
+                throw new RoleUpdateException(errors);
+            };
+
+            var addResult = await _userManager.AddToRoleAsync(user, userRoleUpdate.NewRole);
+
+            if (!addResult.Succeeded)
+            {
+                var errors = string.Join(", ", addResult.Errors.Select(e => e.Description));
+                throw new RoleUpdateException(errors);
+            };
         }
     }
 }

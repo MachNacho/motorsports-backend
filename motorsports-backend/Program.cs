@@ -37,7 +37,8 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<ICacheService, MemoryCacheService>();
 //DI - Token
 builder.Services.AddScoped<ITokenService, TokenService>();
-
+//DI - Account
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 //Prevent circular references
 builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
@@ -62,10 +63,10 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 //Configure Identity service
 builder.Services.AddIdentity<UserEntity, IdentityRole>(options =>
 {
-    //options.Password.RequireDigit = true;
-    //options.Password.RequireLowercase = true;
-    //options.Password.RequireUppercase = true;
-    //options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 8;
 }).AddEntityFrameworkStores<ApplicationDBContext>();
 

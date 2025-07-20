@@ -7,5 +7,6 @@ namespace motorsports_Service.Contracts
     {
         Task<NewUserDTO> Register(RegisterDTO user);
         Task<NewUserDTO> Login(LoginDTO user);
+        Task RoleChange(UpdateUserRoleDTO userRoleUpdate);
     }
 }

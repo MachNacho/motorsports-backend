@@ -39,7 +39,12 @@ namespace motorsports_backend.Middleware
                 DatabaseException => HttpStatusCode.InternalServerError,
                 ExternalServiceException => HttpStatusCode.BadGateway,
                 FileStorageException => HttpStatusCode.InternalServerError,
-                // BadRequestException => HttpStatusCode.BadRequest,
+                AuthenticationFailedException => HttpStatusCode.Unauthorized,
+                EmailAlreadyExistsException => HttpStatusCode.Conflict,
+                UserCreationFailedException => HttpStatusCode.BadRequest,
+                RoleAssignmentException => HttpStatusCode.InternalServerError,
+                UserNotFoundException => HttpStatusCode.NotFound,
+                RoleNotFoundException => HttpStatusCode.BadRequest,
                 _ => HttpStatusCode.InternalServerError
             };
             var response = new { message = exception.Message };
