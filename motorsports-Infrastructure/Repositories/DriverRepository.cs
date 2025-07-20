@@ -60,7 +60,7 @@ namespace motorsports_Infrastructure.Repositories
         {
             try
             {
-                var activePersons = await _context.Driver.AsNoTracking().Where(d => d.IsActive).Include(x=>x.Nationality).ToListAsync();
+                var activePersons = await _context.Driver.AsNoTracking().Where(d => d.IsActive).Include(x => x.Nationality).ToListAsync();
 
                 if (activePersons == null || activePersons.Count == 0)
                 {
@@ -82,7 +82,7 @@ namespace motorsports_Infrastructure.Repositories
         {
             try
             {
-                var driver = await _context.Driver.FindAsync(id);
+                var driver = await _context.Driver.Include(x => x.Nationality).Include(r => r.Team).FirstOrDefaultAsync(x => x.ID == id);
                 if (driver == null || !driver.IsActive)
                 {
                     _logger.LogWarning("Driver with ID {Id} not found or inactive", id);
@@ -102,11 +102,11 @@ namespace motorsports_Infrastructure.Repositories
         public async Task<DriverEntity> UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver)
         {
             try
-            {   
+            {
                 var driverToUpdate = await GetDriverById(id);
 
                 driver.ApplyTo(driverToUpdate);
-                
+
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Driver updated: {@Driver}", driverToUpdate);

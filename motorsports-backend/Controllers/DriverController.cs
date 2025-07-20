@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using motorsports_Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Service.Contracts;
 using motorsports_Service.DTOs;
 
@@ -38,8 +36,8 @@ namespace motorsports_backend.Controllers
         [HttpDelete("delete/{personid}")]
         public async Task<IActionResult> DeleteDriver(Guid personid)
         {
-            await _personService.DeleteDriver(personid);          
-            return Ok("Driver deleted successfully");         
+            await _personService.DeleteDriver(personid);
+            return Ok("Driver deleted successfully");
         }
     }
 }

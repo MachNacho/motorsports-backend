@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace motorsports_Domain.Entities
 {
-    public class NationalityEntity:BaseEntity
+    public class NationalityEntity : BaseEntity
     {
         [Required]
         public required string Name { get; set; }

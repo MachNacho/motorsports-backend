@@ -4,10 +4,10 @@ namespace motorsports_Infrastructure.Seeding
 {
     public static class DbSeeder
     {
-        public static void SeedBDData(ApplicationDBContext context, Fakers fakers ,int driverCount =1, int teamCount= 1)
+        public static void SeedBDData(ApplicationDBContext context, Fakers fakers, int driverCount = 1, int teamCount = 1)
         {
             ClearDatabase(context);
-            SeedData(context,fakers, driverCount, teamCount);
+            SeedData(context, fakers, driverCount, teamCount);
         }
         public static void ClearDatabase(ApplicationDBContext context)
         {
@@ -16,7 +16,7 @@ namespace motorsports_Infrastructure.Seeding
             context.RemoveRange(context.Nationailty);
             context.SaveChanges();
         }
-        public static void SeedData(ApplicationDBContext context, Fakers fakers,int driverCount, int teamCount)
+        public static void SeedData(ApplicationDBContext context, Fakers fakers, int driverCount, int teamCount)
         {
             var personList = fakers.GetFakeDrivers().Generate(driverCount);
             var teamList = fakers.GetFakeTeams().Generate(teamCount);

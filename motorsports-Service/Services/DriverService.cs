@@ -46,30 +46,23 @@ namespace motorsports_Service.Services
 
         public async Task<IEnumerable<PersonDTO>> GetAllDrivers()
         {
-           var persons = await _personRepo.GetAllDrivers();
+            var persons = await _personRepo.GetAllDrivers();
             return persons.Select(x => new PersonDTO
             {
                 ID = x.ID,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 BirthDate = x.BirthDate,
-                Gender =  x.Gender.ToString(),
+                Gender = x.Gender.ToString(),
                 Nationality = x.Nationality.Name,
                 RaceNumber = x.RaceNumber ?? 0,
             });
         }
 
-        public async Task<PersonDTO> GetDriverById(Guid id)
+        public async Task<DriverEntity> GetDriverById(Guid id)
         {
             var driver = await _personRepo.GetDriverById(id);
-            var DTO = new PersonDTO
-            {
-                ID = driver.ID,
-                FirstName = driver.FirstName,
-                LastName = driver.LastName,
-                BirthDate = driver.BirthDate,
-            };
-            return DTO;
+            return driver;
         }
 
         public Task<PersonDTO> UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver)

@@ -1,5 +1,4 @@
 ﻿using motorsports_Domain.Entities.@base;
-using motorsports_Domain.enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace motorsports_Domain.Entities

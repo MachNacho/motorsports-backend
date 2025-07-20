@@ -4,7 +4,6 @@ using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
 using motorsports_Domain.Exceptions;
 using motorsports_Infrastructure.Data;
-using motorsports_Infrastructure.Exceptions;
 
 namespace motorsports_Infrastructure.Repositories
 {
@@ -23,7 +22,7 @@ namespace motorsports_Infrastructure.Repositories
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new NotImplementedException();
             }
@@ -47,7 +46,7 @@ namespace motorsports_Infrastructure.Repositories
             {
                 throw new NotFoundException($"Driver not found {ex}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new NotImplementedException();
             }
@@ -60,7 +59,7 @@ namespace motorsports_Infrastructure.Repositories
                 var teams = await _context.Team.AsNoTracking().Where(d => d.IsActive).ToListAsync();
                 return teams.Count == 0 ? throw new EmptyOrNoRecordsException("No teams found") : teams;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new NotImplementedException();
             }
@@ -88,7 +87,7 @@ namespace motorsports_Infrastructure.Repositories
                 await _context.SaveChangesAsync();
                 return OGmodel;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new NotImplementedException();
             }

@@ -3,11 +3,6 @@ using Microsoft.Extensions.Logging;
 using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
 using motorsports_Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace motorsports_Infrastructure.Repositories
 {

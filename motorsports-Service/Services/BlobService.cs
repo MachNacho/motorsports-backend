@@ -1,10 +1,10 @@
-﻿using Azure.Storage.Blobs.Models;
+﻿using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using motorsports_Service.Contracts;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 
 namespace motorsports_Service.Services
 {

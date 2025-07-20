@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Service.Contracts;
 using motorsports_Service.DTOs;
 
@@ -16,7 +15,7 @@ namespace motorsports_backend.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<IActionResult> List() 
+        public async Task<IActionResult> List()
         {
             var nationalities = await _nationalityService.GetAllNationalitiesAsync(null);
             return Ok(nationalities);

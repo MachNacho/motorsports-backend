@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace motorsports_Service.DTOs
+﻿namespace motorsports_Service.DTOs
 {
-   public class CreateDriverDTO
+    public class CreateDriverDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -9,7 +9,7 @@ namespace motorsports_Domain.Entities
         //Personal info
         [Required]
         public required string FirstName { get; set; }
-        public string? MiddleName { get; set; } 
+        public string? MiddleName { get; set; }
         [Required]
         public required string LastName { get; set; }
         [Required]
@@ -20,7 +20,7 @@ namespace motorsports_Domain.Entities
         //Aditional info
 
         //Race info
-        public int? RaceNumber { get; set;}
+        public int? RaceNumber { get; set; }
 
         //Nation
         [Required]

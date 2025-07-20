@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace motorsports_backend.Controllers
 {
@@ -15,7 +14,7 @@ namespace motorsports_backend.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpPut("Login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> LoginUser()
         {
             throw new NotImplementedException();

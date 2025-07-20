@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using motorsports_Domain.Entities;
 using motorsports_Domain.Entities.@base;
 
 namespace motorsports_Infrastructure.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<UserEntity>
     {
         public ApplicationDBContext(DbContextOptions options) : base(options)
         {
@@ -14,7 +16,7 @@ namespace motorsports_Infrastructure.Data
         public DbSet<NationalityEntity> Nationailty { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region REL
+            #region Entity Relationships
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<DriverEntity>()
@@ -34,6 +36,23 @@ namespace motorsports_Infrastructure.Data
                 .WithOne(t => t.Nationality) // TeamEntity has one NationalityEntity
                 .HasForeignKey(t => t.NationalityID) // Foreign key in TeamEntity
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
+            #endregion
+
+            #region Roles
+            List<IdentityRole> roles = new List<IdentityRole>()
+            {
+                new IdentityRole{
+                    Id = "1d0f5b60-fd58-4cfb-9e13-11cbf9c59eae", // static Guid
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                },
+                new IdentityRole{
+                    Id = "dd0878b9-b15b-4049-9db4-d91cc01b5c3e", // static Guid
+                    Name = "User",
+                    NormalizedName = "USER",
+                }
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(roles);
             #endregion
         }
 

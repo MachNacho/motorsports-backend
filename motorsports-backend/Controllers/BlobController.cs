@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Service.Contracts;
 
 namespace motorsports_backend.Controllers
@@ -13,7 +12,7 @@ namespace motorsports_backend.Controllers
         {
             _blobService = blobService;
         }
-        
+
         [HttpGet("{fileName}")]
         public async Task<IActionResult> Download(string fileName)
         {

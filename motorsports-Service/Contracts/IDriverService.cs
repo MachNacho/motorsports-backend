@@ -7,7 +7,7 @@ namespace motorsports_Service.Contracts
     public interface IDriverService
     {
         Task<IEnumerable<PersonDTO>> GetAllDrivers();
-        Task<PersonDTO> GetDriverById(Guid id);
+        Task<DriverEntity> GetDriverById(Guid id);
         Task<bool> CreateDriver(UploadPersonDTO uploadPersonDto);
         Task<PersonDTO> UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver);
         Task DeleteDriver(Guid id);
