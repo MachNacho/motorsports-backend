@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using motorsports_Service.Contracts;
 
 namespace motorsports_backend.Controllers
@@ -7,17 +8,24 @@ namespace motorsports_backend.Controllers
     [ApiController]
     public class BlobController : ControllerBase
     {
-        private readonly IBlobService _blobService;
-        public BlobController(IBlobService blobService)
-        {
-            _blobService = blobService;
-        }
+        //private readonly IBlobService _blobService;
+        //public BlobController(IBlobService blobService)
+        //{
+        //    _blobService = blobService;
+        //}
 
-        [HttpGet("{fileName}")]
-        public async Task<IActionResult> Download(string fileName)
+        //[HttpGet("{fileName}")]
+        //public async Task<IActionResult> Download(string fileName)
+        //{
+        //    var (content, contentType) = await _blobService.GetFileAsync(fileName);
+        //    return File(content, contentType!, fileName);
+        //}
+
+        [Authorize]
+        [HttpGet("Test/{message}")]
+        public async Task<IActionResult> TestAuth(string message) 
         {
-            var (content, contentType) = await _blobService.GetFileAsync(fileName);
-            return File(content, contentType!, fileName);
+            return Ok(message);
         }
 
     }

@@ -73,7 +73,7 @@ builder.Services.AddIdentity<UserEntity, IdentityRole>(options =>
 //Configure JWT for API auth
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme =
+   options.DefaultAuthenticateScheme =
    options.DefaultChallengeScheme =
    options.DefaultForbidScheme =
    options.DefaultScheme =
@@ -89,7 +89,9 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidAudience = builder.Configuration["JWT:Audience"],
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]))
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])),
+        ValidateLifetime = true, //Validate token expiration
+        ClockSkew = TimeSpan.Zero //Remove grace period
     };
 });
 
