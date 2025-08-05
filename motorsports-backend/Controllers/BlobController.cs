@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using motorsports_Service.Contracts;
 
 namespace motorsports_backend.Controllers
 {
@@ -23,7 +22,7 @@ namespace motorsports_backend.Controllers
 
         [Authorize]
         [HttpGet("Test/{message}")]
-        public async Task<IActionResult> TestAuth(string message) 
+        public async Task<IActionResult> TestAuth(string message)
         {
             return Ok(message);
         }

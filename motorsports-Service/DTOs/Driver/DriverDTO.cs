@@ -1,6 +1,6 @@
-﻿namespace motorsports_Service.DTOs
+﻿namespace motorsports_Service.DTOs.Driver
 {
-    public class PersonDTO
+    public class DriverDTO
     {
         public Guid ID { get; set; }
         public string FirstName { get; set; }

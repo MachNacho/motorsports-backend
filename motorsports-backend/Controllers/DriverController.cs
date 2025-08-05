@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using motorsports_Domain.Entities;
 using motorsports_Service.Contracts;
 using motorsports_Service.DTOs.Driver;
 
@@ -22,22 +24,29 @@ namespace motorsports_backend.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddPerson(UploadDriverDTO uploadPersonDTO)
+        public async Task<IActionResult> AddPerson([FromBody] UploadDriverDTO uploadPersonDTO)
         {
-            return Ok(await _personService.CreateDriver(uploadPersonDTO));
+            await _personService.CreateDriver(uploadPersonDTO);
+            return Created();
         }
-        
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDriverProfile(Guid id)
+        public async Task<IActionResult> GetDriverProfile([FromRoute] Guid id)
         {
             var updatedDriver = await _personService.GetDriverById(id);
             return Ok(updatedDriver);
         }
-        
-        [HttpPatch("delete/{personid}")]
-        public async Task<IActionResult> DeleteDriver([FromRoute] Guid personid)
+
+        [HttpPatch("delete/{DriverId}")]
+        public async Task<IActionResult> DeleteDriver([FromRoute] Guid DriverId)
         {
-            await _personService.DeleteDriver(personid);
+            await _personService.DeleteDriver(DriverId);
+            return NoContent();
+        }
+        [HttpPatch("Update/{Id}")]
+        public async Task<IActionResult> UpdateDriver([FromRoute] Guid Id, [FromBody] JsonPatchDocument<DriverEntity> A)
+        {
+            await _personService.UpdateDriver(Id, A);
             return NoContent();
         }
     }

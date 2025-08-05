@@ -1,6 +1,6 @@
 ﻿using motorsports_Domain.Entities.@base;
-using motorsports_Domain.enums;
 using System.ComponentModel.DataAnnotations;
+using static motorsports_Domain.Constants.Constants;
 
 namespace motorsports_Domain.Entities
 {

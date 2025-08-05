@@ -6,9 +6,9 @@ namespace motorsports_Domain.Contracts
     public interface ITeamRepository
     {
         Task<IEnumerable<TeamEntity>> GetAllTeams();
-        Task<TeamEntity> GetTeamById(int id);
-        Task<bool> CreateTeam(TeamEntity team);
-        Task<TeamEntity> UpdateTeam(int id, JsonPatchDocument<TeamEntity> team);
-        Task<bool> DeleteTeam(int id);
+        Task<TeamEntity> GetTeamById(Guid id);
+        Task CreateTeam(TeamEntity team);
+        Task UpdateTeam(Guid id, JsonPatchDocument<TeamEntity> team);
+        Task DeleteTeam(Guid id);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using motorsports_Domain.Entities;
-using motorsports_Domain.enums;
+using static motorsports_Domain.Constants.Constants;
 
 namespace motorsports_Infrastructure.Seeding
 {

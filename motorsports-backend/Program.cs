@@ -73,12 +73,12 @@ builder.Services.AddIdentity<UserEntity, IdentityRole>(options =>
 //Configure JWT for API auth
 builder.Services.AddAuthentication(options =>
 {
-   options.DefaultAuthenticateScheme =
-   options.DefaultChallengeScheme =
-   options.DefaultForbidScheme =
-   options.DefaultScheme =
-   options.DefaultSignInScheme =
-   options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme =
+    options.DefaultChallengeScheme =
+    options.DefaultForbidScheme =
+    options.DefaultScheme =
+    options.DefaultSignInScheme =
+    options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
 
 }).AddJwtBearer(options =>
 {

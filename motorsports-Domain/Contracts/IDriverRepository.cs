@@ -8,7 +8,7 @@ namespace motorsports_Domain.Contracts
         Task<IEnumerable<DriverEntity>> GetAllDrivers();
         Task<DriverEntity> GetDriverById(Guid id);
         Task<DriverEntity> CreateDriver(DriverEntity driver);
-        Task<DriverEntity> UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver);
+        Task UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver);
         Task DeleteDriver(Guid id);
     }
 }
