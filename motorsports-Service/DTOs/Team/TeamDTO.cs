@@ -1,11 +1,11 @@
-﻿namespace motorsports_Service.DTOs
+﻿namespace motorsports_Service.DTOs.Team
 {
     public class TeamDTO
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
-        public int YearFounded { get; set; }
+        public DateOnly YearFounded { get; set; }
         public string Headquarters { get; set; }
     }
 }

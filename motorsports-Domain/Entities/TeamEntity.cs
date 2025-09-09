@@ -15,7 +15,7 @@ namespace motorsports_Domain.Entities
         //Nation
         [Required]
         public required Guid NationalityID { get; set; }
-        public required NationalityEntity Nationality { get; set; }
+        public NationalityEntity? Nationality { get; set; }
 
         //List of drivers signed by team
         public ICollection<DriverEntity> Drivers { get; set; } = new List<DriverEntity>();

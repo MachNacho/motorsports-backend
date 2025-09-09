@@ -14,7 +14,6 @@ namespace motorsports_backend.Controllers
             throw new NotImplementedException();
         }
 
-        //Edit team details
-        //Delete team
+
     }
 }

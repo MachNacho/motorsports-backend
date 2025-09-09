@@ -1,4 +1,5 @@
-﻿using motorsports_Domain.Contracts;
+﻿using motorsports_Domain.Constants;
+using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
 using motorsports_Service.Contracts;
 using motorsports_Service.DTOs;
@@ -19,7 +20,7 @@ namespace motorsports_Service.Services
             {
                 Name = nationalityDto.Name,
                 Code = nationalityDto.Code,
-                Continent = nationalityDto.Continent,
+                Continent = Enum.Parse<Constants.ContinentEnum>(nationalityDto.Continent),
                 FlagUrl = nationalityDto.FlagUrl,
             };
             await _nationalityRepo.CreateEntity(newNationalityEntity);
@@ -31,13 +32,21 @@ namespace motorsports_Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<NationalityDTO>> GetAllNationalitiesAsync(string? query)
+        public async Task<IEnumerable<NationalityDTO>> GetAllNationalitiesAsync(string? query)
         {
-            throw new NotImplementedException();
+            var a = await _nationalityRepo.GetAllNationalities(query);
+            return a.Select(x => new NationalityDTO
+            {
+                Name = x.Name,
+                Code = x.Code,
+                Continent = x.Continent.ToString(),
+                FlagUrl = x.FlagUrl,
+            });
         }
 
-        public Task<NationalityDTO> GetNationalityByIdAsync(Guid id)
+        public async Task<NationalityDTO> GetNationalityByIdAsync(Guid id)
         {
+
             throw new NotImplementedException();
         }
 
