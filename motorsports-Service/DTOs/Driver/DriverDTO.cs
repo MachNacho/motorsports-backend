@@ -9,5 +9,6 @@
         public string Nationality { get; set; }
         public string Gender { get; set; }
         public int RaceNumber { get; set; }
+        public string TeamName { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Service.Contracts;
-using motorsports_Service.DTOs;
 
 namespace motorsports_backend.Controllers
 {
@@ -19,11 +18,6 @@ namespace motorsports_backend.Controllers
         {
             var nationalities = await _nationalityService.GetAllNationalitiesAsync(null);
             return Ok(nationalities);
-        }
-        [HttpPost("add")]
-        public async Task<IActionResult> AddCountry(NationalityDTO nationalityDTO)
-        {
-            return Ok(await _nationalityService.CreateNationalityAsync(nationalityDTO));
         }
     }
 }

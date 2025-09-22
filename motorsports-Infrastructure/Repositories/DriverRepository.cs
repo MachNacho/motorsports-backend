@@ -67,7 +67,7 @@ namespace motorsports_Infrastructure.Repositories
         {
             try
             {
-                var activePersons = await _context.Driver.AsNoTracking().Where(d => d.IsActive).Include(x => x.Nationality).ToListAsync();
+                var activePersons = await _context.Driver.AsNoTracking().Where(d => d.IsActive).Include(x => x.Nationality).Include(x => x.Team).ToListAsync();
 
                 if (activePersons == null || activePersons.Count == 0)
                 {

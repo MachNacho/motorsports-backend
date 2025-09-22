@@ -74,7 +74,8 @@ namespace motorsports_Infrastructure.Seeding
                         var suffix = f.PickRandom(_teamSuffixes);
                         return $"{baseName} {suffix}";
                     })
-                    .RuleFor(p => p.YearFounded, f => DateOnly.FromDateTime(f.Date.Between(new DateTime(1920, 1, 1), DateTime.Now)));
+                    .RuleFor(p => p.YearFounded, f => DateOnly.FromDateTime(f.Date.Between(new DateTime(1920, 1, 1), DateTime.Now)))
+                    .RuleFor(p => p.Headquarters, f => f.Address.City());
             }
 
             return _teamFaker;

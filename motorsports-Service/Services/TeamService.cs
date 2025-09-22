@@ -14,50 +14,46 @@ namespace motorsports_Service.Services
             _teamRepo = teamRepo;
         }
 
-        public async Task CreateTeam(UploadTeamDTO team)
+        public async Task AddTeamAsync(UploadTeamDTO team)
         {
             var teamToCreate = new TeamEntity
             {
                 NationalityID = team.NationalityID,
                 TeamName = team.TeamName,
                 YearFounded = team.YearFounded,
+                Headquarters = team.Headquarters,
             };
 
-            await _teamRepo.CreateTeam(teamToCreate);
+            await _teamRepo.AddTeamAsync(teamToCreate);
         }
 
-        public async Task DeleteTeam(Guid id)
+        public async Task DeleteTeamAsync(Guid id)
         {
-            await _teamRepo.DeleteTeam(id);
+            await _teamRepo.RemoveTeamByIdAsync(id);
         }
 
-        public Task<bool> DeleteTeam(int id)
+        public async Task<IEnumerable<TeamDTO>> GetAllTeamsAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<TeamDTO>> GetAllTeams()
-        {
-            var a = await _teamRepo.GetAllTeams();
-            return a.Select(x => new TeamDTO
+            var result = await _teamRepo.GetAllTeamsAsync();
+            return result.Select(x => new TeamDTO
             {
                 ID = x.ID,
                 Name = x.TeamName,
-                Headquarters = "",
-                YearFounded = DateOnly.FromDateTime(DateTime.Today),
+                Headquarters = x.Headquarters,
+                YearFounded = x.YearFounded,
                 Country = x.Nationality.Name
             });
-            throw new NotImplementedException();
         }
 
-        public Task<TeamEntity> GetTeamById(int id)
+        public async Task<TeamDTO> GetTeamByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await _teamRepo.GetTeamByIdAsync(id);
+            return new TeamDTO() { Country = result.Nationality.Name, Headquarters = result.Headquarters, YearFounded = result.YearFounded, Name = result.TeamName, ID = result.ID };
         }
 
-        public Task<TeamEntity> UpdateTeam(int id, JsonPatchDocument<TeamEntity> team)
+        public async Task UpdateTeamAsync(Guid id, JsonPatchDocument<TeamEntity> team)
         {
-            throw new NotImplementedException();
+            await _teamRepo.UpdateTeamAsync(id, team);
         }
     }
 }

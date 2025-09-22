@@ -26,6 +26,7 @@ builder.Services.AddScoped<IDriverRepository, DriverRepository>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 //DI - Teams
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<ITeamService, TeamService>();
 //DI- Nationality
 builder.Services.AddScoped<INationalityRepository, NationalityRepository>();
 builder.Services.AddScoped<INationalityService, NationailtyService>();
@@ -39,7 +40,8 @@ builder.Services.AddScoped<ICacheService, MemoryCacheService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 //DI - Account
 builder.Services.AddScoped<IAccountService, AccountService>();
-
+//DI -Test
+builder.Services.AddScoped<ITestService, TestService>();
 //Prevent circular references
 builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 //Fake data
@@ -97,18 +99,15 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-//DB seeding (via command)
-//TODO Fix this
-if (args.Length == 1 && args[0].ToLower() == "seeddata")
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-        var fakers = scope.ServiceProvider.GetRequiredService<Fakers>();
-        //Seed the database with initial data
-        motorsports_Infrastructure.Seeding.DbSeeder.SeedBDData(dbContext, fakers, 50, 50);
-    }
-}
+//SEEDING
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+//    var fakers = scope.ServiceProvider.GetRequiredService<Fakers>();
+//    //Seed the database with initial data
+//    motorsports_Infrastructure.Seeding.DbSeeder.SeedBDData(dbContext, fakers, 50, 50);
+//}
+
 
 
 // Configure the HTTP request pipeline.

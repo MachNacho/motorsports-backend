@@ -65,6 +65,7 @@ namespace motorsports_Service.Services
                 Gender = x.Gender.ToString(),
                 Nationality = x.Nationality.Name,
                 RaceNumber = x.RaceNumber ?? 0,
+                TeamName = x.Team.TeamName,
             });
         }
 

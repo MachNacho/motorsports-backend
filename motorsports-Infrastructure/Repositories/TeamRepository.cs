@@ -19,7 +19,7 @@ namespace motorsports_Infrastructure.Repositories
             _logger = logger;
         }
 
-        public async Task CreateTeam(TeamEntity team)
+        public async Task AddTeamAsync(TeamEntity team)
         {
             try
             {
@@ -28,51 +28,51 @@ namespace motorsports_Infrastructure.Repositories
             }
             catch (Exception)
             {
-                _logger.LogError("Function:{name} => There was an issue creating a team", nameof(CreateTeam));
+                _logger.LogError("Function:{name} => There was an issue creating a team", nameof(AddTeamAsync));
                 throw;
             }
         }
 
-        public async Task DeleteTeam(Guid id)
+        public async Task RemoveTeamByIdAsync(Guid id)
         {
             try
             {
-                var teamToDelete = await _context.Driver.FindAsync(id) ?? throw new NotFoundException($"Driver with ID:'{id}' not found");
+                var teamToDelete = await _context.Driver.FindAsync(id) ?? throw new NotFoundException($"Team with ID:'{id}' not found");
                 teamToDelete.IsActive = false;
                 await _context.SaveChangesAsync();
             }
-            catch (NotFoundException ex)
+            catch (NotFoundException)
             {
-                _logger.LogError("Function:{name} => Couldnt find a team with id:{id}", nameof(DeleteTeam), id);
-                throw new NotFoundException($"Driver {id} not found: {ex}");
+                _logger.LogError("Function:{name} => Couldnt find a team with id:{id}", nameof(RemoveTeamByIdAsync), id);
+                throw;
             }
             catch (Exception)
             {
-                _logger.LogCritical("Function:{name} => There was an issue deleting a team with id:{id}", nameof(DeleteTeam), id);
+                _logger.LogCritical("Function:{name} => There was an issue removing a team with id:{id}", nameof(RemoveTeamByIdAsync), id);
                 throw;
             }
         }
 
-        public async Task<IEnumerable<TeamEntity>> GetAllTeams()
+        public async Task<IEnumerable<TeamEntity>> GetAllTeamsAsync()
         {
             try
             {
-                var teams = await _context.Team.AsNoTracking().Where(d => d.IsActive).ToListAsync();
+                var teams = await _context.Team.Where(d => d.IsActive).Include(x => x.Nationality).AsNoTracking().ToListAsync();
                 return teams.Count == 0 ? throw new EmptyOrNoRecordsException("No teams found") : teams;
             }
             catch (EmptyOrNoRecordsException)
             {
-                _logger.LogError("Function:{name} => There are no active teams in the database", nameof(GetAllTeams));
+                _logger.LogError("Function:{name} => There are no active teams in the database", nameof(GetAllTeamsAsync));
                 throw;
             }
             catch (Exception)
             {
-                _logger.LogCritical("Function:{name} => There was an issue retrieving all teams in the database", nameof(GetAllTeams));
+                _logger.LogCritical("Function:{name} => There was an issue retrieving all teams in the database", nameof(GetAllTeamsAsync));
                 throw;
             }
         }
 
-        public async Task<TeamEntity> GetTeamById(Guid id)
+        public async Task<TeamEntity> GetTeamByIdAsync(Guid id)
         {
             try
             {
@@ -81,17 +81,17 @@ namespace motorsports_Infrastructure.Repositories
             }
             catch (NotFoundException)
             {
-                _logger.LogError("Function:{name} => There are no teams with ID: '{id}' in the database", nameof(GetTeamById),id);
+                _logger.LogError("Function:{name} => There are no teams with ID: '{id}' in the database", nameof(GetTeamByIdAsync), id);
                 throw;
             }
             catch (Exception)
             {
-                _logger.LogCritical("Function:{name} => There was an issue retrieving a team in the database", nameof(GetTeamById));
+                _logger.LogCritical("Function:{name} => There was an issue retrieving a team in the database", nameof(GetTeamByIdAsync));
                 throw;
             }
         }
 
-        public async Task UpdateTeam(Guid id, JsonPatchDocument<TeamEntity> teamPatchDoc)
+        public async Task UpdateTeamAsync(Guid id, JsonPatchDocument<TeamEntity> teamPatchDoc)
         {
             try
             {
@@ -101,11 +101,11 @@ namespace motorsports_Infrastructure.Repositories
             }
             catch (NotFoundException)
             {
-                _logger.LogError("Function:{name} => There are no teams with ID: '{id}' in the database", nameof(UpdateTeam), id);
+                _logger.LogError("Function:{name} => There are no teams with ID: '{id}' in the database", nameof(UpdateTeamAsync), id);
             }
             catch (Exception)
             {
-                _logger.LogCritical("Function:{name} => There was an issue updating a team in the database", nameof(UpdateTeam));
+                _logger.LogCritical("Function:{name} => There was an issue updating a team in the database", nameof(UpdateTeamAsync));
                 throw;
             }
         }

@@ -8,8 +8,9 @@ namespace motorsports_Domain.Entities
         //Team info
         [Required]
         public required string TeamName { get; set; }
-        public DateOnly? YearFounded { get; set; }
+        public DateOnly YearFounded { get; set; }
 
+        public required string Headquarters { get; set; }
 
         //Aditional info
         //Nation

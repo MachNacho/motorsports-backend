@@ -6,10 +6,10 @@ namespace motorsports_Service.Contracts
 {
     public interface ITeamService
     {
-        Task<IEnumerable<TeamDTO>> GetAllTeams();
-        Task<TeamEntity> GetTeamById(int id);
-        Task CreateTeam(UploadTeamDTO team);
-        Task<TeamEntity> UpdateTeam(int id, JsonPatchDocument<TeamEntity> team);
-        Task<bool> DeleteTeam(int id);
+        Task<IEnumerable<TeamDTO>> GetAllTeamsAsync();
+        Task<TeamDTO> GetTeamByIdAsync(Guid id);
+        Task AddTeamAsync(UploadTeamDTO team);
+        Task UpdateTeamAsync(Guid id, JsonPatchDocument<TeamEntity> team);
+        Task DeleteTeamAsync(Guid id);
     }
 }

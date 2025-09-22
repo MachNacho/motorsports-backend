@@ -6,8 +6,11 @@ namespace motorsports_Service.DTOs.Team
     {
         [Required]
         public string TeamName { get; set; }
-        public DateOnly? YearFounded { get; set; }
+        [Required]
+        public DateOnly YearFounded { get; set; }
         [Required]
         public Guid NationalityID { get; set; }
+
+        public string Headquarters { get; set; }
     }
 }
