@@ -15,7 +15,8 @@
             Europe,
             NorthAmerica,
             Oceania,
-            SouthAmerica
+            SouthAmerica,
+            Other
         }
         public enum GenderEnum
         {
