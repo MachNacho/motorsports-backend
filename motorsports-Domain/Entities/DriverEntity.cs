@@ -7,34 +7,20 @@ namespace motorsports_Domain.Entities
     public class DriverEntity : BaseEntity
     {
         //Personal info
-        [Required]
         public required string FirstName { get; set; }
         public string? MiddleName { get; set; }
-        [Required]
         public required string LastName { get; set; }
-        [Required]
         public required DateOnly BirthDate { get; set; }
-        [Required]
+        [Range(1, 99, ErrorMessage = "Race number must be between 1 and 99.")]
+        public int? RaceNumber { get; set; }
         public required GenderEnum Gender { get; set; }
 
-        //Aditional info
+        //Foreign Keys
+        public required Guid NationalityId { get; set; }
+        public required NationalityEntity Nationality { get; set; }
 
-        //Race info
-        public int? RaceNumber { get; set; }
-
-        //Nation
-        [Required]
-        public required Guid NationalityID { get; set; }
-        public NationalityEntity? Nationality { get; set; }
-
-        //Team
-        public Guid? TeamID { get; set; }
+        public Guid? TeamId { get; set; }
         public TeamEntity? Team { get; set; }
-
-
-        //Other info
-        public string? ImageUrl { get; set; }
-        public string? Description { get; set; }
 
     }
 }

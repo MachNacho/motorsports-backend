@@ -6,18 +6,18 @@ namespace motorsports_Domain.Entities
 {
     public class NationalityEntity : BaseEntity
     {
-        [Required]
-        public required string Name { get; set; }
-        [Required]
-        public required string Code { get; set; }
-        [Required]
-        public required ContinentEnum Continent { get; set; }
-
-        //Additional info
-        public string? FlagUrl { get; set; }
+        public string Capital { get; set; }
+        [MaxLength(4)]
+        public string Code { get; set; }
+        public ContinentEnum Continent { get; set; }
+        public string FlagOneByOne { get; set; }
+        public string FlagFourByThree { get; set; }
+        public bool IsIso { get; set; }
+        [MaxLength(100)]
+        public string Name { get; set; }
 
         //Navigation property
-        public ICollection<DriverEntity> Driver { get; set; } = new List<DriverEntity>();
+        public ICollection<DriverEntity> Drivers { get; set; } = new List<DriverEntity>();
         public ICollection<TeamEntity> Teams { get; set; } = new List<TeamEntity>();
     }
 }

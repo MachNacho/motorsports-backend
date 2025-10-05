@@ -5,20 +5,17 @@ namespace motorsports_Domain.Entities
 {
     public class TeamEntity : BaseEntity
     {
-        //Team info
-        [Required]
+        [MaxLength(100)]
         public required string TeamName { get; set; }
-        public DateOnly YearFounded { get; set; }
+        public DateOnly? FoundedDate { get; set; }
 
+        [MaxLength(100)]
         public required string Headquarters { get; set; }
 
-        //Aditional info
-        //Nation
-        [Required]
-        public required Guid NationalityID { get; set; }
-        public NationalityEntity? Nationality { get; set; }
+        //Foreign Keys
+        public required Guid NationalityId { get; set; }
+        public required NationalityEntity Nationality { get; set; }
 
-        //List of drivers signed by team
         public ICollection<DriverEntity> Drivers { get; set; } = new List<DriverEntity>();
     }
 }
