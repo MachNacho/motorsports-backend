@@ -12,8 +12,8 @@ using motorsports_Infrastructure.Data;
 namespace motorsports_Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250915174430_update team to include headqauters")]
-    partial class updateteamtoincludeheadqauters
+    [Migration("20251007073107_nation update")]
+    partial class nationupdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,7 +174,7 @@ namespace motorsports_Infrastructure.Migrations
 
             modelBuilder.Entity("motorsports_Domain.Entities.DriverEntity", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -184,9 +184,6 @@ namespace motorsports_Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -194,10 +191,7 @@ namespace motorsports_Infrastructure.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
@@ -207,36 +201,39 @@ namespace motorsports_Infrastructure.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("NationalityID")
+                    b.Property<Guid>("NationalityId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("RaceNumber")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("TeamID")
+                    b.Property<Guid?>("TeamId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("NationalityID");
+                    b.HasIndex("NationalityId");
 
-                    b.HasIndex("TeamID");
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Driver");
                 });
 
             modelBuilder.Entity("motorsports_Domain.Entities.NationalityEntity", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
+                    b.Property<string>("Capital")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
 
                     b.Property<int>("Continent")
                         .HasColumnType("int");
@@ -244,56 +241,64 @@ namespace motorsports_Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FlagUrl")
+                    b.Property<string>("FlagFourByThree")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<string>("FlagOneByOne")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsIso")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Nationailty");
                 });
 
             modelBuilder.Entity("motorsports_Domain.Entities.TeamEntity", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateOnly?>("FoundedDate")
+                        .HasColumnType("date");
+
                     b.Property<string>("Headquarters")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("NationalityID")
+                    b.Property<Guid>("NationalityId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TeamName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateOnly>("YearFounded")
-                        .HasColumnType("date");
+                    b.HasKey("Id");
 
-                    b.HasKey("ID");
-
-                    b.HasIndex("NationalityID");
+                    b.HasIndex("NationalityId");
 
                     b.ToTable("Team");
                 });
@@ -431,14 +436,14 @@ namespace motorsports_Infrastructure.Migrations
             modelBuilder.Entity("motorsports_Domain.Entities.DriverEntity", b =>
                 {
                     b.HasOne("motorsports_Domain.Entities.NationalityEntity", "Nationality")
-                        .WithMany("Driver")
-                        .HasForeignKey("NationalityID")
+                        .WithMany("Drivers")
+                        .HasForeignKey("NationalityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("motorsports_Domain.Entities.TeamEntity", "Team")
                         .WithMany("Drivers")
-                        .HasForeignKey("TeamID")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Nationality");
@@ -450,7 +455,7 @@ namespace motorsports_Infrastructure.Migrations
                 {
                     b.HasOne("motorsports_Domain.Entities.NationalityEntity", "Nationality")
                         .WithMany("Teams")
-                        .HasForeignKey("NationalityID")
+                        .HasForeignKey("NationalityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -459,7 +464,7 @@ namespace motorsports_Infrastructure.Migrations
 
             modelBuilder.Entity("motorsports_Domain.Entities.NationalityEntity", b =>
                 {
-                    b.Navigation("Driver");
+                    b.Navigation("Drivers");
 
                     b.Navigation("Teams");
                 });

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
-using motorsports_Domain.Exceptions;
+using motorsports_Domain.Interfaces;
 using motorsports_Infrastructure.Data;
-using motorsports_Infrastructure.Exceptions;
+using static motorsports_Domain.Exceptions.ExceptionsList;
 
 namespace motorsports_Infrastructure.Repositories
 {
@@ -20,113 +18,47 @@ namespace motorsports_Infrastructure.Repositories
             _logger = logger;
         }
 
-        public async Task<DriverEntity> CreateDriver(DriverEntity driver)
+        public async Task<DriverEntity> CreateDriverAsync(DriverEntity driver)
         {
-            try
-            {
-                driver.CreatedAt = DateTime.UtcNow;
-
-                await _context.Driver.AddAsync(driver);
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Driver created: {@Driver}", driver);
-                return driver;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error creating driver");
-                throw new BusinessRuleViolationException($"Error creating driver: {ex.Message}", ex);
-            }
+            await _context.Driver.AddAsync(driver);
+            await _context.SaveChangesAsync();
+            return driver;
         }
 
-        public async Task DeleteDriver(Guid id)
+        public async Task DeleteDriverAsync(Guid id)
         {
-            try
+            var driverToDelete = await _context.Driver.FindAsync(id);
+            if (driverToDelete is null)
             {
-                var drivertodelete = await _context.Driver.Where(d => d.IsActive).FirstOrDefaultAsync(x => x.ID == id);
-                if (drivertodelete == null) { throw new NotFoundException($"Driver with ID '{id}' not found"); }
-                drivertodelete.IsActive = false; // Soft delete
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Deleted driver ID: {Id}", id);
+                _logger.LogWarning("Attempted to delete driver with ID {DriverId}, but it was not found.", id);
+                throw new RecordNotFound($"Driver with ID '{id}' not found.");
             }
-            catch (NotFoundException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error deleting driver: {Id}", id);
-                throw new DatabaseException($"Error deleting driver: {ex.Message}", ex);
-            }
-
-
+            driverToDelete.MarkAsDeleted();
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<DriverEntity>> GetAllDrivers()
+        public async Task<IReadOnlyCollection<DriverEntity>> GetAllDriversAsync()
         {
-            try
-            {
-                var activePersons = await _context.Driver.AsNoTracking().Where(d => d.IsActive).Include(x => x.Nationality).Include(x => x.Team).ToListAsync();
-
-                if (activePersons == null || activePersons.Count == 0)
-                {
-                    _logger.LogWarning("No active drivers found");
-                    throw new EmptyOrNoRecordsException("No drivers found");
-                }
-
-                _logger.LogInformation("Retrieved {Count} active drivers", activePersons.Count);
-                return activePersons;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving drivers");
-                throw;
-            }
+            var drivers = await _context.Driver.Include(x => x.Nationality).Include(x => x.Team).AsNoTracking().ToListAsync();
+            return drivers.AsReadOnly();
         }
 
-        public async Task<DriverEntity> GetDriverById(Guid id)
+        public async Task<DriverEntity?> GetDriverByIdAsync(Guid id)
         {
-            try
-            {
-                var driver = await _context.Driver.AsNoTracking().Include(x => x.Nationality).Include(r => r.Team).FirstOrDefaultAsync(x => x.ID == id);
-                if (driver == null || !driver.IsActive)
-                {
-                    _logger.LogWarning("Driver with ID {Id} not found or inactive", id);
-                    throw new NotFoundException($"Driver with ID {id} not found");
-                }
-
-                _logger.LogInformation("Driver with ID {Id} retrieved", id);
-                return driver;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
+            var driver = await _context.Driver.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+            return driver;
         }
 
-        public async Task UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver)
+        public async Task UpdateDriverAsync(DriverEntity driver)
         {
-            try
+            var existingDriver = await _context.Driver.FindAsync(driver.Id);
+            if (existingDriver is null)
             {
-                var driverToUpdate = await _context.Driver.Where(d => d.IsActive).FirstOrDefaultAsync(x => x.ID == id) ?? throw new NotFoundException($"Driver with ID '{id}' not found");
-
-                driver.ApplyTo(driverToUpdate);
-
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Driver updated: {@Driver}", driverToUpdate);
+                _logger.LogWarning("Attempted to update driver with ID {DriverId}, but it was not found.", driver.Id);
+                throw new RecordNotFound($"Driver with ID '{driver.Id}' not found.");
             }
-            catch (NotFoundException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Update error for driver ID {Id}", id);
-                throw new BusinessRuleViolationException($"Update error occurred: {ex.Message}", ex);
-            }
+            _context.Entry(existingDriver).CurrentValues.SetValues(driver);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using motorsports_Domain.Entities;
 using motorsports_Domain.Entities.@base;
+using System.Linq.Expressions;
 
 namespace motorsports_Infrastructure.Data
 {
@@ -22,19 +23,19 @@ namespace motorsports_Infrastructure.Data
             modelBuilder.Entity<DriverEntity>()
                 .HasOne(d => d.Team) // Configures the relationship: PersonEntity has one Team
                 .WithMany(t => t.Drivers) // TeamEntity has many Employees (PersonEntity)
-                .HasForeignKey(d => d.TeamID) // Foreign key in PersonEntity is TeamID
+                .HasForeignKey(d => d.TeamId) // Foreign key in PersonEntity is TeamID
                 .OnDelete(DeleteBehavior.Restrict); // Cascade delete behavior
 
             modelBuilder.Entity<NationalityEntity>()
-                .HasMany(n => n.Driver) // NationalityEntity has many PersonEntity
+                .HasMany(n => n.Drivers) // NationalityEntity has many PersonEntity
                 .WithOne(p => p.Nationality) // PersonEntity has one NationalityEntity
-                .HasForeignKey(p => p.NationalityID) // Foreign key in PersonEntity
+                .HasForeignKey(p => p.NationalityId) // Foreign key in PersonEntity
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
             modelBuilder.Entity<NationalityEntity>()
                 .HasMany(n => n.Teams) // NationalityEntity has many TeamEntity
                 .WithOne(t => t.Nationality) // TeamEntity has one NationalityEntity
-                .HasForeignKey(t => t.NationalityID) // Foreign key in TeamEntity
+                .HasForeignKey(t => t.NationalityId) // Foreign key in TeamEntity
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
             #endregion
 
@@ -54,9 +55,26 @@ namespace motorsports_Infrastructure.Data
             };
             modelBuilder.Entity<IdentityRole>().HasData(roles);
             #endregion
-        }
 
-        // DbContext SaveChanges override
+            #region Global query filter
+            // Apply global query filter to all entities derived from BaseEntity
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                // Only apply filter to entities inheriting from BaseEntity
+                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                {
+                    // Build expression: e => !e.IsDeleted
+                    var parameter = Expression.Parameter(entityType.ClrType, "e");
+                    var deletedProp = Expression.Property(parameter, nameof(BaseEntity.IsDeleted));
+                    var compare = Expression.Equal(deletedProp, Expression.Constant(false));
+                    var lambda = Expression.Lambda(compare, parameter);
+
+                    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+                }
+            }
+            #endregion
+        }
+        #region Save changes override
         public override int SaveChanges()
         {
             var entries = ChangeTracker.Entries<BaseEntity>();
@@ -79,5 +97,6 @@ namespace motorsports_Infrastructure.Data
 
             return await base.SaveChangesAsync(cancellationToken);
         }
+        #endregion
     }
 }

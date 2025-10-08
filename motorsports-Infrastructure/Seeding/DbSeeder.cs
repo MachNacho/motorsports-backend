@@ -23,21 +23,21 @@ namespace motorsports_Infrastructure.Seeding
             var rand = new Random();
 
             //Nation seeding
-            var nationsList = NationalityListSeeding.CountryList;
+            var nationsList = NationalityListSeeding.CountryList();
             context.Nationailty.AddRange(nationsList);
 
             //Team seeding
             foreach (var r in teamList)
             {
-                r.NationalityID = nationsList[rand.Next(nationsList.Count - 1)].ID;
+                r.NationalityId = nationsList[rand.Next(nationsList.Count - 1)].Id;
             }
             context.Team.AddRange(teamList);
 
             //Driver seeding
             foreach (var r in personList)
             {
-                r.NationalityID = nationsList[rand.Next(nationsList.Count - 1)].ID;
-                r.TeamID = teamList[rand.Next(teamList.Count - 1)].ID;
+                r.NationalityId = nationsList[rand.Next(nationsList.Count - 1)].Id;
+                r.TeamId = teamList[rand.Next(teamList.Count - 1)].Id;
             }
             context.Driver.AddRange(personList);
 

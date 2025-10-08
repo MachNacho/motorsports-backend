@@ -1,24 +1,25 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using motorsports_Domain.Contracts.Service;
-namespace motorsports_Infrastructure.Repositories
+using motorsports_Domain.Interfaces;
+
+namespace motorsports_Infrastructure.Integration
 {
-    public class MemoryCacheService : ICacheService
+    public class CacheIntegration : ICacheIntegration
     {
-        private readonly IMemoryCache _cache;
-        public MemoryCacheService(IMemoryCache cache)
+        private readonly IMemoryCache _memoryCache;
+        public CacheIntegration(IMemoryCache memoryCache)
         {
-            _cache = cache;
+            _memoryCache = memoryCache;
         }
+
         public async Task<T?> GetAsync<T>(string key)
         {
-            _cache.TryGetValue(key, out T value);
+            _memoryCache.TryGetValue(key, out T value);
             return await Task.FromResult(value);
         }
 
         public Task RemoveAsync(string key)
         {
-            _cache.Remove(key);
-            Console.WriteLine("CACHE CLEARED");
+            _memoryCache.Remove(key);
             return Task.CompletedTask;
         }
 
@@ -28,7 +29,7 @@ namespace motorsports_Infrastructure.Repositories
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
             };
-            _cache.Set(key, value, cacheEntryOptions);
+            _memoryCache.Set(key, value, cacheEntryOptions);
             return Task.CompletedTask;
         }
     }

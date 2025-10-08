@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
+using motorsports_Domain.Interfaces;
 using motorsports_Infrastructure.Data;
 
 namespace motorsports_Infrastructure.Repositories
@@ -17,29 +17,11 @@ namespace motorsports_Infrastructure.Repositories
             _logger = logger;
 
         }
-        public async Task<NationalityEntity> CreateEntity(NationalityEntity entity)
+
+        public async Task<IReadOnlyCollection<NationalityEntity>> GetAllNationalitiesAsync()
         {
-            try
-            {
-                entity.CreatedAt = DateTime.UtcNow;
-                entity.IsActive = true;
-
-                await _context.Nationailty.AddAsync(entity);
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("NationalityEntity created successfully with ID: {ID}", entity.ID);
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while creating NationalityEntity");
-                throw;
-            }
-        }
-
-        public async Task<IEnumerable<NationalityEntity>> GetAllNationalities(string? query)
-        {
-            return await _context.Nationailty.ToListAsync();
+            var nations = await _context.Nationailty.AsNoTracking().ToListAsync();
+            return nations.AsReadOnly();
         }
     }
 }

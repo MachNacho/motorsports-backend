@@ -54,9 +54,7 @@ namespace motorsports_Infrastructure.Seeding
                     .RuleFor(p => p.LastName, f => f.Name.LastName())
                     .RuleFor(p => p.BirthDate, f => DateOnly.FromDateTime(f.Date.Between(DateTime.Now.AddYears(-70), DateTime.Now.AddYears(-18))))
                     .RuleFor(p => p.Gender, f => f.PickRandom<GenderEnum>())
-                    .RuleFor(p => p.RaceNumber, f => f.Random.Int(1, 99))
-                    .RuleFor(p => p.ImageUrl, f => f.Random.Bool(0.5f) ? f.Internet.Avatar() : null)
-                    .RuleFor(p => p.Description, f => f.Random.Bool(0.5f) ? f.Lorem.Sentence() : null);
+                    .RuleFor(p => p.RaceNumber, f => f.Random.Int(1, 99));
             }
 
             return _driverFaker;
@@ -74,7 +72,6 @@ namespace motorsports_Infrastructure.Seeding
                         var suffix = f.PickRandom(_teamSuffixes);
                         return $"{baseName} {suffix}";
                     })
-                    .RuleFor(p => p.YearFounded, f => DateOnly.FromDateTime(f.Date.Between(new DateTime(1920, 1, 1), DateTime.Now)))
                     .RuleFor(p => p.Headquarters, f => f.Address.City());
             }
 

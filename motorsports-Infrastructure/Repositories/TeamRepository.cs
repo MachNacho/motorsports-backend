@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using motorsports_Domain.Contracts;
 using motorsports_Domain.Entities;
-using motorsports_Domain.Exceptions;
+using motorsports_Domain.Interfaces;
 using motorsports_Infrastructure.Data;
+using static motorsports_Domain.Exceptions.ExceptionsList;
 
 namespace motorsports_Infrastructure.Repositories
 {
@@ -19,95 +18,47 @@ namespace motorsports_Infrastructure.Repositories
             _logger = logger;
         }
 
-        public async Task AddTeamAsync(TeamEntity team)
+        public async Task<TeamEntity> CreateTeamAsync(TeamEntity team)
         {
-            try
-            {
-                await _context.Team.AddAsync(team);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-                _logger.LogError("Function:{name} => There was an issue creating a team", nameof(AddTeamAsync));
-                throw;
-            }
+            await _context.Team.AddAsync(team);
+            await _context.SaveChangesAsync();
+            return team;
         }
 
-        public async Task RemoveTeamByIdAsync(Guid id)
+        public async Task DeleteTeamAsync(Guid id)
         {
-            try
+            var teamToDelete = await _context.Team.FindAsync(id);
+            if (teamToDelete is null)
             {
-                var teamToDelete = await _context.Driver.FindAsync(id) ?? throw new NotFoundException($"Team with ID:'{id}' not found");
-                teamToDelete.IsActive = false;
-                await _context.SaveChangesAsync();
+                _logger.LogWarning("Attempted to delete team with ID {TeamId}, but it was not found.", id);
+                throw new RecordNotFound($"Team with ID '{id}' not found");
             }
-            catch (NotFoundException)
-            {
-                _logger.LogError("Function:{name} => Couldnt find a team with id:{id}", nameof(RemoveTeamByIdAsync), id);
-                throw;
-            }
-            catch (Exception)
-            {
-                _logger.LogCritical("Function:{name} => There was an issue removing a team with id:{id}", nameof(RemoveTeamByIdAsync), id);
-                throw;
-            }
+            teamToDelete.MarkAsDeleted();
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TeamEntity>> GetAllTeamsAsync()
+        public async Task<IReadOnlyCollection<TeamEntity>> GetAllTeamsAsync()
         {
-            try
-            {
-                var teams = await _context.Team.Where(d => d.IsActive).Include(x => x.Nationality).AsNoTracking().ToListAsync();
-                return teams.Count == 0 ? throw new EmptyOrNoRecordsException("No teams found") : teams;
-            }
-            catch (EmptyOrNoRecordsException)
-            {
-                _logger.LogError("Function:{name} => There are no active teams in the database", nameof(GetAllTeamsAsync));
-                throw;
-            }
-            catch (Exception)
-            {
-                _logger.LogCritical("Function:{name} => There was an issue retrieving all teams in the database", nameof(GetAllTeamsAsync));
-                throw;
-            }
+            var teams = await _context.Team.AsNoTracking().ToListAsync();
+            return teams.AsReadOnly();
         }
 
-        public async Task<TeamEntity> GetTeamByIdAsync(Guid id)
+        public async Task<TeamEntity?> GetTeamByIdAsync(Guid id)
         {
-            try
-            {
-                var team = await _context.Team.FindAsync(id) ?? throw new NotFoundException($"Team with ID '{id}' not found");
-                return team;
-            }
-            catch (NotFoundException)
-            {
-                _logger.LogError("Function:{name} => There are no teams with ID: '{id}' in the database", nameof(GetTeamByIdAsync), id);
-                throw;
-            }
-            catch (Exception)
-            {
-                _logger.LogCritical("Function:{name} => There was an issue retrieving a team in the database", nameof(GetTeamByIdAsync));
-                throw;
-            }
+            var team = await _context.Team.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+            return team;
         }
 
-        public async Task UpdateTeamAsync(Guid id, JsonPatchDocument<TeamEntity> teamPatchDoc)
+        public async Task UpdateTeamAsync(TeamEntity team)
         {
-            try
+            var existingTeam = await _context.Driver.FindAsync(team.Id);
+            if (existingTeam is null)
             {
-                var teamToUpdate = await _context.Team.FindAsync(id) ?? throw new NotFoundException($"Team with ID '{id}' not found"); ;
-                teamPatchDoc.ApplyTo(teamToUpdate);
-                await _context.SaveChangesAsync();
+                _logger.LogWarning("Attempted to update team with ID {TeamId}, but it was not found.", team.Id);
+                throw new RecordNotFound($"Team with ID '{team.Id}' not found.");
             }
-            catch (NotFoundException)
-            {
-                _logger.LogError("Function:{name} => There are no teams with ID: '{id}' in the database", nameof(UpdateTeamAsync), id);
-            }
-            catch (Exception)
-            {
-                _logger.LogCritical("Function:{name} => There was an issue updating a team in the database", nameof(UpdateTeamAsync));
-                throw;
-            }
+            _context.Entry(existingTeam).CurrentValues.SetValues(team);
+            await _context.SaveChangesAsync();
         }
     }
 }
