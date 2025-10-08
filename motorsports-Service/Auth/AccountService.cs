@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using motorsports_Domain.DTO.Account;
 using motorsports_Domain.Entities;
-using motorsports_Service.Contracts;
-using motorsports_Service.Exceptions;
+using motorsports_Service.DTOs.Account;
+using motorsports_Service.Interface;
 
-namespace motorsports_Service.Services
+namespace motorsports_Service.Auth
 {
     public class AccountService : IAccountService
     {
@@ -24,35 +23,35 @@ namespace motorsports_Service.Services
             _tokenService = tokenService;
         }
 
-        public async Task<NewUserDTO> Login(LoginDTO login)
+        public async Task<NewUserDTO> LoginAsync(LoginUserDTO login)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.NormalizedUserName == login.Username.ToUpper());
-            if (user == null) { throw new AuthenticationFailedException(); }
+            if (user == null) { throw new NotImplementedException(); }
             var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
 
-            if (!result.Succeeded) { throw new AuthenticationFailedException(); }
+            if (!result.Succeeded) { throw new NotImplementedException(); }
 
             return new NewUserDTO
             {
-                UserName = user.UserName,
+                Username = user.UserName,
                 Email = user.Email,
                 Token = _tokenService.createToken(user)
             };
         }
 
-        public async Task<NewUserDTO> Register(RegisterDTO register)
+        public async Task<NewUserDTO> RegisterAsync(RegisterUserDTO register)
         {
             var createUser = new UserEntity
             {
-                FirstName = register.UserFirstName,
-                LastName = register.UserLastName,
+                FirstName = register.FirstName,
+                LastName = register.LastName,
                 Email = register.Email,
                 UserName = register.Username,
             };
 
             var userEmail = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == register.Email);
 
-            if (userEmail != null) { throw new EmailAlreadyExistsException(); }
+            if (userEmail != null) { throw new NotImplementedException(); }
 
             var createdUser = await _userManager.CreateAsync(createUser, register.Password);
 
@@ -63,7 +62,7 @@ namespace motorsports_Service.Services
                 {
                     return new NewUserDTO
                     {
-                        UserName = createUser.UserName,
+                        Username = createUser.UserName,
                         Email = createUser.Email,
                         userID = createUser.Id,
                         Token = _tokenService.createToken(createUser)
@@ -71,41 +70,41 @@ namespace motorsports_Service.Services
                 }
                 else
                 {
-                    throw new UserCreationFailedException("Failed to create user.");
+                    throw new NotImplementedException();
                 }
             }
             else
             {
-                throw new UserCreationFailedException("Failed to create user.");
+                throw new NotImplementedException();
             }
         }
 
-        public async Task RoleChange(UpdateUserRoleDTO userRoleUpdate)
-        {
-            //Find the user
-            var user = await _userManager.FindByIdAsync(userRoleUpdate.UserId);
-            if (user == null) throw new UserNotFoundException(userRoleUpdate.UserId);
+        //public async Task RoleChange(UpdateUserRoleDTO userRoleUpdate)
+        //{
+        //    //Find the user
+        //    var user = await _userManager.FindByIdAsync(userRoleUpdate.UserId);
+        //    if (user == null) throw new NotImplementedException();
 
-            if (!await _roleManager.RoleExistsAsync(userRoleUpdate.NewRole)) throw new RoleNotFoundException(userRoleUpdate.NewRole);
+        //    if (!await _roleManager.RoleExistsAsync(userRoleUpdate.NewRole)) throw new NotImplementedException();
 
-            var currentRole = await _userManager.GetRolesAsync(user);
+        //    var currentRole = await _userManager.GetRolesAsync(user);
 
-            var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRole);
-            if (!removeResult.Succeeded)
-            {
-                var errors = string.Join(", ", removeResult.Errors.Select(e => e.Description));
-                throw new RoleUpdateException(errors);
-            }
-            ;
+        //    var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRole);
+        //    if (!removeResult.Succeeded)
+        //    {
+        //        var errors = string.Join(", ", removeResult.Errors.Select(e => e.Description));
+        //        throw new NotImplementedException();
+        //    }
+        //    ;
 
-            var addResult = await _userManager.AddToRoleAsync(user, userRoleUpdate.NewRole);
+        //    var addResult = await _userManager.AddToRoleAsync(user, userRoleUpdate.NewRole);
 
-            if (!addResult.Succeeded)
-            {
-                var errors = string.Join(", ", addResult.Errors.Select(e => e.Description));
-                throw new RoleUpdateException(errors);
-            }
-            ;
-        }
+        //    if (!addResult.Succeeded)
+        //    {
+        //        var errors = string.Join(", ", addResult.Errors.Select(e => e.Description));
+        //        throw new NotImplementedException();
+        //    }
+        //    ;
+        //}
     }
 }

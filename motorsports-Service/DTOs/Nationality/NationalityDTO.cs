@@ -1,4 +1,4 @@
-﻿namespace motorsports_Service.DTOs
+﻿namespace motorsports_Service.DTOs.Nationality
 {
     public class NationalityDTO
     {

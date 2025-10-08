@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.Extensions.Logging;
-using motorsports_Domain.Contracts;
-using motorsports_Domain.Contracts.Service;
-using motorsports_Domain.Entities;
-using motorsports_Service.Contracts;
+﻿using Microsoft.Extensions.Logging;
+using motorsports_Domain.Interfaces;
 using motorsports_Service.DTOs.Driver;
+using motorsports_Service.Interface;
 using static motorsports_Domain.Constants.Constants;
 
 namespace motorsports_Service.Services
@@ -12,91 +9,79 @@ namespace motorsports_Service.Services
     public class DriverService : IDriverService
     {
         private readonly IDriverRepository _driverRepo;
-        private readonly ICacheService _cacheService;
+        private readonly ICacheIntegration _cacheIntegration;
         private readonly ILogger<DriverService> _logger;
 
-        public DriverService(IDriverRepository driverRepo, ICacheService cacheService, ILogger<DriverService> logger)
+        public DriverService(IDriverRepository driverRepo, ICacheIntegration cacheIntegration, ILogger<DriverService> logger)
         {
             _driverRepo = driverRepo;
-            _cacheService = cacheService;
+            _cacheIntegration = cacheIntegration;
             _logger = logger;
         }
 
-        public async Task CreateDriver(UploadDriverDTO uploadDriverDTO)
+        public Task<FullDriverDTO> CreateDriverAsync(UploadDriverDTO uploadDriverDTO)
         {
-            var newPersonEntity = new DriverEntity
-            {
-                FirstName = uploadDriverDTO.FirstName,
-                LastName = uploadDriverDTO.LastName,
-                MiddleName = uploadDriverDTO.MiddleName,
-                BirthDate = uploadDriverDTO.BirthDate,
-                Gender = uploadDriverDTO.Gender,
-                NationalityID = uploadDriverDTO.NationalityID,
-                TeamID = uploadDriverDTO.TeamID,
-                ImageUrl = uploadDriverDTO.ImageUrl,
-                Description = uploadDriverDTO.Description
-            };
-            await _driverRepo.CreateDriver(newPersonEntity);
-            await _cacheService.RemoveAsync(CacheKeys.Drivers);
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteDriver(Guid id)
+        public Task DeleteDriverAsync(Guid id)
         {
-            await _driverRepo.DeleteDriver(id);
-            await _cacheService.RemoveAsync(CacheKeys.Drivers);
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<DriverDTO>> GetAllDrivers()
+        public async Task<IReadOnlyCollection<DriverDTO>> GetAllDriversAsync()
         {
-            var drivers = await _cacheService.GetAsync<IEnumerable<DriverEntity>>(CacheKeys.Drivers);
-
-            if (drivers == null)
+            var cached = await _cacheIntegration.GetAsync<IReadOnlyCollection<DriverDTO>>(CacheKeys.Drivers);
+            if (cached != null)
             {
-                drivers = await _driverRepo.GetAllDrivers();
-                await _cacheService.SetAsync(CacheKeys.Drivers, drivers);
+                return cached;
             }
 
-            return drivers.Select(x => new DriverDTO
+            var drivers = await _driverRepo.GetAllDriversAsync();
+            if (drivers == null)
             {
-                ID = x.ID,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                BirthDate = x.BirthDate,
-                Gender = x.Gender.ToString(),
-                Nationality = x.Nationality.Name,
-                RaceNumber = x.RaceNumber ?? 0,
+                return null;
+            }
+
+            var driverDTO = drivers.Select(x => new DriverDTO
+            {
+                Id = x.Id,
+                Firstname = x.FirstName,
+                Lastname = x.LastName,
+                Code = x.Nationality.Code,
+                FlagOneByOne = x.Nationality.FlagOneByOne,
+                RaceNumber = x.RaceNumber,
                 TeamName = x.Team.TeamName,
-            });
+            }).ToList().AsReadOnly();
+
+            await _cacheIntegration.SetAsync<IReadOnlyCollection<DriverDTO>>(CacheKeys.Drivers, driverDTO);
+            return driverDTO;
         }
 
-        public async Task<FullDriverDTO> GetDriverById(Guid id)
+        public async Task<FullDriverDTO?> GetDriverByIdAsync(Guid id)
         {
-            var driver = await _driverRepo.GetDriverById(id);
-            var d = new FullDriverDTO
+            var driver = await _driverRepo.GetDriverByIdAsync(id);
+            var driverDTO = new FullDriverDTO
             {
-                ID = driver.ID,
-                FirstName = driver.FirstName,
-                LastName = driver.LastName,
-                BirthDate = driver.BirthDate,
+                Id = driver.Id,
+                Firstname = driver.FirstName,
+                Lastname = driver.LastName,
+                Nationality = driver.Nationality.Name,
+                Code = driver.Nationality.Code,
+                FlagFourByThree = driver.Nationality.FlagFourByThree,
+                FlagOneByOne = driver.Nationality.FlagOneByOne,
                 Gender = driver.Gender.ToString(),
-                RaceNumber = driver.RaceNumber ?? 0,
-
-                TeamID = driver.TeamID,
-                TeamnNme = driver.Team.TeamName,
-
-                Continent = driver.Nationality.Continent.ToString(),
-                NationCode = driver.Nationality.Code,
-                NationName = driver.Nationality.Name,
-                NationID = driver.Nationality.ID,
-
+                RaceNumber = driver.RaceNumber,
+                TeamName = driver.Team.TeamName,
+                TeamId = driver.TeamId,
+                BirthDate = driver.BirthDate,
             };
-            return d;
+            return driverDTO;
         }
 
-        public async Task UpdateDriver(Guid id, JsonPatchDocument<DriverEntity> driver)
+        public Task UpdateDriverAsync(Guid id, UpdateDriverDTO driverDTO)
         {
-            await _driverRepo.UpdateDriver(id, driver);
-            await _cacheService.RemoveAsync(CacheKeys.Drivers);
+            throw new NotImplementedException();
         }
     }
 }
