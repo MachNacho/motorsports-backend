@@ -13,9 +13,9 @@
             Antarctica,
             Asia,
             Europe,
-            NorthAmerica,
+            North_America,
             Oceania,
-            SouthAmerica,
+            South_America,
             Other
         }
         public enum GenderEnum
