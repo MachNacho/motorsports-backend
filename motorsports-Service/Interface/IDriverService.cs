@@ -1,4 +1,5 @@
-﻿using motorsports_Service.DTOs.Driver;
+﻿using motorsports_Domain.Entities;
+using motorsports_Service.DTOs.Driver;
 
 namespace motorsports_Service.Interface
 {
@@ -6,7 +7,7 @@ namespace motorsports_Service.Interface
     {
         Task<IReadOnlyCollection<DriverDTO>> GetAllDriversAsync();
         Task<FullDriverDTO?> GetDriverByIdAsync(Guid id);
-        Task<FullDriverDTO> CreateDriverAsync(UploadDriverDTO uploadDriverDTO);
+        Task<DriverEntity> CreateDriverAsync(UploadDriverDTO uploadDriverDTO);
         Task UpdateDriverAsync(Guid id, UpdateDriverDTO driverDTO);
         Task DeleteDriverAsync(Guid id);
     }

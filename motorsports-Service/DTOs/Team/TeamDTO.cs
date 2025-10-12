@@ -5,6 +5,8 @@
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
+        public string? FlagOneByOne { get; set; }
+        public string? FlagFourByThree { get; set; }
         public DateOnly YearFounded { get; set; }
         public string Headquarters { get; set; }
     }

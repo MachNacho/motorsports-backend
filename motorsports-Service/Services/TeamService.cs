@@ -1,9 +1,61 @@
-﻿using motorsports_Service.Interface;
+﻿using motorsports_Domain.Entities;
+using motorsports_Domain.Interfaces;
+using motorsports_Service.DTOs.Team;
+using motorsports_Service.Interface;
 
 namespace motorsports_Service.Services
 {
     public class TeamService : ITeamService
     {
+        private readonly ITeamRepository _teamRepository;
+        public TeamService(ITeamRepository teamRepository) { _teamRepository = teamRepository; }
 
+        public async Task<TeamEntity> CreateTeamAsync(TeamEntity team)
+        {
+            var result = await _teamRepository.CreateTeamAsync(team);
+            return result;
+        }
+
+        public async Task DeleteTeamAsync(Guid id)
+        {
+            await _teamRepository.DeleteTeamAsync(id);
+        }
+
+        public async Task<IReadOnlyCollection<TeamDTO>> GetAllTeamAsync()
+        {
+            var result = await _teamRepository.GetAllTeamsAsync();
+            var teamDTO = result.Select(x => new TeamDTO
+            {
+                ID = x.Id,
+                Country = x.Nationality.Name,
+                FlagFourByThree = x.Nationality.FlagFourByThree,
+                FlagOneByOne = x.Nationality.FlagOneByOne,
+                Headquarters = x.Headquarters,
+                Name = x.TeamName,
+                YearFounded = (DateOnly)x.FoundedDate,
+            }).ToList().AsReadOnly();
+            return teamDTO;
+        }
+
+        public async Task<TeamDTO> GetTeamByIdAsync(Guid id)
+        {
+            var result = await _teamRepository.GetTeamByIdAsync(id);
+            var teamDTO = new TeamDTO
+            {
+                ID = result.Id,
+                Country = result.Nationality.Name,
+                FlagFourByThree = result.Nationality.FlagFourByThree,
+                FlagOneByOne = result.Nationality.FlagOneByOne,
+                Headquarters = result.Headquarters,
+                Name = result.TeamName,
+                YearFounded = (DateOnly)result.FoundedDate,
+            };
+            return teamDTO;
+        }
+
+        public async Task UpdateTeamAsync(Guid id, TeamEntity team)
+        {
+            await _teamRepository.UpdateTeamAsync(team);
+        }
     }
 }

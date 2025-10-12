@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using motorsports_Domain.Entities;
 using motorsports_Domain.Interfaces;
 using motorsports_Service.DTOs.Driver;
+using motorsports_Service.Helpers;
 using motorsports_Service.Interface;
 using static motorsports_Domain.Constants.Constants;
 
@@ -19,14 +21,27 @@ namespace motorsports_Service.Services
             _logger = logger;
         }
 
-        public Task<FullDriverDTO> CreateDriverAsync(UploadDriverDTO uploadDriverDTO)
+        public async Task<DriverEntity> CreateDriverAsync(UploadDriverDTO uploadDriverDTO)
         {
-            throw new NotImplementedException();
+            var newDriver = new DriverEntity()
+            {
+                FirstName = uploadDriverDTO.FirstName,
+                LastName = uploadDriverDTO.LastName,
+                BirthDate = uploadDriverDTO.BirthDate,
+                RaceNumber = uploadDriverDTO.RaceNumber,
+                TeamId = uploadDriverDTO.TeamID,
+                NationalityId = uploadDriverDTO.NationalityID,
+                MiddleName = uploadDriverDTO.MiddleName,
+                Gender = uploadDriverDTO.Gender,
+            };
+
+            var result = await _driverRepo.CreateDriverAsync(newDriver);
+            return result;
         }
 
-        public Task DeleteDriverAsync(Guid id)
+        public async Task DeleteDriverAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _driverRepo.DeleteDriverAsync(id);
         }
 
         public async Task<IReadOnlyCollection<DriverDTO>> GetAllDriversAsync()
@@ -38,10 +53,6 @@ namespace motorsports_Service.Services
             }
 
             var drivers = await _driverRepo.GetAllDriversAsync();
-            if (drivers == null)
-            {
-                return null;
-            }
 
             var driverDTO = drivers.Select(x => new DriverDTO
             {
@@ -79,9 +90,11 @@ namespace motorsports_Service.Services
             return driverDTO;
         }
 
-        public Task UpdateDriverAsync(Guid id, UpdateDriverDTO driverDTO)
+        public async Task UpdateDriverAsync(Guid id, UpdateDriverDTO driverDTO)
         {
-            throw new NotImplementedException();
+            var driver = await _driverRepo.GetDriverByIdAsync(id);
+            DriverUpdateHelper.ApplyDriverUpdates(driver, driverDTO);
+            await _driverRepo.UpdateDriverAsync(driver);
         }
     }
 }
