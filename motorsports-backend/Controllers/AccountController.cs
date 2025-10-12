@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using motorsports_Domain.DTO.Account;
-using motorsports_Service.Contracts;
+using motorsports_Service.DTOs.Account;
+using motorsports_Service.Interface;
 
 namespace motorsports_backend.Controllers
 {
@@ -12,22 +12,18 @@ namespace motorsports_backend.Controllers
         public AccountController(IAccountService accountService) { _accountService = accountService; }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterDTO register)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO registerUserDTO)
         {
-            return Ok(await _accountService.Register(register));
+            var a = await _accountService.RegisterAsync(registerUserDTO);
+            return Ok(a);
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser([FromBody] LoginDTO login)
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserDTO login)
         {
-            return Ok(await _accountService.Login(login));
+            var a = await _accountService.LoginAsync(login);
+            return Ok(a);
         }
 
-        [HttpPost("Roles")]
-        public async Task<IActionResult> AssignRoles([FromBody] UpdateUserRoleDTO update)
-        {
-            await _accountService.RoleChange(update);
-            return Ok();
-        }
     }
 }

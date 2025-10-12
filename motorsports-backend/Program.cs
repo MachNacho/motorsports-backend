@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using motorsports_backend.Middleware;
-using motorsports_Domain.Contracts;
-using motorsports_Domain.Contracts.Service;
 using motorsports_Domain.Entities;
+using motorsports_Domain.Interfaces;
 using motorsports_Infrastructure.Data;
+using motorsports_Infrastructure.Integration;
 using motorsports_Infrastructure.Repositories;
 using motorsports_Infrastructure.Seeding;
 using motorsports_Service.Auth;
-using motorsports_Service.Contracts;
+using motorsports_Service.Interface;
 using motorsports_Service.Services;
 using Newtonsoft.Json;
 using Scalar.AspNetCore;
@@ -21,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+#region Dependency Injection
 //DI - Drivers
 builder.Services.AddScoped<IDriverRepository, DriverRepository>();
 builder.Services.AddScoped<IDriverService, DriverService>();
@@ -31,28 +32,30 @@ builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<INationalityRepository, NationalityRepository>();
 builder.Services.AddScoped<INationalityService, NationailtyService>();
 //DI - BLOB
-builder.Services.AddScoped<IBlobService, BlobService>();//Add AutoMapper
+builder.Services.AddScoped<IBlobIntegration, BlobIntegration>();//Add AutoMapper
 //Add in-memory cache
 builder.Services.AddMemoryCache();
 //DI - Cache
-builder.Services.AddScoped<ICacheService, MemoryCacheService>();
+builder.Services.AddScoped<ICacheIntegration, CacheIntegration>();
 //DI - Token
 builder.Services.AddScoped<ITokenService, TokenService>();
 //DI - Account
 builder.Services.AddScoped<IAccountService, AccountService>();
-//DI -Test
-builder.Services.AddScoped<ITestService, TestService>();
-//Prevent circular references
-builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 //Fake data
 builder.Services.AddTransient<Fakers>();
+#endregion
+
+//Prevent circular references
+builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
 
+#region logging
 //Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // or AddDebug(), AddFile(), etc.
 builder.Logging.AddDebug();   // for Visual Studio Output
 builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Information);
+#endregion
 
 // Add database connection
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
@@ -62,7 +65,10 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.LogTo(Console.WriteLine, LogLevel.Information); // log SQL to console
 });
 
+
+#region Identity service
 //Configure Identity service
+
 builder.Services.AddIdentity<UserEntity, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -71,8 +77,11 @@ builder.Services.AddIdentity<UserEntity, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 8;
 }).AddEntityFrameworkStores<ApplicationDBContext>();
+#endregion
 
+#region JWT configuration
 //Configure JWT for API auth
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme =
@@ -96,9 +105,11 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero //Remove grace period
     };
 });
+#endregion
 
 var app = builder.Build();
 
+#region Seeding
 //SEEDING
 //using (var scope = app.Services.CreateScope())
 //{
@@ -107,8 +118,7 @@ var app = builder.Build();
 //    //Seed the database with initial data
 //    motorsports_Infrastructure.Seeding.DbSeeder.SeedBDData(dbContext, fakers, 50, 50);
 //}
-
-
+#endregion
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

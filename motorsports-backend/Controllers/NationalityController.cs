@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using motorsports_Service.Contracts;
+using motorsports_Service.DTOs.Nationality;
+using motorsports_Service.Interface;
 
 namespace motorsports_backend.Controllers
 {
@@ -7,17 +8,20 @@ namespace motorsports_backend.Controllers
     [ApiController]
     public class NationalityController : ControllerBase
     {
-        private readonly INationalityService _nationalityService;
-        public NationalityController(INationalityService nationalityService)
+        private readonly INationalityService _nationService;
+
+        public NationalityController(INationalityService nationService)
         {
-            _nationalityService = nationalityService;
+            _nationService = nationService;
         }
 
-        [HttpGet("list")]
-        public async Task<IActionResult> List()
+        [HttpGet]
+        [ProducesResponseType(typeof(IReadOnlyCollection<NationalityDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> GetAllNations()
         {
-            var nationalities = await _nationalityService.GetAllNationalitiesAsync(null);
-            return Ok(nationalities);
+            var nations = await _nationService.GetAllNations();
+            return Ok(nations);
         }
     }
 }

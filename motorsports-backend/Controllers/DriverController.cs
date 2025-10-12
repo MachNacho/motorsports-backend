@@ -1,52 +1,59 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using motorsports_Domain.Entities;
-using motorsports_Service.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Service.DTOs.Driver;
+using motorsports_Service.Interface;
 
 namespace motorsports_backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]s")]
     [ApiController]
     public class DriverController : ControllerBase
     {
-        private readonly IDriverService _personService;
-        public DriverController(IDriverService personService)
+        private readonly IDriverService _driverService;
+        public DriverController(IDriverService driverService)
         {
-            _personService = personService;
+            _driverService = driverService;
         }
 
-        [HttpGet("list/drivers")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllDrivers()
         {
-            var drivers = await _personService.GetAllDrivers();
+            var drivers = await _driverService.GetAllDriversAsync();
             return Ok(drivers);
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> AddPerson([FromBody] UploadDriverDTO uploadPersonDTO)
+        [HttpGet("driver/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDriverById([FromRoute] Guid id)
         {
-            await _personService.CreateDriver(uploadPersonDTO);
-            return Created();
+            var driver = await _driverService.GetDriverByIdAsync(id);
+            return Ok(driver);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetDriverProfile([FromRoute] Guid id)
+        [HttpPut("update/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateDriver([FromRoute] Guid id, [FromBody] UpdateDriverDTO updateDriver)
         {
-            var updatedDriver = await _personService.GetDriverById(id);
-            return Ok(updatedDriver);
-        }
-
-        [HttpPatch("delete/{DriverId}")]
-        public async Task<IActionResult> DeleteDriver([FromRoute] Guid DriverId)
-        {
-            await _personService.DeleteDriver(DriverId);
+            await _driverService.UpdateDriverAsync(id, updateDriver);
             return NoContent();
         }
-        [HttpPatch("Update/{Id}")]
-        public async Task<IActionResult> UpdateDriver([FromRoute] Guid Id, [FromBody] JsonPatchDocument<DriverEntity> A)
+
+        [HttpPost("add")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> CreateDriver([FromBody] UploadDriverDTO uploadDriver)
         {
-            await _personService.UpdateDriver(Id, A);
+            var a = await _driverService.CreateDriverAsync(uploadDriver);
+            return CreatedAtAction(nameof(GetDriverById), new { id = a.Id }, a);
+        }
+
+        [HttpDelete("delete/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteDriver([FromRoute] Guid id)
+        {
+            await _driverService.DeleteDriverAsync(id);
             return NoContent();
         }
     }

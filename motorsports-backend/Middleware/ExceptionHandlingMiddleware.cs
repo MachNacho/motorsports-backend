@@ -1,8 +1,6 @@
-﻿using motorsports_Domain.Exceptions;
-using motorsports_Infrastructure.Exceptions;
-using motorsports_Service.Exceptions;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
+using static motorsports_Domain.Exceptions.ExceptionsList;
 
 namespace motorsports_backend.Middleware
 {
@@ -28,23 +26,24 @@ namespace motorsports_backend.Middleware
         {
             var code = exception switch
             {
-                EmptyOrNoRecordsException => HttpStatusCode.NoContent,
-                NotFoundException => HttpStatusCode.NotFound,
-                ValidationException => HttpStatusCode.BadRequest,
-                DuplicateRecordException => HttpStatusCode.Conflict,
-                BusinessRuleViolationException => HttpStatusCode.BadRequest,
-                UnauthorizedException => HttpStatusCode.Unauthorized,
-                ForbiddenException => HttpStatusCode.Forbidden,
-                OperationFailedException => HttpStatusCode.InternalServerError,
-                DatabaseException => HttpStatusCode.InternalServerError,
-                ExternalServiceException => HttpStatusCode.BadGateway,
-                FileStorageException => HttpStatusCode.InternalServerError,
-                AuthenticationFailedException => HttpStatusCode.Unauthorized,
-                EmailAlreadyExistsException => HttpStatusCode.Conflict,
-                UserCreationFailedException => HttpStatusCode.BadRequest,
-                RoleAssignmentException => HttpStatusCode.InternalServerError,
-                UserNotFoundException => HttpStatusCode.NotFound,
-                RoleNotFoundException => HttpStatusCode.BadRequest,
+                //EmptyOrNoRecordsException => HttpStatusCode.NoContent,
+                //NotFoundException => HttpStatusCode.NotFound,
+                //ValidationException => HttpStatusCode.BadRequest,
+                //DuplicateRecordException => HttpStatusCode.Conflict,
+                //BusinessRuleViolationException => HttpStatusCode.BadRequest,
+                //UnauthorizedException => HttpStatusCode.Unauthorized,
+                //ForbiddenException => HttpStatusCode.Forbidden,
+                //OperationFailedException => HttpStatusCode.InternalServerError,
+                //DatabaseException => HttpStatusCode.InternalServerError,
+                //ExternalServiceException => HttpStatusCode.BadGateway,
+                //FileStorageException => HttpStatusCode.InternalServerError,
+                //AuthenticationFailedException => HttpStatusCode.Unauthorized,
+                //EmailAlreadyExistsException => HttpStatusCode.Conflict,
+                //UserCreationFailedException => HttpStatusCode.BadRequest,
+                //RoleAssignmentException => HttpStatusCode.InternalServerError,
+                //UserNotFoundException => HttpStatusCode.NotFound,
+                //RoleNotFoundException => HttpStatusCode.BadRequest,
+                RecordNotFound => HttpStatusCode.NotFound,
                 _ => HttpStatusCode.InternalServerError
             };
             var response = new { message = exception.Message };

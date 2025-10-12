@@ -1,43 +1,66 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using motorsports_Domain.Entities;
-using motorsports_Service.Contracts;
 using motorsports_Service.DTOs.Team;
+using motorsports_Service.Interface;
 
 namespace motorsports_backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]s")]
     [ApiController]
     public class TeamController : ControllerBase
     {
-        private readonly ITeamService _teamServ;
-        public TeamController(ITeamService teamServ) { _teamServ = teamServ; }
+        private readonly ITeamService _teamService;
+        public TeamController(ITeamService teamService)
+        {
+            _teamService = teamService;
+        }
 
         [HttpGet]
-        public async Task<IActionResult> GetTeams()
+        [ProducesResponseType(typeof(IReadOnlyCollection<TeamDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllTeams()
         {
-            var result = await _teamServ.GetAllTeamsAsync();
-            return Ok(result);
+            var teamListResult = await _teamService.GetAllTeamAsync();
+            return Ok(teamListResult);
         }
-        [HttpPost("Add")]
-        public async Task<IActionResult> AddTeam([FromBody] UploadTeamDTO teamToAdd)
+
+        [HttpGet("team/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetTeamById([FromRoute] Guid id)
         {
-            await _teamServ.AddTeamAsync(teamToAdd);
+            var teamResult = await _teamService.GetTeamByIdAsync(id);
+            return Ok(teamResult);
+        }
+
+        [HttpPut("update/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+        public async Task<IActionResult> UpdateTeam([FromRoute] Guid id, [FromBody] TeamEntity test)
+        {
+            await _teamService.UpdateTeamAsync(id, test);
             return NoContent();
         }
 
-        [HttpPatch("Remove/{teamID}")]
-        public async Task<IActionResult> RemoveTeam([FromRoute] Guid teamID)
+        [HttpDelete("delete/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteTeam([FromRoute] Guid id)
         {
-            await _teamServ.DeleteTeamAsync(teamID);
+            await _teamService.DeleteTeamAsync(id);
             return NoContent();
         }
 
-        [HttpPatch("Update/{teamID}")]
-        public async Task<IActionResult> UpdateTeam([FromRoute] Guid teamID, [FromBody] JsonPatchDocument<TeamEntity> team)
+        [HttpPost("add")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CreateTeam([FromBody] TeamEntity entity)
         {
-            await _teamServ.UpdateTeamAsync(teamID, team);
-            return NoContent();
+            await _teamService.CreateTeamAsync(entity);
+            return Created();
         }
     }
 }
