@@ -14,10 +14,10 @@ namespace motorsports_Domain.Entities
         [Range(1, 99, ErrorMessage = "Race number must be between 1 and 99.")]
         public int? RaceNumber { get; set; }
         public required GenderEnum Gender { get; set; }
-
+        public string? ImageURL { get; set; }
         //Foreign Keys
         public required Guid NationalityId { get; set; }
-        public required NationalityEntity Nationality { get; set; }
+        public NationalityEntity? Nationality { get; set; }
 
         public Guid? TeamId { get; set; }
         public TeamEntity? Team { get; set; }
