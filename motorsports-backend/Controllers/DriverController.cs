@@ -15,7 +15,8 @@ namespace motorsports_backend.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<DriverDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllDrivers()
         {
             var drivers = await _driverService.GetAllDriversAsync();
@@ -23,7 +24,7 @@ namespace motorsports_backend.Controllers
         }
 
         [HttpGet("driver/{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FullDriverDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetDriverById([FromRoute] Guid id)
         {
