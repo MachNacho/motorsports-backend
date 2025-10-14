@@ -39,7 +39,7 @@ namespace motorsports_Infrastructure.Repositories
 
         public async Task<IReadOnlyCollection<TeamEntity>> GetAllTeamsAsync()
         {
-            var teams = await _context.Team.AsNoTracking().ToListAsync();
+            var teams = await _context.Team.Include(x => x.Nationality).AsNoTracking().ToListAsync();
             return teams.AsReadOnly();
         }
 

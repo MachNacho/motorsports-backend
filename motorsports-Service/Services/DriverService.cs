@@ -60,7 +60,7 @@ namespace motorsports_Service.Services
                 Firstname = x.FirstName,
                 Lastname = x.LastName,
                 Code = x.Nationality.Code,
-                FlagOneByOne = x.Nationality.FlagOneByOne,
+                Country = x.Nationality.Name,
                 RaceNumber = x.RaceNumber,
                 TeamName = x.Team.TeamName,
             }).ToList().AsReadOnly();

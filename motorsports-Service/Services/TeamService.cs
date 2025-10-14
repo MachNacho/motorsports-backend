@@ -28,8 +28,7 @@ namespace motorsports_Service.Services
             {
                 ID = x.Id,
                 Country = x.Nationality.Name,
-                FlagFourByThree = x.Nationality.FlagFourByThree,
-                FlagOneByOne = x.Nationality.FlagOneByOne,
+                Code = x.Nationality.Code,
                 Headquarters = x.Headquarters,
                 Name = x.TeamName,
                 YearFounded = (DateOnly)x.FoundedDate,
@@ -37,15 +36,14 @@ namespace motorsports_Service.Services
             return teamDTO;
         }
 
-        public async Task<TeamDTO> GetTeamByIdAsync(Guid id)
+        public async Task<FullTeamDTO> GetTeamByIdAsync(Guid id)
         {
             var result = await _teamRepository.GetTeamByIdAsync(id);
             var teamDTO = new TeamDTO
             {
                 ID = result.Id,
                 Country = result.Nationality.Name,
-                FlagFourByThree = result.Nationality.FlagFourByThree,
-                FlagOneByOne = result.Nationality.FlagOneByOne,
+                Code = result.Nationality.Code,
                 Headquarters = result.Headquarters,
                 Name = result.TeamName,
                 YearFounded = (DateOnly)result.FoundedDate,

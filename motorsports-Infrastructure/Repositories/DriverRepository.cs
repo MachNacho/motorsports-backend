@@ -45,7 +45,7 @@ namespace motorsports_Infrastructure.Repositories
 
         public async Task<DriverEntity?> GetDriverByIdAsync(Guid id)
         {
-            var driver = await _context.Driver.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+            var driver = await _context.Driver.Include(x => x.Nationality).Include(x => x.Team).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
             return driver;
         }
 

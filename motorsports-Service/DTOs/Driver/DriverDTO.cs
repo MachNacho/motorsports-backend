@@ -6,7 +6,7 @@
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string? Code { get; set; }
-        public string? FlagOneByOne { get; set; }
+        public string? Country { get; set; }
         public int? RaceNumber { get; set; }
         public string? TeamName { get; set; }
     }
