@@ -25,18 +25,19 @@ namespace motorsports_Infrastructure.Seeding
             //Nation seeding
             var nationsList = NationalityListSeeding.CountryList();
             context.Nationailty.AddRange(nationsList);
-
+            //Only nation that are part of the International Organization for Standardization list (ISO 3166)
+            var isIsoNationList = nationsList.Where(x => x.IsIso == true).ToList();
             //Team seeding
             foreach (var r in teamList)
             {
-                r.NationalityId = nationsList[rand.Next(nationsList.Count - 1)].Id;
+                r.NationalityId = isIsoNationList[rand.Next(isIsoNationList.Count - 1)].Id;
             }
             context.Team.AddRange(teamList);
 
             //Driver seeding
             foreach (var r in personList)
             {
-                r.NationalityId = nationsList[rand.Next(nationsList.Count - 1)].Id;
+                r.NationalityId = isIsoNationList[rand.Next(isIsoNationList.Count - 1)].Id;
                 r.TeamId = teamList[rand.Next(teamList.Count - 1)].Id;
             }
             context.Driver.AddRange(personList);

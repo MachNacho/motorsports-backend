@@ -41,7 +41,7 @@ namespace motorsports_Infrastructure.Seeding
         };
 
 
-        private static int seed = 1534; // Example seed value
+        private static int seed = 1533; // Example seed value
 
         public Faker<DriverEntity> GetFakeDrivers()
         {
@@ -68,11 +68,12 @@ namespace motorsports_Infrastructure.Seeding
                     .UseSeed(seed)
                     .RuleFor(p => p.TeamName, f =>
                     {
-                        var baseName = f.Company.CompanyName();
+                        var baseName = f.Company.CompanyName(0);
                         var suffix = f.PickRandom(_teamSuffixes);
                         return $"{baseName} {suffix}";
                     })
-                    .RuleFor(p => p.Headquarters, f => f.Address.City());
+                    .RuleFor(p => p.Headquarters, f => f.Address.City())
+                    .RuleFor(p => p.FoundedDate, f => DateOnly.FromDateTime(f.Date.Between(DateTime.Now.AddYears(-100), DateTime.Now.AddYears(-1))));
             }
 
             return _teamFaker;
