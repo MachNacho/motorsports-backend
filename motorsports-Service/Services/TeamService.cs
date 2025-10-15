@@ -39,14 +39,20 @@ namespace motorsports_Service.Services
         public async Task<FullTeamDTO> GetTeamByIdAsync(Guid id)
         {
             var result = await _teamRepository.GetTeamByIdAsync(id);
-            var teamDTO = new TeamDTO
+            var teamDTO = new FullTeamDTO
             {
-                ID = result.Id,
-                Country = result.Nationality.Name,
-                Code = result.Nationality.Code,
+                TeamName = result.TeamName,
+                FoundedDate = result.FoundedDate,
+                nationName = result.Nationality.Name,
+                nationCode = result.Nationality.Code,
                 Headquarters = result.Headquarters,
-                Name = result.TeamName,
-                YearFounded = (DateOnly)result.FoundedDate,
+                Drivers = result.Drivers.Select(d => new TeamDriver
+                {
+                    Firstname = d.FirstName,
+                    Lasstname = d.LastName,
+                    nationCode = d.Nationality.Code
+
+                }).ToList().AsReadOnly()
             };
             return teamDTO;
         }

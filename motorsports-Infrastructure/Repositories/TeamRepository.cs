@@ -45,7 +45,7 @@ namespace motorsports_Infrastructure.Repositories
 
         public async Task<TeamEntity?> GetTeamByIdAsync(Guid id)
         {
-            var team = await _context.Team.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+            var team = await _context.Team.Include(d=>d.Drivers).ThenInclude(dn => dn.Nationality).Include(n=>n.Nationality).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
             return team;
         }
 
