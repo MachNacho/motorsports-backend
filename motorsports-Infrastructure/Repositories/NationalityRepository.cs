@@ -23,5 +23,11 @@ namespace motorsports_Infrastructure.Repositories
             var nations = await _context.Nationailty.AsNoTracking().ToListAsync();
             return nations.AsReadOnly();
         }
+
+        public async Task<IReadOnlyCollection<NationalityEntity>> GetAllNationStats()
+        {
+            var stats = await _context.Nationailty.Include(n => n.Teams).Include(t => t.RaceTrack).Include(a => a.Drivers).AsNoTracking().ToListAsync();
+            return stats.AsReadOnly();
+        }
     }
 }
