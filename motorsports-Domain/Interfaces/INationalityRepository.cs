@@ -11,6 +11,6 @@ namespace motorsports_Domain.Interfaces
         /// Retrieves all nationalities from the data source.
         /// </summary>
         Task<IReadOnlyCollection<NationalityEntity>> GetAllNationalitiesAsync();
-        //Task<NationalityEntity> CreateNationalityAsync(NationalityEntity nationality);
+        Task<IReadOnlyCollection<NationalityEntity>> GetAllNationStats();
     }
 }

@@ -64,7 +64,7 @@ namespace motorsports_Service.Auth
                     {
                         Username = createUser.UserName,
                         Email = createUser.Email,
-                        userID = createUser.Id,
+                        userId = createUser.Id,
                         Token = _tokenService.createToken(createUser)
                     };
                 }

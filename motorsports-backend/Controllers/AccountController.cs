@@ -12,17 +12,19 @@ namespace motorsports_backend.Controllers
         public AccountController(IAccountService accountService) { _accountService = accountService; }
 
         [HttpPost("Register")]
+        [ProducesResponseType(typeof(NewUserDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO registerUserDTO)
         {
-            var a = await _accountService.RegisterAsync(registerUserDTO);
-            return Ok(a);
+            var user = await _accountService.RegisterAsync(registerUserDTO);
+            return Ok(user);
         }
 
         [HttpPost("Login")]
+        [ProducesResponseType(typeof(NewUserDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> LoginUser([FromBody] LoginUserDTO login)
         {
-            var a = await _accountService.LoginAsync(login);
-            return Ok(a);
+            var user = await _accountService.LoginAsync(login);
+            return Ok(user);
         }
 
     }
