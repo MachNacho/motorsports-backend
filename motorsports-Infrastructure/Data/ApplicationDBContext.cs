@@ -15,6 +15,7 @@ namespace motorsports_Infrastructure.Data
         public DbSet<DriverEntity> Driver { get; set; }
         public DbSet<TeamEntity> Team { get; set; }
         public DbSet<NationalityEntity> Nationailty { get; set; }
+        public DbSet<RaceTrackEntity> RaceTrack { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region Entity Relationships
@@ -37,6 +38,12 @@ namespace motorsports_Infrastructure.Data
                 .WithOne(t => t.Nationality) // TeamEntity has one NationalityEntity
                 .HasForeignKey(t => t.NationalityId) // Foreign key in TeamEntity
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
+
+            modelBuilder.Entity<NationalityEntity>()
+                .HasMany(n => n.RaceTrack)
+                .WithOne(r => r.nation)
+                .HasForeignKey(t => t.NationID)
+                .OnDelete(DeleteBehavior.Restrict);
             #endregion
 
             #region Roles

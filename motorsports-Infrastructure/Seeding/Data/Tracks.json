@@ -1,0 +1,782 @@
+[
+  {
+    "Circuit": "Adelaide Street Circuit",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Adelaide",
+    "Country": "Australia",
+    "Last length used": "3.780 km (2.349 mi)",
+    "Turns": "16",
+    "Grands Prix": "Australian Grand Prix"
+  },
+  {
+    "Circuit": "Ain-Diab Circuit",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Casablanca",
+    "Country": "Morocco",
+    "Last length used": "7.618 km (4.734 mi)",
+    "Turns": "18",
+    "Grands Prix": "Moroccan Grand Prix"
+  },
+  {
+    "Circuit": "Aintree Motor Racing Circuit",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Aintree",
+    "Country": "United Kingdom",
+    "Last length used": "4.828 km (3.000 mi)",
+    "Turns": "12",
+    "Grands Prix": "British Grand Prix"
+  },
+  {
+    "Circuit": "Albert Park Circuit *",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Melbourne",
+    "Country": "Australia",
+    "Last length used": "5.278 km (3.280 mi)",
+    "Turns": "14",
+    "Grands Prix": "Australian Grand Prix"
+  },
+  {
+    "Circuit": "Algarve International Circuit",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Portimão",
+    "Country": "Portugal",
+    "Last length used": "4.653 km (2.891 mi)",
+    "Turns": "15",
+    "Grands Prix": "Portuguese Grand Prix"
+  },
+  {
+    "Circuit": "Autódromo do Estoril",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Estoril",
+    "Country": "Portugal",
+    "Last length used": "4.360 km (2.709 mi)",
+    "Turns": "13",
+    "Grands Prix": "Portuguese Grand Prix"
+  },
+  {
+    "Circuit": "Autódromo Hermanos Rodríguez *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Mexico City",
+    "Country": "Mexico",
+    "Last length used": "4.304 km (2.674 mi)",
+    "Turns": "17",
+    "Grands Prix": "Mexican Grand Prix,Mexico City Grand Prix"
+  },
+  {
+    "Circuit": "Autódromo Internacional do Rio de Janeiro",
+    "Type": "Race circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Rio de Janeiro",
+    "Country": "Brazil",
+    "Last length used": "5.031 km (3.126 mi)",
+    "Turns": "11",
+    "Grands Prix": "Brazilian Grand Prix"
+  },
+  {
+    "Circuit": "Autodromo Internazionale del Mugello",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Scarperia e San Piero",
+    "Country": "Italy",
+    "Last length used": "5.245 km (3.259 mi)",
+    "Turns": "15",
+    "Grands Prix": "Tuscan Grand Prix"
+  },
+  {
+    "Circuit": "Autodromo Internazionale Enzo e Dino Ferrari *",
+    "Type": "Race circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Imola",
+    "Country": "Italy",
+    "Last length used": "4.909 km (3.050 mi)",
+    "Turns": "19",
+    "Grands Prix": "Italian Grand Prix,San Marino Grand Prix,Emilia Romagna Grand Prix"
+  },
+  {
+    "Circuit": "Autodromo José Carlos Pace *",
+    "Type": "Race circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "São Paulo",
+    "Country": "Brazil",
+    "Last length used": "4.309 km (2.677 mi)",
+    "Turns": "15",
+    "Grands Prix": "Brazilian Grand Prix,São Paulo Grand Prix"
+  },
+  {
+    "Circuit": "Autodromo Nazionale di Monza *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Monza",
+    "Country": "Italy",
+    "Last length used": "5.793 km (3.600 mi)",
+    "Turns": "11",
+    "Grands Prix": "Italian Grand Prix"
+  },
+  {
+    "Circuit": "Autódromo Oscar y Juan Gálvez",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Buenos Aires",
+    "Country": "Argentina",
+    "Last length used": "4.259 km (2.646 mi)",
+    "Turns": "18",
+    "Grands Prix": "Argentine Grand Prix"
+  },
+  {
+    "Circuit": "AVUS",
+    "Type": "Road circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Berlin",
+    "Country": "Germany",
+    "Last length used": "8.300 km (5.157 mi)",
+    "Turns": "4",
+    "Grands Prix": "German Grand Prix"
+  },
+  {
+    "Circuit": "Bahrain International Circuit *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Sakhir",
+    "Country": "Bahrain",
+    "Last length used": "5.412 km (3.363 mi)",
+    "Turns": "15",
+    "Grands Prix": "Bahrain Grand Prix,Sakhir Grand Prix"
+  },
+  {
+    "Circuit": "Baku City Circuit *",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Baku",
+    "Country": "Azerbaijan",
+    "Last length used": "6.003 km (3.730 mi)",
+    "Turns": "20",
+    "Grands Prix": "European Grand Prix,Azerbaijan Grand Prix"
+  },
+  {
+    "Circuit": "Brands Hatch Circuit",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "West Kingsdown",
+    "Country": "United Kingdom",
+    "Last length used": "4.206 km (2.613 mi)",
+    "Turns": "11",
+    "Grands Prix": "British Grand Prix,European Grand Prix"
+  },
+  {
+    "Circuit": "Buddh International Circuit",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Greater Noida",
+    "Country": "India",
+    "Last length used": "5.141 km (3.194 mi)",
+    "Turns": "16",
+    "Grands Prix": "Indian Grand Prix"
+  },
+  {
+    "Circuit": "Bugatti Au Mans",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Le Mans",
+    "Country": "France",
+    "Last length used": "4.430 km (2.753 mi)",
+    "Turns": "8",
+    "Grands Prix": "French Grand Prix"
+  },
+  {
+    "Circuit": "Caesars Palace Grand Prix Circuit",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Paradise",
+    "Country": "United States of America",
+    "Last length used": "3.650 km (2.268 mi)",
+    "Turns": "14",
+    "Grands Prix": "Caesars Palace Grand Prix"
+  },
+  {
+    "Circuit": "Charade Circuit",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Saint-Genès-Champanelle",
+    "Country": "France",
+    "Last length used": "8.055 km (5.005 mi)",
+    "Turns": "38",
+    "Grands Prix": "French Grand Prix"
+  },
+  {
+    "Circuit": "Circuit Bremgarten",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Bern",
+    "Country": "Switzerland",
+    "Last length used": "7.208 km (4.479 mi)",
+    "Turns": "14",
+    "Grands Prix": "Swiss Grand Prix"
+  },
+  {
+    "Circuit": "Circuit de Barcelona-Catalunya *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Montmeló",
+    "Country": "Spain",
+    "Last length used": "4.657 km (2.894 mi)",
+    "Turns": "14",
+    "Grands Prix": "Spanish Grand Prix"
+  },
+  {
+    "Circuit": "Circuit de Monaco *",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Monte Carlo",
+    "Country": "Monaco",
+    "Last length used": "3.337 km (2.074 mi)",
+    "Turns": "19",
+    "Grands Prix": "Monaco Grand Prix"
+  },
+  {
+    "Circuit": "Circuit de Nevers Magny-Cours",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Magny-Cours",
+    "Country": "France",
+    "Last length used": "4.411 km (2.741 mi)",
+    "Turns": "16",
+    "Grands Prix": "French Grand Prix"
+  },
+  {
+    "Circuit": "Circuit de Pedralbes",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Barcelona",
+    "Country": "Spain",
+    "Last length used": "6.316 km (3.925 mi)",
+    "Turns": "6",
+    "Grands Prix": "Spanish Grand Prix"
+  },
+  {
+    "Circuit": "Circuit de Reims-Gueux",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Gueux",
+    "Country": "France",
+    "Last length used": "8.302 km (5.159 mi)",
+    "Turns": "6",
+    "Grands Prix": "French Grand Prix"
+  },
+  {
+    "Circuit": "Circuit de Spa-Francorchamps *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Stavelot",
+    "Country": "Belgium",
+    "Last length used": "7.004 km (4.352 mi)",
+    "Turns": "20",
+    "Grands Prix": "Belgian Grand Prix"
+  },
+  {
+    "Circuit": "Circuit Dijon-Prenois",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Prenois",
+    "Country": "France",
+    "Last length used": "3.886 km (2.415 mi)",
+    "Turns": "12",
+    "Grands Prix": "French Grand Prix,Swiss Grand Prix"
+  },
+  {
+    "Circuit": "Circuit Gilles-Villeneuve *",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Montreal",
+    "Country": "Canada",
+    "Last length used": "4.361 km (2.710 mi)",
+    "Turns": "14",
+    "Grands Prix": "Canadian Grand Prix"
+  },
+  {
+    "Circuit": "Circuit Mont-Tremblant",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Mont-Tremblant",
+    "Country": "Canada",
+    "Last length used": "4.265 km (2.650 mi)",
+    "Turns": "15",
+    "Grands Prix": "Canadian Grand Prix"
+  },
+  {
+    "Circuit": "Circuit of the Americas *",
+    "Type": "Race circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Austin",
+    "Country": "United States of America",
+    "Last length used": "5.513 km (3.426 mi)",
+    "Turns": "20",
+    "Grands Prix": "United States of America Grand Prix"
+  },
+  {
+    "Circuit": "Circuit Paul Ricard",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Le Castellet",
+    "Country": "France",
+    "Last length used": "5.842 km (3.630 mi)",
+    "Turns": "15",
+    "Grands Prix": "French Grand Prix"
+  },
+  {
+    "Circuit": "Circuit Zandvoort *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Zandvoort",
+    "Country": "Netherlands",
+    "Last length used": "4.259 km (2.646 mi)",
+    "Turns": "14",
+    "Grands Prix": "Dutch Grand Prix"
+  },
+  {
+    "Circuit": "Circuit Zolder",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Heusden-Zolder",
+    "Country": "Belgium",
+    "Last length used": "4.262 km (2.648 mi)",
+    "Turns": "10",
+    "Grands Prix": "Belgian Grand Prix"
+  },
+  {
+    "Circuit": "Circuito da Boavista",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Porto",
+    "Country": "Portugal",
+    "Last length used": "7.775 km (4.831 mi)",
+    "Turns": "15",
+    "Grands Prix": "Portuguese Grand Prix"
+  },
+  {
+    "Circuit": "Circuito de Monsanto",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Lisbon",
+    "Country": "Portugal",
+    "Last length used": "5.440 km (3.380 mi)",
+    "Turns": "9",
+    "Grands Prix": "Portuguese Grand Prix"
+  },
+  {
+    "Circuit": "Circuito Permanente de Jerez",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Jerez de la Frontera",
+    "Country": "Spain",
+    "Last length used": "4.428 km (2.751 mi)",
+    "Turns": "13",
+    "Grands Prix": "Spanish Grand Prix,European Grand Prix"
+  },
+  {
+    "Circuit": "Circuito Permanente del Jarama",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "San Sebastián de los Reyes",
+    "Country": "Spain",
+    "Last length used": "3.314 km (2.059 mi)",
+    "Turns": "12",
+    "Grands Prix": "Spanish Grand Prix"
+  },
+  {
+    "Circuit": "Dallas Fair Park",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Dallas",
+    "Country": "United States of America",
+    "Last length used": "3.901 km (2.424 mi)",
+    "Turns": "14",
+    "Grands Prix": "Dallas Grand Prix"
+  },
+  {
+    "Circuit": "Detroit Street Circuit",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Detroit",
+    "Country": "United States of America",
+    "Last length used": "4.023 km (2.500 mi)",
+    "Turns": "20",
+    "Grands Prix": "Detroit Grand Prix"
+  },
+  {
+    "Circuit": "Donington Park",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Castle Donington",
+    "Country": "United Kingdom",
+    "Last length used": "4.020 km (2.498 mi)",
+    "Turns": "11",
+    "Grands Prix": "European Grand Prix"
+  },
+  {
+    "Circuit": "Fuji Speedway",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Oyama",
+    "Country": "Japan",
+    "Last length used": "4.563 km (2.835 mi)",
+    "Turns": "16",
+    "Grands Prix": "Japanese Grand Prix"
+  },
+  {
+    "Circuit": "Hockenheimring",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Hockenheim",
+    "Country": "Germany",
+    "Last length used": "4.574 km (2.842 mi)",
+    "Turns": "16",
+    "Grands Prix": "German Grand Prix"
+  },
+  {
+    "Circuit": "Hungaroring *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Mogyoród",
+    "Country": "Hungary",
+    "Last length used": "4.381 km (2.722 mi)",
+    "Turns": "14",
+    "Grands Prix": "Hungarian Grand Prix"
+  },
+  {
+    "Circuit": "Indianapolis Motor Speedway",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Speedway",
+    "Country": "United States of America",
+    "Last length used": "4.192 km (2.605 mi)",
+    "Turns": "13",
+    "Grands Prix": "Indianapolis 500[d],United States of America Grand Prix"
+  },
+  {
+    "Circuit": "Intercity Istanbul Park",
+    "Type": "Race circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Istanbul",
+    "Country": "Türkiye",
+    "Last length used": "5.338 km (3.317 mi)",
+    "Turns": "14",
+    "Grands Prix": "Turkish Grand Prix"
+  },
+  {
+    "Circuit": "Jeddah Corniche Circuit *",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Jeddah",
+    "Country": "Saudi Arabia",
+    "Last length used": "6.174 km (3.836 mi)",
+    "Turns": "27",
+    "Grands Prix": "Saudi Arabian Grand Prix"
+  },
+  {
+    "Circuit": "Korea International Circuit",
+    "Type": "Race circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Yeongam",
+    "Country": "South Korea",
+    "Last length used": "5.615 km (3.489 mi)",
+    "Turns": "18",
+    "Grands Prix": "Korean Grand Prix"
+  },
+  {
+    "Circuit": "Kyalami Grand Prix Circuit",
+    "Type": "Race circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Midrand",
+    "Country": "South Africa",
+    "Last length used": "4.261 km (2.648 mi)",
+    "Turns": "13",
+    "Grands Prix": "South African Grand Prix"
+  },
+  {
+    "Circuit": "Las Vegas Strip Circuit *",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Paradise",
+    "Country": "United States of America",
+    "Last length used": "6.201 km (3.853 mi)",
+    "Turns": "17",
+    "Grands Prix": "Las Vegas Grand Prix"
+  },
+  {
+    "Circuit": "Long Beach Street Circuit",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Long Beach",
+    "Country": "United States of America",
+    "Last length used": "3.275 km (2.035 mi)",
+    "Turns": "18",
+    "Grands Prix": "United States of America Grand Prix West"
+  },
+  {
+    "Circuit": "Lusail International Circuit *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Lusail",
+    "Country": "Qatar",
+    "Last length used": "5.419 km (3.367 mi)",
+    "Turns": "16",
+    "Grands Prix": "Qatar Grand Prix"
+  },
+  {
+    "Circuit": "Madring †",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Barajas",
+    "Country": "Spain",
+    "Last length used": "5.474 km (3.401 mi)",
+    "Turns": "22",
+    "Grands Prix": "Spanish Grand Prix"
+  },
+  {
+    "Circuit": "Marina Bay Street Circuit *",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Marina Bay",
+    "Country": "Singapore",
+    "Last length used": "4.940 km (3.070 mi)",
+    "Turns": "19",
+    "Grands Prix": "Singapore Grand Prix"
+  },
+  {
+    "Circuit": "Miami International Autodrome *",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Miami Gardens",
+    "Country": "United States of America",
+    "Last length used": "5.412 km (3.363 mi)",
+    "Turns": "19",
+    "Grands Prix": "Miami Grand Prix"
+  },
+  {
+    "Circuit": "Montjuïc circuit",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Barcelona",
+    "Country": "Spain",
+    "Last length used": "3.791 km (2.356 mi)",
+    "Turns": "18",
+    "Grands Prix": "Spanish Grand Prix"
+  },
+  {
+    "Circuit": "Mosport International Raceway",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Bowmanville",
+    "Country": "Canada",
+    "Last length used": "3.957 km (2.459 mi)",
+    "Turns": "10",
+    "Grands Prix": "Canadian Grand Prix"
+  },
+  {
+    "Circuit": "Nivelles-Baulers",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Nivelles",
+    "Country": "Belgium",
+    "Last length used": "3.724 km (2.314 mi)",
+    "Turns": "7",
+    "Grands Prix": "Belgian Grand Prix"
+  },
+  {
+    "Circuit": "Nürburgring",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Nürburg",
+    "Country": "Germany",
+    "Last length used": "5.148 km (3.199 mi)",
+    "Turns": "15",
+    "Grands Prix": "German Grand Prix,European Grand Prix,Luxembourg Grand Prix,Eifel Grand Prix"
+  },
+  {
+    "Circuit": "Pescara Circuit",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Pescara",
+    "Country": "Italy",
+    "Last length used": "25.800 km (16.031 mi)",
+    "Turns": "24*",
+    "Grands Prix": "Pescara Grand Prix"
+  },
+  {
+    "Circuit": "Phoenix Street Circuit",
+    "Type": "Street circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Phoenix",
+    "Country": "United States of America",
+    "Last length used": "3.720 km (2.312 mi)",
+    "Turns": "12",
+    "Grands Prix": "United States of America Grand Prix"
+  },
+  {
+    "Circuit": "Prince George Circuit",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "East London",
+    "Country": "South Africa",
+    "Last length used": "3.920 km (2.436 mi)",
+    "Turns": "8",
+    "Grands Prix": "South African Grand Prix"
+  },
+  {
+    "Circuit": "Red Bull Ring *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Spielberg",
+    "Country": "Austria",
+    "Last length used": "4.318 km (2.683 mi)",
+    "Turns": "10",
+    "Grands Prix": "Austrian Grand Prix,Styrian Grand Prix"
+  },
+  {
+    "Circuit": "Riverside International Raceway",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Moreno Valley",
+    "Country": "United States of America",
+    "Last length used": "5.271 km (3.275 mi)",
+    "Turns": "9",
+    "Grands Prix": "United States of America Grand Prix"
+  },
+  {
+    "Circuit": "Rouen-Les-Essarts",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Orival",
+    "Country": "France",
+    "Last length used": "6.542 km (4.065 mi)",
+    "Turns": "13",
+    "Grands Prix": "French Grand Prix"
+  },
+  {
+    "Circuit": "Scandinavian Raceway",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Anderstorp",
+    "Country": "Sweden",
+    "Last length used": "4.031 km (2.505 mi)",
+    "Turns": "8",
+    "Grands Prix": "Swedish Grand Prix"
+  },
+  {
+    "Circuit": "Sebring Raceway",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Sebring",
+    "Country": "United States of America",
+    "Last length used": "8.356 km (5.192 mi)",
+    "Turns": "12",
+    "Grands Prix": "United States of America Grand Prix"
+  },
+  {
+    "Circuit": "Sepang International Circuit",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Sepang",
+    "Country": "Malaysia",
+    "Last length used": "5.543 km (3.444 mi)",
+    "Turns": "15",
+    "Grands Prix": "Malaysian Grand Prix"
+  },
+  {
+    "Circuit": "Shanghai International Circuit *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Shanghai",
+    "Country": "China",
+    "Last length used": "5.451 km (3.387 mi)",
+    "Turns": "16",
+    "Grands Prix": "Chinese Grand Prix"
+  },
+  {
+    "Circuit": "Silverstone Circuit *",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Silverstone",
+    "Country": "United Kingdom",
+    "Last length used": "5.891 km (3.660 mi)",
+    "Turns": "18",
+    "Grands Prix": "British Grand Prix,70th Anniversary Grand Prix"
+  },
+  {
+    "Circuit": "Sochi Autodrom",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Sochi",
+    "Country": "Russia",
+    "Last length used": "5.848 km (3.634 mi)",
+    "Turns": "15",
+    "Grands Prix": "Russian Grand Prix"
+  },
+  {
+    "Circuit": "Suzuka International Racing Course *",
+    "Type": "Race circuit",
+    "Direction": "Part clockwise and part anti-clockwise (figure eight)",
+    "Location": "Suzuka",
+    "Country": "Japan",
+    "Last length used": "5.807 km (3.608 mi)",
+    "Turns": "18",
+    "Grands Prix": "Japanese Grand Prix"
+  },
+  {
+    "Circuit": "TI Circuit Aida",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Mimasaka",
+    "Country": "Japan",
+    "Last length used": "3.703 km (2.301 mi)",
+    "Turns": "11",
+    "Grands Prix": "Pacific Grand Prix"
+  },
+  {
+    "Circuit": "Valencia Street Circuit",
+    "Type": "Street circuit",
+    "Direction": "Clockwise",
+    "Location": "Valencia",
+    "Country": "Spain",
+    "Last length used": "5.419 km (3.367 mi)",
+    "Turns": "25",
+    "Grands Prix": "European Grand Prix"
+  },
+  {
+    "Circuit": "Watkins Glen International",
+    "Type": "Race circuit",
+    "Direction": "Clockwise",
+    "Location": "Watkins Glen",
+    "Country": "United States of America",
+    "Last length used": "5.430 km (3.374 mi)",
+    "Turns": "10",
+    "Grands Prix": "United States of America Grand Prix"
+  },
+  {
+    "Circuit": "Yas Marina Circuit *",
+    "Type": "Race circuit",
+    "Direction": "Anti-clockwise",
+    "Location": "Abu Dhabi",
+    "Country": "United Arab Emirates",
+    "Last length used": "5.281 km (3.281 mi)",
+    "Turns": "15",
+    "Grands Prix": "Abu Dhabi Grand Prix"
+  },
+  {
+    "Circuit": "Zeltweg Airfield",
+    "Type": "Road circuit",
+    "Direction": "Clockwise",
+    "Location": "Zeltweg",
+    "Country": "Austria",
+    "Last length used": "3.186 km (1.980 mi)",
+    "Turns": "4",
+    "Grands Prix": "Austrian Grand Prix"
+  }
+]

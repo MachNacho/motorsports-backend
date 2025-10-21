@@ -14,6 +14,7 @@ namespace motorsports_Infrastructure.Seeding
             context.RemoveRange(context.Driver);
             context.RemoveRange(context.Team);
             context.RemoveRange(context.Nationailty);
+            context.RemoveRange(context.RaceTrack);
             context.SaveChanges();
         }
         public static void SeedData(ApplicationDBContext context, Fakers fakers, int driverCount, int teamCount)
@@ -25,8 +26,13 @@ namespace motorsports_Infrastructure.Seeding
             //Nation seeding
             var nationsList = NationalityListSeeding.CountryList();
             context.Nationailty.AddRange(nationsList);
+
+            var tracklist = TrackListSeeding.TrackList(nationsList);
+            context.RaceTrack.AddRange(tracklist);
+
             //Only nation that are part of the International Organization for Standardization list (ISO 3166)
             var isIsoNationList = nationsList.Where(x => x.IsIso == true).ToList();
+
             //Team seeding
             foreach (var r in teamList)
             {
