@@ -18,5 +18,6 @@ namespace motorsports_Domain.Entities
         //Navigation property
         public ICollection<DriverEntity> Drivers { get; set; } = new List<DriverEntity>();
         public ICollection<TeamEntity> Teams { get; set; } = new List<TeamEntity>();
+        public ICollection<RaceTrackEntity> RaceTrack { get; set; } = new List<RaceTrackEntity>();
     }
 }

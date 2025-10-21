@@ -23,5 +23,13 @@ namespace motorsports_backend.Controllers
             var nations = await _nationService.GetAllNations();
             return Ok(nations);
         }
+
+        [HttpGet("stats")]
+        [ProducesResponseType(typeof(IReadOnlyCollection<NationStatsDTO>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetStats()
+        {
+            var results = await _nationService.GetStatsAsync();
+            return Ok(results);
+        }
     }
 }
