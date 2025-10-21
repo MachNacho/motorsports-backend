@@ -24,5 +24,26 @@
             Female = 2,
             Other = 3
         }
+
+        /// <summary>
+        /// Defines the direction in which the track runs.
+        /// </summary>
+        public enum TrackDirectionEnum
+        {
+            Clockwise,
+            AntiClockwise,
+            Mixed
+        }
+
+        /// <summary>
+        /// Defines the type of the track.
+        /// </summary>
+        public enum TrackTypeEnum
+        {
+            Street_Circuit,
+            Road_Circuit,
+            Race_Circuit,
+            Other
+        }
     }
 }
