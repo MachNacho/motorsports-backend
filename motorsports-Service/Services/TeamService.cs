@@ -48,6 +48,7 @@ namespace motorsports_Service.Services
                 Headquarters = result.Headquarters,
                 Drivers = result.Drivers.Select(d => new TeamDriver
                 {
+                    id = d.Id,
                     Firstname = d.FirstName,
                     Lasstname = d.LastName,
                     nationCode = d.Nationality.Code

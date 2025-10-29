@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using motorsports_Domain.Entities;
+using motorsports_Domain.Exceptions;
 using motorsports_Service.DTOs.Account;
 using motorsports_Service.Interface;
 
@@ -26,10 +27,10 @@ namespace motorsports_Service.Auth
         public async Task<NewUserDTO> LoginAsync(LoginUserDTO login)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.NormalizedUserName == login.Username.ToUpper());
-            if (user == null) { throw new NotImplementedException(); }
+            if (user == null) { throw new UserNotFound(); }
             var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
 
-            if (!result.Succeeded) { throw new NotImplementedException(); }
+            if (!result.Succeeded) { throw new PasswordMismatch(); }
 
             return new NewUserDTO
             {
@@ -51,7 +52,7 @@ namespace motorsports_Service.Auth
 
             var userEmail = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == register.Email);
 
-            if (userEmail != null) { throw new NotImplementedException(); }
+            if (userEmail != null) { throw new DuplicateUserEmail(); }
 
             var createdUser = await _userManager.CreateAsync(createUser, register.Password);
 
@@ -70,41 +71,13 @@ namespace motorsports_Service.Auth
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new UserRoleCreationError();
                 }
             }
             else
             {
-                throw new NotImplementedException();
+                throw new UserCreationError();
             }
         }
-
-        //public async Task RoleChange(UpdateUserRoleDTO userRoleUpdate)
-        //{
-        //    //Find the user
-        //    var user = await _userManager.FindByIdAsync(userRoleUpdate.UserId);
-        //    if (user == null) throw new NotImplementedException();
-
-        //    if (!await _roleManager.RoleExistsAsync(userRoleUpdate.NewRole)) throw new NotImplementedException();
-
-        //    var currentRole = await _userManager.GetRolesAsync(user);
-
-        //    var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRole);
-        //    if (!removeResult.Succeeded)
-        //    {
-        //        var errors = string.Join(", ", removeResult.Errors.Select(e => e.Description));
-        //        throw new NotImplementedException();
-        //    }
-        //    ;
-
-        //    var addResult = await _userManager.AddToRoleAsync(user, userRoleUpdate.NewRole);
-
-        //    if (!addResult.Succeeded)
-        //    {
-        //        var errors = string.Join(", ", addResult.Errors.Select(e => e.Description));
-        //        throw new NotImplementedException();
-        //    }
-        //    ;
-        //}
     }
 }

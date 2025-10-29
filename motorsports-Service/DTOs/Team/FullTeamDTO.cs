@@ -13,6 +13,7 @@
     }
     public class TeamDriver
     {
+        public Guid id { get; set; }
         public string Firstname { get; set; }
         public string Lasstname { get; set; }
         public string nationCode { get; set; }

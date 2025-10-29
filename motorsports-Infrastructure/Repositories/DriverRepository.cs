@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using motorsports_Domain.Entities;
+using motorsports_Domain.Exceptions;
 using motorsports_Domain.Interfaces;
 using motorsports_Infrastructure.Data;
-using static motorsports_Domain.Exceptions.ExceptionsList;
 
 namespace motorsports_Infrastructure.Repositories
 {
