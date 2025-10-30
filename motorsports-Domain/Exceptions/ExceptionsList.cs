@@ -39,5 +39,10 @@
         public UserRoleCreationError(string message) : base(message) { }
     }
 
+    public class DuplicateUsernameException : Exception
+    {
+        public DuplicateUsernameException() : base("There is a duplicate username") { }
+        public DuplicateUsernameException(string message) : base(message) { }
+    }
     #endregion
 }

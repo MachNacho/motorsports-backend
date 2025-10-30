@@ -12,19 +12,26 @@ namespace motorsports_backend.Controllers
         public AccountController(IAccountService accountService) { _accountService = accountService; }
 
         [HttpPost("Register")]
-        [ProducesResponseType(typeof(NewUserDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO registerUserDTO)
         {
-            var user = await _accountService.RegisterAsync(registerUserDTO);
-            return Ok(user);
+            var userJWT = await _accountService.RegisterAsync(registerUserDTO);
+            return Ok(userJWT);
         }
 
         [HttpPost("Login")]
-        [ProducesResponseType(typeof(NewUserDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> LoginUser([FromBody] LoginUserDTO login)
         {
-            var user = await _accountService.LoginAsync(login);
-            return Ok(user);
+            var userJWT = await _accountService.LoginAsync(login);
+            return Ok(userJWT);
         }
 
     }

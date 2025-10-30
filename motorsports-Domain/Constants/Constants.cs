@@ -2,6 +2,9 @@
 {
     public class Constants
     {
+        // Default role assigned to new users
+        public const string DEFAULT_USER_ROLE = "User";
+
         public static class CacheKeys
         {
             public const string Drivers = "Drivers";

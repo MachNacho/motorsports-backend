@@ -28,10 +28,13 @@ namespace motorsports_backend.Middleware
             {
                 UserCreationError => HttpStatusCode.InternalServerError,
                 PasswordMismatch => HttpStatusCode.Unauthorized,
+                DuplicateUsernameException => HttpStatusCode.Conflict,
                 DuplicateUserEmail => HttpStatusCode.Conflict,
                 UserRoleCreationError => HttpStatusCode.BadRequest,
                 UserNotFound => HttpStatusCode.NotFound,
                 RecordNotFound => HttpStatusCode.NotFound,
+                ArgumentNullException => HttpStatusCode.BadRequest,
+                ArgumentException => HttpStatusCode.BadRequest,
                 _ => HttpStatusCode.InternalServerError
             };
             var response = new { message = exception.Message };
