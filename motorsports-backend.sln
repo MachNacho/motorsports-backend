@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "motorsports-Service", "motorsports-Service\motorsports-Service.csproj", "{B4EADD15-FF64-42B9-9661-E512847B9A90}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "motorsports-UnitTests", "motorsports-UnitTests\motorsports-UnitTests.csproj", "{F8E41EBD-960E-46FF-BD21-B3E7335299B4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{95346D18-22E9-4CF9-B817-D00B0CF9CDD7} = {95346D18-22E9-4CF9-B817-D00B0CF9CDD7}
+		{A9910634-E821-4589-A74F-DFD33D70925F} = {A9910634-E821-4589-A74F-DFD33D70925F}
+		{BBCE1CDA-30CC-4A13-8A96-9934FD8351A7} = {BBCE1CDA-30CC-4A13-8A96-9934FD8351A7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
