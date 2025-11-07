@@ -64,22 +64,28 @@ namespace motorsports_Infrastructure.Data
             #endregion
 
             #region Global query filter
-            // Apply global query filter to all entities derived from BaseEntity
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                // Only apply filter to entities inheriting from BaseEntity
                 if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
                 {
-                    // Build expression: e => !e.IsDeleted
                     var parameter = Expression.Parameter(entityType.ClrType, "e");
                     var deletedProp = Expression.Property(parameter, nameof(BaseEntity.IsDeleted));
                     var compare = Expression.Equal(deletedProp, Expression.Constant(false));
                     var lambda = Expression.Lambda(compare, parameter);
 
-                    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+                    // Dynamically create a typed expression
+                    var typedLambda = Expression.Lambda(
+                        typeof(Func<,>).MakeGenericType(entityType.ClrType, typeof(bool)),
+                        compare,
+                        parameter
+                    );
+
+                    modelBuilder.Entity(entityType.ClrType)
+                        .HasQueryFilter((LambdaExpression)typedLambda);
                 }
             }
             #endregion
+
         }
         #region Save changes override
         public override int SaveChanges()
