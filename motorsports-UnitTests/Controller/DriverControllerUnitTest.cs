@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using motorsports_backend.Controllers;
 using motorsports_Service.DTOs.Driver;
@@ -11,14 +12,18 @@ namespace motorsports_UnitTests.Controller
     {
         private Mock<IDriverService> _driverServiceMock;
         private DriverController _driverController;
+        private Mock<ILogger<DriverController>> _loggerMock;
 
         [SetUp]
         public void Setup()
         {
             _driverServiceMock = new Mock<IDriverService>();
-            _driverController = new DriverController(_driverServiceMock.Object);
+            _loggerMock = new Mock<ILogger<DriverController>>();
+            _driverController = new DriverController(_driverServiceMock.Object, _loggerMock.Object);
         }
 
+        #region Tests - GetAllDrivers()
+        //Sample list
         private List<DriverDTO> sampleDriverCollection() => new()
         {
             new DriverDTO
@@ -32,6 +37,7 @@ namespace motorsports_UnitTests.Controller
                 TeamName= "McLaren F1"
             }
         };
+
         [Test]
         public async Task GetAllDrivers_DriversExists_ReturnList()
         {
@@ -48,5 +54,6 @@ namespace motorsports_UnitTests.Controller
             Assert.That(okResult.StatusCode, Is.EqualTo(200));
             Assert.That(okResult.Value, Is.EqualTo(A));
         }
+        #endregion
     }
 }
