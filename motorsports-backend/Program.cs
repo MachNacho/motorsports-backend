@@ -22,6 +22,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 #region Dependency Injection
+//DI- Race track
+builder.Services.AddScoped<IRaceTrackRepository, RaceTrackRepository>();
+builder.Services.AddScoped<IRaceTrackService, RaceTrackService>();
 //DI - Drivers
 builder.Services.AddScoped<IDriverRepository, DriverRepository>();
 builder.Services.AddScoped<IDriverService, DriverService>();
@@ -116,7 +119,7 @@ var app = builder.Build();
 //    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
 //    var fakers = scope.ServiceProvider.GetRequiredService<Fakers>();
 //    //Seed the database with initial data
-//    motorsports_Infrastructure.Seeding.DbSeeder.SeedBDData(dbContext, fakers, 20, 10);
+//    motorsports_Infrastructure.Seeding.DbSeeder.SeedBDData(dbContext, fakers, 120, 10);
 //}
 #endregion
 
