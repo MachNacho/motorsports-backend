@@ -28,7 +28,8 @@ namespace motorsports_Service.Services
                 FirstName = uploadDriverDTO.FirstName,
                 LastName = uploadDriverDTO.LastName,
                 BirthDate = uploadDriverDTO.BirthDate,
-                RaceNumber = uploadDriverDTO.RaceNumber,
+                RaceNumber = Convert.ToInt32(uploadDriverDTO.RaceNumber),
+                ImageURL = uploadDriverDTO.ImageURL,
                 TeamId = uploadDriverDTO.TeamID,
                 NationalityId = uploadDriverDTO.NationalityID,
                 MiddleName = uploadDriverDTO.MiddleName,
@@ -42,6 +43,7 @@ namespace motorsports_Service.Services
         public async Task DeleteDriverAsync(Guid id)
         {
             await _driverRepo.DeleteDriverAsync(id);
+            await _cacheIntegration.RemoveAsync(CacheKeys.Drivers);
         }
 
         public async Task<IReadOnlyCollection<DriverDTO>> GetAllDriversAsync()
@@ -69,6 +71,25 @@ namespace motorsports_Service.Services
             return driverDTO;
         }
 
+        public async Task<IReadOnlyCollection<FullTableDriver>> GetAllDriversForTableAsync()
+        {
+            var drivers = await _driverRepo.GetAllDriversAsync();
+            var driverTable = drivers.Select(x => new FullTableDriver
+            {
+                Id = x.Id,
+                Firstname = x.FirstName,
+                Lastname = x.LastName,
+                MiddleName = x.MiddleName,
+                NationalityId = x.NationalityId,
+                TeamId = x.TeamId,
+                RaceNumber = x.RaceNumber.ToString(),
+                BirthDate = x.BirthDate,
+                Gender = x.Gender.ToString(),
+                ImageURL = x.ImageURL,
+            }).ToList().AsReadOnly();
+            return driverTable;
+        }
+
         public async Task<FullDriverDTO?> GetDriverByIdAsync(Guid id)
         {
             var driver = await _driverRepo.GetDriverByIdAsync(id);
@@ -90,7 +111,7 @@ namespace motorsports_Service.Services
             return driverDTO;
         }
 
-        public async Task UpdateDriverAsync(Guid id, UpdateDriverDTO driverDTO)
+        public async Task UpdateDriverAsync(Guid id, UploadDriverDTO driverDTO)
         {
             var driver = await _driverRepo.GetDriverByIdAsync(id);
             DriverUpdateHelper.ApplyDriverUpdates(driver, driverDTO);

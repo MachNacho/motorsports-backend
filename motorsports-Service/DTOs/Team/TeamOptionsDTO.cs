@@ -1,6 +1,6 @@
-﻿namespace motorsports_Service.DTOs.Nationality
+﻿namespace motorsports_Service.DTOs.Team
 {
-    public class NationalityDTO
+    public class TeamOptionsDTO
     {
         public Guid Id { get; set; }
         public string label { get; set; }

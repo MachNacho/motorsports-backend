@@ -55,7 +55,7 @@ namespace motorsports_backend.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateDriver([FromRoute] Guid id, [FromBody] UpdateDriverDTO updateDriver)
+        public async Task<IActionResult> UpdateDriver([FromRoute] Guid id, [FromBody] UploadDriverDTO updateDriver)
         {
             if (id == Guid.Empty)
             {
@@ -109,6 +109,19 @@ namespace motorsports_backend.Controllers
 
             _logger.LogInformation("Successfully deleted driver: {DriverId}", id);
             return NoContent();
+        }
+
+        [HttpGet("Admin/Table")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(IReadOnlyCollection<FullTableDriver>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetDriversForTable()
+        {
+            _logger.LogInformation("Fetching driver data for table usage");
+            var driverTableData = await _driverService.GetAllDriversForTableAsync();
+            _logger.LogInformation("Successfully retrived table data ");
+            return Ok(driverTableData);
         }
     }
 }

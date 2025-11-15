@@ -6,6 +6,7 @@ namespace motorsports_Service.Interface
     public interface ITeamService
     {
         Task<IReadOnlyCollection<TeamDTO>> GetAllTeamAsync();
+        Task<IReadOnlyCollection<TeamOptionsDTO>> GetAllTeamsForOptionsAsync();
         Task<FullTeamDTO> GetTeamByIdAsync(Guid id);
         Task<TeamEntity> CreateTeamAsync(TeamEntity team);
         Task UpdateTeamAsync(Guid id, TeamEntity team);

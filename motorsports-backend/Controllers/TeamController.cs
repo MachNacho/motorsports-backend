@@ -34,10 +34,18 @@ namespace motorsports_backend.Controllers
             return Ok(teamResult);
         }
 
+        [HttpGet("Select/Items")]
+        [ProducesResponseType(typeof(IReadOnlyCollection<TeamOptionsDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetTeamOptionItems()
+        {
+            var teamOptionResult = await _teamService.GetAllTeamsForOptionsAsync();
+            return Ok(teamOptionResult);
+        }
+
         [HttpPut("update/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
         public async Task<IActionResult> UpdateTeam([FromRoute] Guid id, [FromBody] TeamEntity test)
         {
             await _teamService.UpdateTeamAsync(id, test);

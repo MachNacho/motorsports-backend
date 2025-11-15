@@ -36,14 +36,14 @@ namespace motorsports_Infrastructure.Seeding
             //Team seeding
             foreach (var r in teamList)
             {
-                r.NationalityId = isIsoNationList[rand.Next(isIsoNationList.Count - 1)].Id;
+                r.NationalityId = isIsoNationList[rand.Next(isIsoNationList.Count)].Id;
             }
             context.Team.AddRange(teamList);
 
             //Driver seeding
             foreach (var r in personList)
             {
-                r.NationalityId = isIsoNationList[rand.Next(isIsoNationList.Count - 1)].Id;
+                r.NationalityId = isIsoNationList[rand.Next(isIsoNationList.Count)].Id;
                 r.TeamId = teamList[rand.Next(teamList.Count - 1)].Id;
             }
             context.Driver.AddRange(personList);

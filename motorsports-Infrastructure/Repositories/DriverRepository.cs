@@ -45,19 +45,14 @@ namespace motorsports_Infrastructure.Repositories
 
         public async Task<DriverEntity?> GetDriverByIdAsync(Guid id)
         {
-            var driver = await _context.Driver.Include(x => x.Nationality).Include(x => x.Team).AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+            var driver = await _context.Driver.Include(x => x.Nationality).Include(x => x.Team).SingleOrDefaultAsync(x => x.Id == id);
             return driver;
         }
 
         public async Task UpdateDriverAsync(DriverEntity driver)
         {
-            var existingDriver = await _context.Driver.FindAsync(driver.Id);
-            if (existingDriver is null)
-            {
-                _logger.LogWarning("Attempted to update driver with ID {DriverId}, but it was not found.", driver.Id);
-                throw new RecordNotFound($"Driver with ID '{driver.Id}' not found.");
-            }
-            _context.Entry(existingDriver).CurrentValues.SetValues(driver);
+
+            _context.Driver.Update(driver);
             await _context.SaveChangesAsync();
         }
     }

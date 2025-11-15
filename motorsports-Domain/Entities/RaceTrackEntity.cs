@@ -12,6 +12,8 @@ namespace motorsports_Domain.Entities
         public string Last_length_used { get; set; }
         public string Turns { get; set; }
         public string Grand_Prix_Names { get; set; }
+        public string imageUrl { get; set; }
+        public string Description { get; set; }
         public Guid NationID { get; set; }
         public NationalityEntity nation { get; set; }
     }

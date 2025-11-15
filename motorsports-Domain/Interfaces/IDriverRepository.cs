@@ -2,6 +2,9 @@
 
 namespace motorsports_Domain.Interfaces
 {
+    /// <summary>
+    /// Repository implementation for managing Driver entities.
+    /// </summary>
     public interface IDriverRepository
     {
         /// <summary>

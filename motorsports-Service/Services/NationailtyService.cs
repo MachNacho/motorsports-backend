@@ -15,7 +15,7 @@ namespace motorsports_Service.Services
         {
             var nationsList = await _nationalityRepo.GetAllNationalitiesAsync();
 
-            var nationsDTO = nationsList.Select(n => new NationalityDTO { Id = n.Id, Code = n.Code, Continent = n.Continent.ToString().Replace("_", " "), Name = n.Name }).ToList().AsReadOnly();
+            var nationsDTO = nationsList.Select(n => new NationalityDTO { Id = n.Id, label = n.Name }).ToList().AsReadOnly();
             return nationsDTO;
         }
 

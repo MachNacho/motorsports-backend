@@ -36,6 +36,18 @@ namespace motorsports_Service.Services
             return teamDTO;
         }
 
+        public async Task<IReadOnlyCollection<TeamOptionsDTO>> GetAllTeamsForOptionsAsync()
+        {
+
+            var result = await _teamRepository.GetAllTeamsAsync();
+            var TeamOptions = result.Select(x => new TeamOptionsDTO
+            {
+                Id = x.Id,
+                label = x.TeamName
+            }).ToList().AsReadOnly();
+            return TeamOptions;
+        }
+
         public async Task<FullTeamDTO> GetTeamByIdAsync(Guid id)
         {
             var result = await _teamRepository.GetTeamByIdAsync(id);
