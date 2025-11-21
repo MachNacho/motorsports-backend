@@ -39,7 +39,7 @@ namespace motorsports_Infrastructure.Repositories
 
         public async Task<IReadOnlyCollection<DriverEntity>> GetAllDriversAsync()
         {
-            var drivers = await _context.Driver.Include(x => x.Nationality).Include(x => x.Team).AsNoTracking().ToListAsync();
+            var drivers = await _context.Driver.Include(x => x.Nationality).Include(x => x.Team).OrderBy(x=>x.TeamId).AsNoTracking().ToListAsync();
             return drivers.AsReadOnly();
         }
 

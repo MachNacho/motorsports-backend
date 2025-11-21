@@ -8,7 +8,7 @@ namespace motorsports_Service.DTOs.Driver
         public required string FirstName { get; set; }
         public string? MiddleName { get; set; }
         public required string LastName { get; set; }
-        public string? ImageURL { get; set; }
+        public string? Description { get; set; }
         public required DateOnly BirthDate { get; set; }
         public required GenderEnum Gender { get; set; }
         public required Guid NationalityID { get; set; }

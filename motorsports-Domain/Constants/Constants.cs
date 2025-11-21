@@ -4,6 +4,7 @@
     {
         // Default role assigned to new users
         public const string DEFAULT_USER_ROLE = "User";
+        public const string DEFAULT_ADMIN_ROLE = "Admin";
 
         public static class CacheKeys
         {

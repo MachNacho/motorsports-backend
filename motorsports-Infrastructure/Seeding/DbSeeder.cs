@@ -12,9 +12,9 @@ namespace motorsports_Infrastructure.Seeding
         public static void ClearDatabase(ApplicationDBContext context)
         {
             context.RemoveRange(context.Driver);
+            context.RemoveRange(context.RaceTrack);
             context.RemoveRange(context.Team);
             context.RemoveRange(context.Nationailty);
-            context.RemoveRange(context.RaceTrack);
             context.SaveChanges();
         }
         public static void SeedData(ApplicationDBContext context, Fakers fakers, int driverCount, int teamCount)

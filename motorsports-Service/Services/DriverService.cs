@@ -29,14 +29,16 @@ namespace motorsports_Service.Services
                 LastName = uploadDriverDTO.LastName,
                 BirthDate = uploadDriverDTO.BirthDate,
                 RaceNumber = Convert.ToInt32(uploadDriverDTO.RaceNumber),
-                ImageURL = uploadDriverDTO.ImageURL,
+                ImageURL = (uploadDriverDTO.Gender==GenderEnum.Male) ? "/Driver/Male/UnkownMale.png": "/Driver/Female/UnkownFemale.png",
                 TeamId = uploadDriverDTO.TeamID,
                 NationalityId = uploadDriverDTO.NationalityID,
                 MiddleName = uploadDriverDTO.MiddleName,
                 Gender = uploadDriverDTO.Gender,
+                Description = uploadDriverDTO.Description,
             };
 
             var result = await _driverRepo.CreateDriverAsync(newDriver);
+            await _cacheIntegration.RemoveAsync(CacheKeys.Drivers);
             return result;
         }
 
@@ -65,6 +67,8 @@ namespace motorsports_Service.Services
                 Country = x.Nationality.Name,
                 RaceNumber = x.RaceNumber,
                 TeamName = x.Team.TeamName,
+                imageURL = x.ImageURL,
+                Colour = x.Team.TeamColour,
             }).ToList().AsReadOnly();
 
             await _cacheIntegration.SetAsync<IReadOnlyCollection<DriverDTO>>(CacheKeys.Drivers, driverDTO);
@@ -85,7 +89,7 @@ namespace motorsports_Service.Services
                 RaceNumber = x.RaceNumber.ToString(),
                 BirthDate = x.BirthDate,
                 Gender = x.Gender.ToString(),
-                ImageURL = x.ImageURL,
+                Description = x.Description,
             }).ToList().AsReadOnly();
             return driverTable;
         }
@@ -97,16 +101,27 @@ namespace motorsports_Service.Services
             {
                 Id = driver.Id,
                 Firstname = driver.FirstName,
+                MiddleName = driver.MiddleName,
+                Description = driver.Description,
                 Lastname = driver.LastName,
                 Nationality = driver.Nationality.Name,
                 Code = driver.Nationality.Code,
                 FlagFourByThree = driver.Nationality.FlagFourByThree,
                 FlagOneByOne = driver.Nationality.FlagOneByOne,
+                Colour = driver.Team.TeamColour,
+                ImageURL = driver.ImageURL,
                 Gender = driver.Gender.ToString(),
                 RaceNumber = driver.RaceNumber,
                 TeamName = driver.Team.TeamName,
                 TeamId = driver.TeamId,
                 BirthDate = driver.BirthDate,
+                RaceWins = driver.RaceWins,
+                RacePole = driver.RacePole,
+                CareerPoints = driver.CareerPoints,
+                RacesParticipated = driver.RacesParticipated,
+                RaceLapsLed = driver.RaceLapsLed,
+                RacePodiums = driver.RacePodiums,
+                ChampionshipTitles = driver.ChampionshipTitles,
             };
             return driverDTO;
         }

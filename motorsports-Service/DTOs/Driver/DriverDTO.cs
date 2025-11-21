@@ -7,7 +7,9 @@
         public string Lastname { get; set; }
         public string? Code { get; set; }
         public string? Country { get; set; }
+        public string? imageURL { get; set; }
         public int? RaceNumber { get; set; }
         public string? TeamName { get; set; }
-    }
+        public string? Colour { get; set; }
+    }  
 }

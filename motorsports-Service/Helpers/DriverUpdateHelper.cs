@@ -15,7 +15,7 @@ namespace motorsports_Service.Helpers
             if (driver.Gender != dto.Gender) driver.Gender = (motorsports_Domain.Constants.Constants.GenderEnum)dto.Gender;
             if (driver.NationalityId != dto.NationalityID) driver.NationalityId = (Guid)dto.NationalityID;
             if (driver.TeamId != dto.TeamID) driver.TeamId = dto.TeamID;
-            if (driver.ImageURL != dto.ImageURL) driver.ImageURL = dto.ImageURL;
+            if (driver.Description != dto.Description) driver.Description = dto.Description;
         }
     }
 }

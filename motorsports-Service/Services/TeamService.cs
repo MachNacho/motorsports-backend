@@ -27,11 +27,12 @@ namespace motorsports_Service.Services
             var teamDTO = result.Select(x => new TeamDTO
             {
                 ID = x.Id,
-                Country = x.Nationality.Name,
-                Code = x.Nationality.Code,
-                Headquarters = x.Headquarters,
+                imageURL = x.imageURL,
+                Colour = x.TeamColour,
                 Name = x.TeamName,
+                driverCount = x.Drivers.Count,
                 YearFounded = (DateOnly)x.FoundedDate,
+
             }).ToList().AsReadOnly();
             return teamDTO;
         }
@@ -58,6 +59,9 @@ namespace motorsports_Service.Services
                 nationName = result.Nationality.Name,
                 nationCode = result.Nationality.Code,
                 Headquarters = result.Headquarters,
+                Colour = result.TeamColour,
+                Description = result.TeamDescription,
+                imageURL = result.imageURL,
                 Drivers = result.Drivers.Select(d => new TeamDriver
                 {
                     id = d.Id,

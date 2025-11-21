@@ -101,7 +101,7 @@ namespace motorsports_Service.Auth
                 throw new UserCreationError();
             }
 
-            var addToRoleResult = await _userManager.AddToRoleAsync(newUser, Constants.DEFAULT_USER_ROLE);
+            var addToRoleResult = await _userManager.AddToRoleAsync(newUser, Constants.DEFAULT_ADMIN_ROLE);
 
             if (!addToRoleResult.Succeeded)
             {

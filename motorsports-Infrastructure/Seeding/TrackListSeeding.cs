@@ -26,7 +26,7 @@ namespace motorsports_Infrastructure.Seeding
                     Location = dto.Location,
                     Last_length_used = dto.LastLengthUsed,
                     Turns = dto.Turns,
-                    NationID = nation.Id
+                    NationID = nation.Id,
                 };
 
             }).ToList();

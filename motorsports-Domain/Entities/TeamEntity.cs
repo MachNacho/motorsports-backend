@@ -11,6 +11,9 @@ namespace motorsports_Domain.Entities
 
         [MaxLength(100)]
         public required string Headquarters { get; set; }
+        public string? TeamColour { get; set; }
+        public string? imageURL { get; set; }
+        public string? TeamDescription { get; set; }
 
         //Foreign Keys
         public required Guid NationalityId { get; set; }

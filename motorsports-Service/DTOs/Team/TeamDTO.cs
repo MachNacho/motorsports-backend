@@ -4,9 +4,9 @@
     {
         public Guid ID { get; set; }
         public string Name { get; set; }
-        public string Country { get; set; }
-        public string? Code { get; set; }
+        public int driverCount { get; set; } = 0;
+        public string? imageURL { get; set; }
+        public string? Colour { get; set; }
         public DateOnly YearFounded { get; set; }
-        public string Headquarters { get; set; }
     }
 }

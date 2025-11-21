@@ -29,6 +29,7 @@ namespace motorsports_Service.Services
                 {
                     Id = track.Id,
                     nationName = track.nation.Name,
+                    Location = track.Location,
                     TrackName = track.Circuit,
                     nationCode = track.nation.Code
                 });
@@ -52,6 +53,7 @@ namespace motorsports_Service.Services
                 Type = track.Type.ToString().Replace("_", " "),
                 Location = track.Location,
                 Length = track.Last_length_used,
+                Turns = track.Turns,
                 NationName = track.nation.Name,
                 NationCode = track.nation.Code,
                 imageURL = track.imageUrl

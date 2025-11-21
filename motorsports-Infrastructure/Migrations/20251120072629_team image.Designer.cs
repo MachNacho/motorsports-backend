@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using motorsports_Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using motorsports_Infrastructure.Data;
 namespace motorsports_Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251120072629_team image")]
+    partial class teamimage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,12 +181,6 @@ namespace motorsports_Infrastructure.Migrations
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CareerPoints")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ChampionshipTitles")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -213,22 +210,7 @@ namespace motorsports_Infrastructure.Migrations
                     b.Property<Guid>("NationalityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RaceLapsLed")
-                        .HasColumnType("int");
-
                     b.Property<int?>("RaceNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RacePodiums")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RacePole")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RaceWins")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RacesParticipated")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("TeamId")
@@ -302,6 +284,7 @@ namespace motorsports_Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Direction")
@@ -336,6 +319,7 @@ namespace motorsports_Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("imageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

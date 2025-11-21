@@ -8,7 +8,7 @@
         public string Lastname { get; set; }
         public DateOnly BirthDate { get; set; }
         public required Guid NationalityId { get; set; }
-        public string? ImageURL { get; set; }
+        public string? Description { get; set; }
         public string Gender { get; set; }
         public string? RaceNumber { get; set; }
         public Guid? TeamId { get; set; }

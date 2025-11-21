@@ -9,6 +9,7 @@
         public string Type { get; set; }
         public string Location { get; set; }
         public string Length { get; set; }
+        public string Turns { get; set; }
         public string NationName { get; set; }
         public string NationCode { get; set; }
         public string imageURL { get; set; }

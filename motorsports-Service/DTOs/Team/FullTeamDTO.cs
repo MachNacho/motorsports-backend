@@ -7,7 +7,9 @@
         public string Headquarters { get; set; }
         public string nationCode { get; set; }
         public string nationName { get; set; }
-
+        public string? Colour { get; set; }
+        public string? Description { get; set; }
+        public string? imageURL { get; set; }
         public ICollection<TeamDriver> Drivers { get; set; } = new List<TeamDriver>();
 
     }

@@ -119,7 +119,7 @@ var app = builder.Build();
 //    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
 //    var fakers = scope.ServiceProvider.GetRequiredService<Fakers>();
 //    //Seed the database with initial data
-//    motorsports_Infrastructure.Seeding.DbSeeder.SeedBDData(dbContext, fakers, 120, 10);
+//    motorsports_Infrastructure.Seeding.DbSeeder.SeedBDData(dbContext, fakers, 20, 10);
 //}
 #endregion
 
