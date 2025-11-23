@@ -1,6 +1,20 @@
 ﻿namespace motorsports_Domain.Exceptions
 {
-    #region DB exceptions
+    #region Service Layer Exceptions
+    public class DriverCreationErrorException : Exception
+    {
+        public DriverCreationErrorException() : base("There was an error creating a driver") { }
+        public DriverCreationErrorException(string message) : base(message) { }
+    }
+    public class DriverUpdateErrorException : Exception
+    {
+        public DriverUpdateErrorException() : base("There was an error updating a driver") { }
+        public DriverUpdateErrorException(string message) : base(message) { }
+    }
+    #endregion
+
+
+    #region Repo Layer exceptions
     public class RecordNotFound : Exception
     {
         public RecordNotFound() : base("The record was not found") { }

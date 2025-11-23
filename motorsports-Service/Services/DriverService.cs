@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using motorsports_Domain.Entities;
+using motorsports_Domain.Exceptions;
 using motorsports_Domain.Interfaces;
 using motorsports_Service.DTOs.Driver;
 using motorsports_Service.Helpers;
@@ -23,19 +24,36 @@ namespace motorsports_Service.Services
 
         public async Task<DriverEntity> CreateDriverAsync(UploadDriverDTO uploadDriverDTO)
         {
-            var newDriver = new DriverEntity()
+            DriverEntity newDriver = null;
+            try
             {
-                FirstName = uploadDriverDTO.FirstName,
-                LastName = uploadDriverDTO.LastName,
-                BirthDate = uploadDriverDTO.BirthDate,
-                RaceNumber = Convert.ToInt32(uploadDriverDTO.RaceNumber),
-                ImageURL = (uploadDriverDTO.Gender==GenderEnum.Male) ? "/Driver/Male/UnkownMale.png": "/Driver/Female/UnkownFemale.png",
-                TeamId = uploadDriverDTO.TeamID,
-                NationalityId = uploadDriverDTO.NationalityID,
-                MiddleName = uploadDriverDTO.MiddleName,
-                Gender = uploadDriverDTO.Gender,
-                Description = uploadDriverDTO.Description,
-            };
+                newDriver = new DriverEntity()
+                {
+                    FirstName = uploadDriverDTO.FirstName,
+                    LastName = uploadDriverDTO.LastName,
+                    BirthDate = uploadDriverDTO.BirthDate,
+                    RaceNumber = Convert.ToInt32(uploadDriverDTO.RaceNumber),
+                    ImageURL = (uploadDriverDTO.Gender == GenderEnum.Male) ? "/Driver/Male/UnkownMale.png" : "/Driver/Female/UnkownFemale.png",
+                    TeamId = uploadDriverDTO.TeamID,
+                    NationalityId = uploadDriverDTO.NationalityID,
+                    MiddleName = uploadDriverDTO.MiddleName,
+                    Gender = uploadDriverDTO.Gender,
+                    Description = uploadDriverDTO.Description,
+                    RaceWins = Convert.ToInt32(uploadDriverDTO.RaceWins),
+                    RacePodiums = Convert.ToInt32(uploadDriverDTO.RacePodiums),
+                    RacesParticipated = Convert.ToInt32(uploadDriverDTO.RacesParticipated),
+                    ChampionshipTitles = Convert.ToInt32(uploadDriverDTO.ChampionshipTitles),
+                    RacePole = Convert.ToInt32(uploadDriverDTO.RacePole),
+                    CareerPoints = Convert.ToInt32(uploadDriverDTO.CareerPoints),
+                    RaceLapsLed = Convert.ToInt32(uploadDriverDTO.RaceLapsLed),
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating driver");
+                throw new DriverCreationErrorException();         
+            }
+
 
             var result = await _driverRepo.CreateDriverAsync(newDriver);
             await _cacheIntegration.RemoveAsync(CacheKeys.Drivers);
@@ -85,11 +103,21 @@ namespace motorsports_Service.Services
                 Lastname = x.LastName,
                 MiddleName = x.MiddleName,
                 NationalityId = x.NationalityId,
+                NationName = x.Nationality.Name,
                 TeamId = x.TeamId,
+                TeamName = x.Team.TeamName,
                 RaceNumber = x.RaceNumber.ToString(),
                 BirthDate = x.BirthDate,
                 Gender = x.Gender.ToString(),
                 Description = x.Description,
+                RacesParticipated = x.RacesParticipated,
+                RacePodiums = x.RacePodiums,
+                RaceWins = x.RaceWins,
+                RacePole = x.RacePole,
+                CareerPoints = x.CareerPoints,
+                ChampionshipTitles= x.ChampionshipTitles,
+                RaceLapsLed = x.RaceLapsLed,
+
             }).ToList().AsReadOnly();
             return driverTable;
         }
@@ -129,7 +157,16 @@ namespace motorsports_Service.Services
         public async Task UpdateDriverAsync(Guid id, UploadDriverDTO driverDTO)
         {
             var driver = await _driverRepo.GetDriverByIdAsync(id);
-            DriverUpdateHelper.ApplyDriverUpdates(driver, driverDTO);
+            try 
+            {
+                DriverUpdateHelper.ApplyDriverUpdates(driver, driverDTO); 
+
+            } catch (Exception ex) 
+            {
+                _logger.LogError(ex, $"Error updating driver: {id}");
+                throw new DriverUpdateErrorException();
+            }
+            await _cacheIntegration.RemoveAsync(CacheKeys.Drivers);
             await _driverRepo.UpdateDriverAsync(driver);
         }
     }

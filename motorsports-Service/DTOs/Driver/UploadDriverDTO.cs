@@ -14,5 +14,12 @@ namespace motorsports_Service.DTOs.Driver
         public required Guid NationalityID { get; set; }
         public Guid? TeamID { get; set; }
         public string? RaceNumber { get; set; }
+        public string? RacesParticipated { get; set; }
+        public string? RacePodiums { get; set; }
+        public string? RaceWins { get; set; }
+        public string? ChampionshipTitles { get; set; }
+        public string? RacePole { get; set; }
+        public string? CareerPoints { get; set; }
+        public string? RaceLapsLed { get; set; }
     }
 }
