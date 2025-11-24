@@ -17,4 +17,10 @@ Run the update-database command in package mangaer console
 
 Run the API by clicking the green button on top
 
+
+
+## How to use
+
 Use https://localhost:7016/scalar/ to view the endpoints
+
+Copy the full endpoint into the application to use it.
