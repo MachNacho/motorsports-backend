@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using motorsports_Domain.Entities;
 using motorsports_Domain.Entities.@base;
-using System.Linq.Expressions;
 
 namespace motorsports_Infrastructure.Data
 {
@@ -22,12 +21,14 @@ namespace motorsports_Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<DriverEntity>()
+                .HasQueryFilter(e=>!e.IsDeleted)
                 .HasOne(d => d.Team) // Configures the relationship: PersonEntity has one Team
                 .WithMany(t => t.Drivers) // TeamEntity has many Employees (PersonEntity)
                 .HasForeignKey(d => d.TeamId) // Foreign key in PersonEntity is TeamID
                 .OnDelete(DeleteBehavior.Restrict); // Cascade delete behavior
 
             modelBuilder.Entity<NationalityEntity>()
+                .HasQueryFilter(e => !e.IsDeleted)
                 .HasMany(n => n.Drivers) // NationalityEntity has many PersonEntity
                 .WithOne(p => p.Nationality) // PersonEntity has one NationalityEntity
                 .HasForeignKey(p => p.NationalityId) // Foreign key in PersonEntity
@@ -44,6 +45,13 @@ namespace motorsports_Infrastructure.Data
                 .WithOne(r => r.nation)
                 .HasForeignKey(t => t.NationID)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<TeamEntity>()
+                .HasQueryFilter(e => !e.IsDeleted);
+
+            modelBuilder.Entity<RaceTrackEntity>()
+                .HasQueryFilter(e => !e.IsDeleted);
+
             #endregion
 
             #region Roles
@@ -61,29 +69,6 @@ namespace motorsports_Infrastructure.Data
                 }
             };
             modelBuilder.Entity<IdentityRole>().HasData(roles);
-            #endregion
-
-            #region Global query filter
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            {
-                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
-                {
-                    var parameter = Expression.Parameter(entityType.ClrType, "e");
-                    var deletedProp = Expression.Property(parameter, nameof(BaseEntity.IsDeleted));
-                    var compare = Expression.Equal(deletedProp, Expression.Constant(false));
-                    var lambda = Expression.Lambda(compare, parameter);
-
-                    // Dynamically create a typed expression
-                    var typedLambda = Expression.Lambda(
-                        typeof(Func<,>).MakeGenericType(entityType.ClrType, typeof(bool)),
-                        compare,
-                        parameter
-                    );
-
-                    modelBuilder.Entity(entityType.ClrType)
-                        .HasQueryFilter((LambdaExpression)typedLambda);
-                }
-            }
             #endregion
 
         }
